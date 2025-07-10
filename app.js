@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.showPage('page-pos');
         },
         
-        loadData() {
+       loadData() {
             const data = localStorage.getItem('posData');
             if (data) {
                 this.data = JSON.parse(data);
@@ -187,7 +187,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (typeof this.data.backupPassword === 'undefined') { this.data.backupPassword = null; }
                 if (!this.data.stores) { this.data.stores = []; }
                 if (!this.data.stockOuts) { this.data.stockOuts = []; }
-                if (!this.data.users) { this.data.users = []; } // Ensure users array exists
+                
+                // --- START OF FIX ---
+                // This robust check ensures an admin user always exists if data is loaded but has no users.
+                if (!this.data.users || this.data.users.length === 0) { 
+                    this.data.users = [
+                        { id: Date.now(), username: 'admin', password: '123', role: 'admin' }
+                    ];
+                }
+                // --- END OF FIX ---
+
                 if (this.data.sales && this.data.sales.length > 0) {
                     this.data.sales.forEach(sale => {
                         sale.items.forEach(item => { if (typeof item.isSpecialPrice === 'undefined') { item.isSpecialPrice = false; item.originalPrice = item.price; } });
@@ -209,9 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             } else {
-                // *** MAJOR FIX HERE ***
-                // Create a full, clean data structure from scratch
-                // This is more robust than modifying the initial empty object.
                 this.data = {
                     users: [
                         { id: Date.now(), username: 'admin', password: '123', role: 'admin' }
