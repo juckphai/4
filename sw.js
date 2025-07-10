@@ -1,5 +1,5 @@
 // เปลี่ยนชื่อ Cache ทุกครั้งที่มีการอัปเดตไฟล์ใน urlsToCache
-const CACHE_NAME = 'juckim-pwa-cache-v5';
+const CACHE_NAME = 'juckim-pwa-cache-v6'; // <--- เปลี่ยนจาก v5 เป็น v6
 
 // รายการไฟล์ทั้งหมดที่ต้องการให้แอปทำงานแบบ Offline ได้
 const urlsToCache = [
