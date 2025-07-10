@@ -1,3 +1,4 @@
+html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -44,7 +45,7 @@
             <p id="login-error" style="color: var(--danger-color);"></p>
         </div>
 
-        <div id="main-app" style="display: none;">
+        <div id="main-app">
             <div class="top-bar">
                 <h1 style="font-size: 16px; font-style: normal;">
                     บัญชีขาย <span id="store-display-name" style="color: #FFD700; font-style: normal;"></span>
@@ -55,60 +56,58 @@
                 </div>
             </div>
 
-            <!-- Section Headers for navigation -->
-            <div class="section-header header-pos" data-page="page-pos">
+            <div class="section-header header-pos" onclick="App.showPage('page-pos')">
                 <span>ขายสินค้า (POS)</span><span class="arrow">▶</span>
             </div>
             <div id="page-pos" class="section-content"></div>
 
-            <div class="section-header header-products admin-only" data-page="page-products">
+            <div class="section-header header-products admin-only" onclick="App.showPage('page-products')">
                 <span>จัดการสินค้า</span><span class="arrow">▶</span>
             </div>
             <div id="page-products" class="section-content admin-only"></div>
 
-            <div class="section-header header-stock admin-only" data-page="page-stock-in">
+            <div class="section-header header-stock admin-only" onclick="App.showPage('page-stock-in')">
                 <span>นำเข้าสินค้า</span><span class="arrow">▶</span>
             </div>
             <div id="page-stock-in" class="section-content admin-only"></div>
 
-            <div class="section-header header-stock-out admin-only" data-page="page-stock-out">
+            <div class="section-header header-stock-out admin-only" onclick="App.showPage('page-stock-out')">
                 <span>ปรับสต็อก (นำออก)</span><span class="arrow">▶</span>
             </div>
             <div id="page-stock-out" class="section-content admin-only"></div>
 
-            <div class="section-header header-history admin-only" data-page="page-sales-history">
+            <div class="section-header header-history admin-only" onclick="App.showPage('page-sales-history')">
                 <span>รายการขายย้อนหลัง</span><span class="arrow">▶</span>
             </div>
             <div id="page-sales-history" class="section-content admin-only"></div>
 
-            <div class="section-header header-reports admin-only" data-page="page-reports">
+            <div class="section-header header-reports admin-only" onclick="App.showPage('page-reports')">
                 <span>รายงานกำไร/ขาดทุน</span><span class="arrow">▶</span>
             </div>
             <div id="page-reports" class="section-content admin-only"></div>
 
-            <div class="section-header header-summary admin-only" data-page="page-summary">
+            <div class="section-header header-summary admin-only" onclick="App.showPage('page-summary')">
                 <span>สรุปข้อมูล</span><span class="arrow">▶</span>
             </div>
             <div id="page-summary" class="section-content admin-only"></div>
             
-            <div class="section-header header-stores admin-only" data-page="page-stores">
+            <div class="section-header header-stores admin-only" onclick="App.showPage('page-stores')">
                 <span>จัดการร้านค้า</span><span class="arrow">▶</span>
             </div>
             <div id="page-stores" class="section-content admin-only"></div>
 
-            <div class="section-header header-users admin-only" data-page="page-users">
+            <div class="section-header header-users admin-only" onclick="App.showPage('page-users')">
                 <span>จัดการผู้ใช้</span><span class="arrow">▶</span>
             </div>
             <div id="page-users" class="section-content admin-only"></div>
 
-            <div class="section-header header-data" data-page="page-data">
+            <div class="section-header header-data" onclick="App.showPage('page-data')">
                 <span>จัดการข้อมูล</span><span class="arrow">▶</span>
             </div>
             <div id="page-data" class="section-content"></div>
         </div>
     </div>
 
-    <!-- Modals and Notifications -->
     <div id="toast-notification"></div>
     <div id="summaryModal" class="modal-overlay"><div class="modal-content-container"><div id="modalBodyContent"></div><button onclick="App.closeSummaryModal()" class="modal-close-btn">ปิดหน้าต่างนี้</button></div></div>
     <div id="summaryOutputModal" class="modal-overlay"><div class="format-modal-content"><h3>เลือกรูปแบบการแสดงผลสรุป</h3><div class="format-modal-buttons"><button class="btn-display" onclick="App.handleSummaryOutput('display')">แสดงบนจอ</button><button class="btn-csv" onclick="App.handleSummaryOutput('csv')">ส่งออกเป็น CSV</button><button class="btn-cancel" onclick="App.closeSummaryOutputModal()">ยกเลิก</button></div></div></div>
@@ -130,8 +129,8 @@
             </div>
         </div>
     </div>
-
     <!-- Link to external JS file (at the end of body) -->
     <script src="app.js"></script>
 </body>
 </html>
+

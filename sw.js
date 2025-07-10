@@ -1,45 +1,43 @@
-// sw.js - เวอร์ชันปรับปรุง
+// เปลี่ยนชื่อ Cache ทุกครั้งที่มีการอัปเดตไฟล์ใน urlsToCache
+const CACHE_NAME = 'juckim-pwa-cache-v6'; // <--- เปลี่ยนจาก v5 เป็น v6
 
-// กำหนดชื่อและเวอร์ชันของ Cache
-// **สำคัญ:** เปลี่ยนเลขเวอร์ชันทุกครั้งที่มีการแก้ไขไฟล์ด้านล่าง!
-const CACHE_NAME = 'juckim-pwa-cache-v8';
-
-// รายการไฟล์หลักที่จำเป็นสำหรับ App Shell
+// รายการไฟล์ทั้งหมดที่ต้องการให้แอปทำงานแบบ Offline ได้
 const urlsToCache = [
-  './', // แคชหน้าหลัก (index.html)
+  './',
+  './index.html',
   './style.css',
   './app.js',
   './manifest.json',
-  './192.png',
-  './512.png'
+  './192.png', // ชื่อไฟล์ไอคอนของคุณ
+  './512.png'  // ชื่อไฟล์ไอคอนของคุณ
 ];
 
-// 1. Event: install - ติดตั้ง Service Worker และแคชไฟล์ทั้งหมด
+// Event: install - ติดตั้ง Service Worker และแคชไฟล์ทั้งหมดที่ระบุไว้
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Service Worker: Caching App Shell...');
+        console.log('Opened cache and caching all app files');
         return cache.addAll(urlsToCache);
       })
       .catch(error => {
-        console.error('Service Worker: Failed to cache App Shell.', error);
+        console.error('Failed to cache files during install:', error);
       })
   );
-  // บังคับให้ Service Worker ใหม่เข้าควบคุมทันที ไม่ต้องรอ
+  // บังคับให้ Service Worker ใหม่เริ่มทำงานทันที
   self.skipWaiting();
 });
 
-// 2. Event: activate - จัดการแคชเก่าที่ไม่ต้องการแล้ว
+// Event: activate - จัดการแคชเก่าที่ไม่ต้องการแล้ว
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.filter(cache => {
-          // ค้นหา cache ที่ขึ้นต้นด้วยชื่อเดียวกัน แต่ไม่ใช่เวอร์ชันปัจจุบัน
+          // ค้นหา cache ที่เป็นของแอปนี้ แต่ไม่ใช่เวอร์ชันปัจจุบัน
           return cache.startsWith('juckim-pwa-cache-') && cache !== CACHE_NAME;
         }).map(cache => {
-          console.log('Service Worker: Deleting old cache:', cache);
+          console.log('Service Worker: Clearing old cache:', cache);
           return caches.delete(cache);
         })
       );
@@ -49,23 +47,19 @@ self.addEventListener('activate', event => {
   return self.clients.claim();
 });
 
-// 3. Event: fetch - จัดการ request ทั้งหมด (กลยุทธ์: Cache First)
+// Event: fetch - จัดการ request ทั้งหมดที่เกิดขึ้นจากแอป
 self.addEventListener('fetch', event => {
-  // จัดการเฉพาะ GET request เท่านั้น
+  // เราจะจัดการเฉพาะ GET request เท่านั้น
   if (event.request.method !== 'GET') {
       return;
   }
   
-  // ค้นหาใน Cache ก่อน ถ้าไม่เจอก็ค่อยไปดึงจาก Network
+  // กลยุทธ์: Cache First (ค้นหาใน Cache ก่อน ถ้าไม่เจอก็ค่อยไปดึงจาก Network)
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // ถ้าเจอใน Cache ให้ส่งกลับไปเลย
-        if (response) {
-          return response;
-        }
-        // ถ้าไม่เจอใน Cache ให้ไปดึงจาก Network
-        return fetch(event.request);
+        // ถ้าเจอใน Cache ให้ส่งกลับไปเลย, ถ้าไม่เจอ (response เป็น null) ให้ fetch จาก Network
+        return response || fetch(event.request);
       })
   );
 });
