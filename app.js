@@ -1,4 +1,6 @@
 javascript
+// app.js
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const App = {
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
+                    // แก้ไข: ให้ตรงกับชื่อไฟล์ที่ถูกต้อง
                     navigator.serviceWorker.register('./sw.js')
                         .then(registration => console.log('ServiceWorker registration successful'))
                         .catch(err => console.log('ServiceWorker registration failed: ', err));
@@ -2744,7 +2747,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.id === 'backup-password-form') { e.preventDefault(); this.saveBackupPassword(e); }
             });
 
-            mainApp.addEventListener('click', (e) => {
+            // Replaced all `onclick` with delegated listeners for robustness
+            document.body.addEventListener('click', (e) => {
                  const target = e.target;
                 if (target.id === 'process-sale-btn') this.processSale();
                 if (target.classList.contains('remove-from-cart-btn')) this.removeFromCart(target.dataset.index);
@@ -2795,6 +2799,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.id === 'generate-credit-summary-btn') this.runAdminCreditSummary();
                 if (target.id === 'generate-transfer-summary-btn') this.runAdminTransferSummary();
                 if (target.id === 'generate-aggregated-summary-btn') this.runAdminAggregatedSummary();
+
+                // Listeners for modals, previously inline HTML
+                if (target.classList.contains('modal-close-btn')) this.closeSummaryModal();
+                if (target.classList.contains('btn-display')) this.handleSummaryOutput('display');
+                if (target.classList.contains('btn-csv')) this.handleSummaryOutput('csv');
+                if (target.classList.contains('btn-cancel')) this.closeSummaryOutputModal();
+                if (target.id === 'cancel-reset-btn') this.closeResetModal();
+                if (target.id === 'confirm-selective-reset-btn') this.handleSelectiveReset();
             });
 
             document.body.addEventListener('change', (e) => {
@@ -2869,12 +2881,169 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-
-            document.getElementById('cancel-reset-btn').addEventListener('click', () => this.closeResetModal());
-            document.getElementById('confirm-selective-reset-btn').addEventListener('click', () => this.handleSelectiveReset());
         }
     };
 
     window.App = App;
     App.init();
 });
+```
+
+#### 2. แก้ไข `index.html`: ลบ `onclick` ออก
+
+ผมได้ลบ `onclick="..."` ออกจากปุ่มใน Modal เพราะเราได้ย้ายไปจัดการใน `app.js` แล้ว ซึ่งเป็นวิธีที่ทันสมัยกว่า
+
+**ไฟล์ `index.html` ที่แก้ไขแล้ว:**
+
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บัญชีขาย</title>
+
+    <!-- [PWA] Link to Manifest & Theme Color -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a90e2">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div id="login-screen">
+            <h1>บัญชีขาย</h1>
+            <p>กรุณาเข้าสู่ระบบ</p>
+            <form id="login-form" style="display: inline-grid; max-width: 350px;">
+                <label for="username">ชื่อผู้ใช้:</label>
+                <input type="text" id="username" required>
+                <label for="password">รหัสผ่าน:</label>
+                <input type="password" id="password" required>
+                
+                <div style="grid-column: 1 / -1; text-align: left; margin: 0 0 10px 0;">
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" id="show-password-login">
+                        แสดงรหัสผ่าน
+                    </label>
+                </div>
+                
+                <div style="grid-column: 1 / -1; text-align: left; margin: 5px 0 10px 0;">
+                    <label style="font-weight: normal; cursor: pointer;">
+                        <input type="checkbox" id="remember-me">
+                        จดจำการเข้าสู่ระบบในครั้งถัดไป
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="success">เข้าสู่ระบบ</button>
+                </div>
+            </form>
+            <p id="login-error" style="color: var(--danger-color);"></p>
+        </div>
+
+        <div id="main-app" style="display: none;">
+            <div class="top-bar">
+                <h1 style="font-size: 16px; font-style: normal;">
+                    บัญชีขาย <span id="store-display-name" style="color: #FFD700; font-style: normal;"></span>
+                </h1>
+                <div id="user-info-container">
+                    <span id="user-info"></span>
+                    <button id="logout-btn">ออกจากระบบ</button>
+                </div>
+            </div>
+
+            <!-- Section Headers for navigation -->
+            <div class="section-header header-pos" data-page="page-pos">
+                <span>ขายสินค้า (POS)</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-pos" class="section-content"></div>
+
+            <div class="section-header header-products admin-only" data-page="page-products">
+                <span>จัดการสินค้า</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-products" class="section-content admin-only"></div>
+
+            <div class="section-header header-stock admin-only" data-page="page-stock-in">
+                <span>นำเข้าสินค้า</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-stock-in" class="section-content admin-only"></div>
+
+            <div class="section-header header-stock-out admin-only" data-page="page-stock-out">
+                <span>ปรับสต็อก (นำออก)</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-stock-out" class="section-content admin-only"></div>
+
+            <div class="section-header header-history admin-only" data-page="page-sales-history">
+                <span>รายการขายย้อนหลัง</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-sales-history" class="section-content admin-only"></div>
+
+            <div class="section-header header-reports admin-only" data-page="page-reports">
+                <span>รายงานกำไร/ขาดทุน</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-reports" class="section-content admin-only"></div>
+
+            <div class="section-header header-summary admin-only" data-page="page-summary">
+                <span>สรุปข้อมูล</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-summary" class="section-content admin-only"></div>
+            
+            <div class="section-header header-stores admin-only" data-page="page-stores">
+                <span>จัดการร้านค้า</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-stores" class="section-content admin-only"></div>
+
+            <div class="section-header header-users admin-only" data-page="page-users">
+                <span>จัดการผู้ใช้</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-users" class="section-content admin-only"></div>
+
+            <div class="section-header header-data" data-page="page-data">
+                <span>จัดการข้อมูล</span><span class="arrow">▶</span>
+            </div>
+            <div id="page-data" class="section-content"></div>
+        </div>
+    </div>
+
+    <!-- Modals and Notifications -->
+    <div id="toast-notification"></div>
+    <div id="summaryModal" class="modal-overlay">
+        <div class="modal-content-container">
+            <div id="modalBodyContent"></div>
+            <button class="modal-close-btn">ปิดหน้าต่างนี้</button>
+        </div>
+    </div>
+    <div id="summaryOutputModal" class="modal-overlay">
+        <div class="format-modal-content">
+            <h3>เลือกรูปแบบการแสดงผลสรุป</h3>
+            <div class="format-modal-buttons">
+                <button class="btn-display">แสดงบนจอ</button>
+                <button class="btn-csv">ส่งออกเป็น CSV</button>
+                <button class="btn-cancel">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="resetModal" class="modal-overlay">
+        <div id="reset-modal-content">
+            <h3>เลือกข้อมูลที่จะรีเซ็ต</h3>
+            <p style="color: var(--danger-color); font-weight: bold;">คำเตือน: การกระทำนี้ไม่สามารถย้อนกลับได้! โปรดเลือกด้วยความระมัดระวัง</p>
+            <div id="reset-options-container">
+                <label><input type="checkbox" id="reset-sales-checkbox"> ลบประวัติการขายทั้งหมด (Sales)</label>
+                <label><input type="checkbox" id="reset-stockins-checkbox"> ลบประวัติการนำเข้าทั้งหมด (Stock-ins)</label>
+                <label><input type="checkbox" id="reset-products-checkbox"> ลบสินค้าทั้งหมด (Products)</label>
+                <label style="color: var(--danger-color);"><input type="checkbox" id="reset-sellers-checkbox"> ลบผู้ขายทั้งหมด (Sellers - ยกเว้น Admin)</label>
+                <label style="color: var(--danger-color);"><input type="checkbox" id="reset-stores-checkbox"> ลบร้านค้าทั้งหมด (Stores)</label>
+            </div>
+            <div id="reset-modal-actions">
+                <button type="button" id="cancel-reset-btn" style="background-color: #6c757d;">ยกเลิก</button>
+                <button type="button" id="confirm-selective-reset-btn" class="danger">ยืนยันการรีเซ็ต</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to external JS file (at the end of body) -->
+    <script src="app.js"></script>
+</body>
+</html>
