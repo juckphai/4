@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    // แก้ไข: ให้ตรงกับชื่อไฟล์ที่ถูกต้อง
                     navigator.serviceWorker.register('./sw.js')
                         .then(registration => console.log('ServiceWorker registration successful'))
                         .catch(err => console.log('ServiceWorker registration failed: ', err));
@@ -39,12 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Render content only if it's the first time the page is opened
             if (section.innerHTML.trim() === '') {
                 section.innerHTML = this.getPageContent(pageId);
             }
 
-            // Always run the render/setup function for the page to ensure data is fresh
             const isAdmin = this.currentUser.role === 'admin';
             section.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? '' : 'none');
             section.querySelectorAll('.seller-only').forEach(el => el.style.display = !isAdmin ? '' : 'none');
@@ -68,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
             }
             
-            // Toggle visibility
             this.toggleSection(pageId);
         },
 
@@ -76,14 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const clickedHeader = document.querySelector(`.section-header[data-page="${sectionId}"]`);
             const sectionToToggle = document.getElementById(sectionId);
             
-            // If the section is already active, close it and do nothing else.
             if (clickedHeader && clickedHeader.classList.contains('active')) {
                 clickedHeader.classList.remove('active');
                 sectionToToggle.classList.remove('active');
                 return;
             }
 
-            // Close any other currently open section
             const currentlyOpenSection = document.querySelector('.section-content.active');
             if (currentlyOpenSection) {
                 currentlyOpenSection.classList.remove('active');
@@ -91,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(currentlyOpenHeader) currentlyOpenHeader.classList.remove('active');
             }
 
-            // Open the new section
             if (sectionToToggle && clickedHeader) {
                 sectionToToggle.classList.add('active');
                 clickedHeader.classList.add('active');
@@ -186,61 +179,84 @@ document.addEventListener('DOMContentLoaded', () => {
             this.showPage('page-pos');
         },
         
-        loadData() { 
-            const data = localStorage.getItem('posData'); 
-            if (data) { 
-                this.data = JSON.parse(data); 
-                if (typeof this.data.backupPassword === 'undefined') {
-                    this.data.backupPassword = null;
+        loadData() {
+            const data = localStorage.getItem('posData');
+            if (data) {
+                this.data = JSON.parse(data);
+                // Data migration for older versions
+                if (typeof this.data.backupPassword === 'undefined') { this.data.backupPassword = null; }
+                if (!this.data.stores) { this.data.stores = []; }
+                if (!this.data.stockOuts) { this.data.stockOuts = []; }
+                if (!this.data.users) { this.data.users = []; } // Ensure users array exists
+                if (this.data.sales && this.data.sales.length > 0) {
+                    this.data.sales.forEach(sale => {
+                        sale.items.forEach(item => { if (typeof item.isSpecialPrice === 'undefined') { item.isSpecialPrice = false; item.originalPrice = item.price; } });
+                        if (sale.paymentMethod === 'เครดิต' && typeof sale.creditDueDate === 'undefined') { sale.creditDueDate = null; }
+                        if (typeof sale.transferorName === 'undefined') { sale.transferorName = null; }
+                    });
                 }
-                if (!this.data.stores) { this.data.stores = []; } 
-                if (!this.data.stockOuts) { this.data.stockOuts = []; } 
-                if (this.data.sales && this.data.sales.length > 0) { 
-                    this.data.sales.forEach(sale => { 
-                        sale.items.forEach(item => { if (typeof item.isSpecialPrice === 'undefined') { item.isSpecialPrice = false; item.originalPrice = item.price; } }); 
-                        if (sale.paymentMethod === 'เครดิต' && typeof sale.creditDueDate === 'undefined') { sale.creditDueDate = null; } 
-                        if (typeof sale.transferorName === 'undefined') { sale.transferorName = null; } 
-                    }); 
-                } 
-                this.data.users.forEach(u => { 
-                    if (!u.storeId) { u.storeId = null; } 
-                    if (u.role === 'seller') { 
-                        if (!u.assignedProductIds) { u.assignedProductIds = []; } 
-                        if (typeof u.salesStartDate === 'undefined') { u.salesStartDate = null; } 
-                        if (typeof u.salesEndDate === 'undefined') { u.salesEndDate = null; } 
+                this.data.users.forEach(u => {
+                    if (!u.storeId) { u.storeId = null; }
+                    if (u.role === 'seller') {
+                        if (!u.assignedProductIds) { u.assignedProductIds = []; }
+                        if (typeof u.salesStartDate === 'undefined') { u.salesStartDate = null; }
+                        if (typeof u.salesEndDate === 'undefined') { u.salesEndDate = null; }
                         if (typeof u.commissionRate === 'undefined') { u.commissionRate = 0; }
                         if (typeof u.commissionOnCash === 'undefined') { u.commissionOnCash = false; }
                         if (typeof u.commissionOnTransfer === 'undefined') { u.commissionOnTransfer = false; }
                         if (typeof u.commissionOnCredit === 'undefined') { u.commissionOnCredit = false; }
                         if (typeof u.visibleSalesDays === 'undefined') { u.visibleSalesDays = null; }
-                    } 
-                }); 
-            } else { 
-                this.data.users.push({ id: Date.now(), username: 'admin', password: '123', role: 'admin' }); 
-                this.data.backupPassword = null;
-                this.saveData(); 
-            } 
+                    }
+                });
+            } else {
+                // *** MAJOR FIX HERE ***
+                // Create a full, clean data structure from scratch
+                // This is more robust than modifying the initial empty object.
+                this.data = {
+                    users: [
+                        { id: Date.now(), username: 'admin', password: '123', role: 'admin' }
+                    ],
+                    products: [],
+                    sales: [],
+                    stockIns: [],
+                    stockOuts: [],
+                    stores: [],
+                    backupPassword: null
+                };
+                this.saveData();
+            }
         },
+
         saveData() { localStorage.setItem('posData', JSON.stringify(this.data)); },
         
         checkLoginState() {
             const rememberedUserJson = localStorage.getItem('posCurrentUser');
             if (rememberedUserJson) {
-                const rememberedUser = JSON.parse(rememberedUserJson);
-                this.currentUser = this.data.users.find(u => u.id === rememberedUser.id);
-                if (this.currentUser) {
-                    this.showMainApp();
-                    return;
+                try {
+                    const rememberedUser = JSON.parse(rememberedUserJson);
+                    this.currentUser = this.data.users.find(u => u.id === rememberedUser.id);
+                    if (this.currentUser) {
+                        this.showMainApp();
+                        return;
+                    }
+                } catch(e) {
+                    console.error("Error parsing remembered user:", e);
+                    localStorage.removeItem('posCurrentUser');
                 }
             }
 
             const sessionUserJson = sessionStorage.getItem('posCurrentUser');
             if (sessionUserJson) {
-                const sessionUser = JSON.parse(sessionUserJson);
-                this.currentUser = this.data.users.find(u => u.id === sessionUser.id);
-                if (this.currentUser) {
-                    this.showMainApp();
-                } else {
+                try {
+                    const sessionUser = JSON.parse(sessionUserJson);
+                    this.currentUser = this.data.users.find(u => u.id === sessionUser.id);
+                    if (this.currentUser) {
+                        this.showMainApp();
+                    } else {
+                        this.logout();
+                    }
+                } catch(e) {
+                    console.error("Error parsing session user:", e);
                     this.logout();
                 }
             } else {
@@ -2486,7 +2502,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         renderUserTable() {
             const tbody = document.querySelector('#user-table tbody');
-            if (!tbody) return; 
+            if (!tbody) return;
             tbody.innerHTML = '';
             this.data.users.forEach(u => {
                 let assignedText = 'N/A';
@@ -2513,8 +2529,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.innerHTML = `<td data-label="ชื่อผู้ใช้">${u.username}</td><td data-label="ประเภท">${u.role}</td><td data-label="ร้านค้า">${storeName}</td><td data-label="สินค้าที่ขายได้">${assignedText}</td><td data-label="ระยะเวลาที่ขายได้">${salesPeriodText}</td> <td data-label="จัดการ"><div class="action-buttons"><button class="edit-user-btn" data-id="${u.id}" style="background-color: var(--warning-color);">แก้ไข</button> ${u.username !== 'admin' ? `<button class="danger delete-user-btn" data-id="${u.id}">ลบ</button>` : ''}</div></td>`;
                 tbody.appendChild(tr);
             });
-            
-            this.setupUserForm(); 
+             // We don't want to reset the form every time the table is rendered.
+             // It should only be reset on "new" or "clear" actions.
         },
 
         saveUser(e) {
@@ -2608,6 +2624,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             this.saveData();
             this.renderUserTable();
+            this.setupUserForm(null); // Explicitly clear the form after saving
         },
         
         editUser(id) { 
@@ -2617,7 +2634,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         
-        deleteUser(id) { const user = this.data.users.find(u => u.id == id); if (user && user.username === 'admin') { this.showToast('ไม่สามารถลบผู้ใช้ admin ได้', 'error'); return; } if(confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้ ${user.username}?`)) { this.data.users = this.data.users.filter(u => u.id != id); this.saveData(); this.renderUserTable(); } },
+        deleteUser(id) { 
+            const user = this.data.users.find(u => u.id == id); 
+            if (user && user.username === 'admin') { 
+                this.showToast('ไม่สามารถลบผู้ใช้ admin ได้', 'error'); 
+                return; 
+            } 
+            if(confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้ ${user.username}?`)) { 
+                this.data.users = this.data.users.filter(u => u.id != id); 
+                this.saveData(); 
+                this.renderUserTable(); 
+                this.setupUserForm(null); // Also clear form after deleting
+            } 
+        },
         
         setupUserForm(user = null) {
             const form = document.getElementById('user-form');
@@ -2629,58 +2658,52 @@ document.addEventListener('DOMContentLoaded', () => {
             const storeContainer = document.getElementById('user-store-assignment-container');
             const commissionContainer = document.getElementById('user-commission-settings-container');
             const historyContainer = document.getElementById('user-history-view-container');
+            const roleSelect = document.getElementById('user-role');
 
             if (user) {
                 document.getElementById('user-id').value = user.id;
                 document.getElementById('user-username').value = user.username;
-                document.getElementById('user-role').value = user.role;
+                roleSelect.value = user.role;
                 document.getElementById('user-password').value = '';
                 document.getElementById('user-password').placeholder = 'เว้นว่างไว้ถ้าไม่ต้องการเปลี่ยน';
                 document.getElementById('user-password-confirm').placeholder = 'เว้นว่างไว้ถ้าไม่ต้องการเปลี่ยน';
+            } else { // This is for creating a new user or clearing the form
+                document.getElementById('user-id').value = '';
+                document.getElementById('user-password').placeholder = 'กำหนดรหัสผ่านสำหรับผู้ใช้ใหม่';
+                document.getElementById('user-password-confirm').placeholder = 'ยืนยันรหัสผ่าน';
+                roleSelect.value = 'seller'; // Default to seller for new user
+            }
 
-                if (user.role === 'seller') {
-                    storeContainer.style.display = 'block';
-                    salesContainer.style.display = 'block';
-                    commissionContainer.style.display = 'block';
-                    historyContainer.style.display = 'block';
-                    productContainer.style.display = 'grid';
-                    
+            // Toggle visibility based on role
+            const isSeller = roleSelect.value === 'seller';
+            storeContainer.style.display = isSeller ? 'block' : 'none';
+            salesContainer.style.display = isSeller ? 'block' : 'none';
+            commissionContainer.style.display = isSeller ? 'block' : 'none';
+            historyContainer.style.display = isSeller ? 'block' : 'none';
+            productContainer.style.display = isSeller ? 'grid' : 'none';
+            
+            if(isSeller) {
+                if (user) { // Populate seller fields if editing an existing seller
                     document.getElementById('user-commission-rate').value = user.commissionRate || 0;
                     document.getElementById('user-commission-cash').checked = user.commissionOnCash || false;
                     document.getElementById('user-commission-transfer').checked = user.commissionOnTransfer || false;
                     document.getElementById('user-commission-credit').checked = user.commissionOnCredit || false;
                     document.getElementById('user-visible-days').value = user.visibleSalesDays ?? '';
-                    
                     this.renderUserStoreAssignment(user.storeId);
                     this.renderUserProductAssignment(user.assignedProductIds || []);
                     document.getElementById('user-sales-start-date').value = user.salesStartDate || '';
                     document.getElementById('user-sales-end-date').value = user.salesEndDate || '';
-                } else {
-                    storeContainer.style.display = 'none';
-                    salesContainer.style.display = 'none';
-                    commissionContainer.style.display = 'none';
-                    historyContainer.style.display = 'none';
-                    productContainer.style.display = 'none';
+                } else { // Setup for a new seller
+                    document.getElementById('user-commission-rate').value = '';
+                    document.getElementById('user-commission-cash').checked = false;
+                    document.getElementById('user-commission-transfer').checked = false;
+                    document.getElementById('user-commission-credit').checked = false;
+                    document.getElementById('user-visible-days').value = '';
+                    this.renderUserStoreAssignment(); 
+                    this.renderUserProductAssignment(); 
                 }
-            } else {
-                document.getElementById('user-id').value = '';
-                document.getElementById('user-password').placeholder = 'กำหนดรหัสผ่านสำหรับผู้ใช้ใหม่';
-                document.getElementById('user-password-confirm').placeholder = 'ยืนยันรหัสผ่าน';
-                
-                storeContainer.style.display = 'block';
-                salesContainer.style.display = 'block';
-                commissionContainer.style.display = 'block';
-                historyContainer.style.display = 'block';
-                productContainer.style.display = 'grid';
-                
-                document.getElementById('user-commission-rate').value = '';
-                document.getElementById('user-commission-cash').checked = false;
-                document.getElementById('user-commission-transfer').checked = false;
-                document.getElementById('user-commission-credit').checked = false;
-                document.getElementById('user-visible-days').value = '';
-                this.renderUserStoreAssignment(); 
-                this.renderUserProductAssignment(); 
             }
+
             document.getElementById('user-username').focus();
         },
         
@@ -2747,7 +2770,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.id === 'backup-password-form') { e.preventDefault(); this.saveBackupPassword(e); }
             });
 
-            // Replaced all `onclick` with delegated listeners for robustness
             document.body.addEventListener('click', (e) => {
                  const target = e.target;
                 if (target.id === 'process-sale-btn') this.processSale();
@@ -2768,7 +2790,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.id === 'clear-store-form-btn') { document.getElementById('store-form').reset(); document.getElementById('store-id').value = ''; }
                 if (target.classList.contains('edit-store-btn')) this.editStore(target.dataset.id);
                 if (target.classList.contains('delete-store-btn')) this.deleteStore(target.dataset.id);
-                if (target.id === 'clear-user-form-btn') this.setupUserForm();
+                if (target.id === 'clear-user-form-btn') this.setupUserForm(null); // Changed to explicitly call with null
                 if (target.classList.contains('edit-user-btn')) this.editUser(target.dataset.id);
                 if (target.classList.contains('delete-user-btn')) this.deleteUser(target.dataset.id);
                 if (target.classList.contains('edit-stock-in-btn')) this.editStockIn(target.dataset.id);
@@ -2800,7 +2822,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.id === 'generate-transfer-summary-btn') this.runAdminTransferSummary();
                 if (target.id === 'generate-aggregated-summary-btn') this.runAdminAggregatedSummary();
 
-                // Listeners for modals, previously inline HTML
                 if (target.classList.contains('modal-close-btn')) this.closeSummaryModal();
                 if (target.classList.contains('btn-display')) this.handleSummaryOutput('display');
                 if (target.classList.contains('btn-csv')) this.handleSummaryOutput('csv');
@@ -2823,25 +2844,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('backup-password-confirm').type = target.checked ? 'text' : 'password';
                 }
                 if (target.name === 'payment-method') this.togglePaymentDetailFields();
-                if (target.id === 'user-role') {
-                    const productDiv = document.getElementById('user-product-assignment-container');
-                    const salesDiv = document.getElementById('user-sales-period-container');
-                    const storeDiv = document.getElementById('user-store-assignment-container');
-                    const commissionDiv = document.getElementById('user-commission-settings-container');
-                    const historyDiv = document.getElementById('user-history-view-container');
-                    if (productDiv && salesDiv && storeDiv && commissionDiv && historyDiv) {
-                        const isSeller = target.value === 'seller';
-                        storeDiv.style.display = isSeller ? 'block' : 'none';
-                        salesDiv.style.display = isSeller ? 'block' : 'none';
-                        commissionDiv.style.display = isSeller ? 'block' : 'none';
-                        historyDiv.style.display = isSeller ? 'block' : 'none';
-                        productDiv.style.display = isSeller ? 'grid' : 'none';
-                        if (isSeller) {
-                            this.renderUserStoreAssignment();
-                            this.renderUserProductAssignment();
-                        }
-                    }
-                }
+                if (target.id === 'user-role') { this.setupUserForm(); }
                 if (target.id === 'data-file-input') this.promptLoadFromFile(e);
                 if (target.id === 'pos-product') this.updateSpecialPriceInfo();
                 if (['report-start-date', 'report-end-date', 'report-seller'].includes(target.id)) this.renderReport(e);
@@ -2887,163 +2890,3 @@ document.addEventListener('DOMContentLoaded', () => {
     window.App = App;
     App.init();
 });
-```
-
-#### 2. แก้ไข `index.html`: ลบ `onclick` ออก
-
-ผมได้ลบ `onclick="..."` ออกจากปุ่มใน Modal เพราะเราได้ย้ายไปจัดการใน `app.js` แล้ว ซึ่งเป็นวิธีที่ทันสมัยกว่า
-
-**ไฟล์ `index.html` ที่แก้ไขแล้ว:**
-
-```html
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บัญชีขาย</title>
-
-    <!-- [PWA] Link to Manifest & Theme Color -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4a90e2">
-
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="main-wrapper">
-        <div id="login-screen">
-            <h1>บัญชีขาย</h1>
-            <p>กรุณาเข้าสู่ระบบ</p>
-            <form id="login-form" style="display: inline-grid; max-width: 350px;">
-                <label for="username">ชื่อผู้ใช้:</label>
-                <input type="text" id="username" required>
-                <label for="password">รหัสผ่าน:</label>
-                <input type="password" id="password" required>
-                
-                <div style="grid-column: 1 / -1; text-align: left; margin: 0 0 10px 0;">
-                    <label style="font-weight: normal; cursor: pointer;">
-                        <input type="checkbox" id="show-password-login">
-                        แสดงรหัสผ่าน
-                    </label>
-                </div>
-                
-                <div style="grid-column: 1 / -1; text-align: left; margin: 5px 0 10px 0;">
-                    <label style="font-weight: normal; cursor: pointer;">
-                        <input type="checkbox" id="remember-me">
-                        จดจำการเข้าสู่ระบบในครั้งถัดไป
-                    </label>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="success">เข้าสู่ระบบ</button>
-                </div>
-            </form>
-            <p id="login-error" style="color: var(--danger-color);"></p>
-        </div>
-
-        <div id="main-app" style="display: none;">
-            <div class="top-bar">
-                <h1 style="font-size: 16px; font-style: normal;">
-                    บัญชีขาย <span id="store-display-name" style="color: #FFD700; font-style: normal;"></span>
-                </h1>
-                <div id="user-info-container">
-                    <span id="user-info"></span>
-                    <button id="logout-btn">ออกจากระบบ</button>
-                </div>
-            </div>
-
-            <!-- Section Headers for navigation -->
-            <div class="section-header header-pos" data-page="page-pos">
-                <span>ขายสินค้า (POS)</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-pos" class="section-content"></div>
-
-            <div class="section-header header-products admin-only" data-page="page-products">
-                <span>จัดการสินค้า</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-products" class="section-content admin-only"></div>
-
-            <div class="section-header header-stock admin-only" data-page="page-stock-in">
-                <span>นำเข้าสินค้า</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-stock-in" class="section-content admin-only"></div>
-
-            <div class="section-header header-stock-out admin-only" data-page="page-stock-out">
-                <span>ปรับสต็อก (นำออก)</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-stock-out" class="section-content admin-only"></div>
-
-            <div class="section-header header-history admin-only" data-page="page-sales-history">
-                <span>รายการขายย้อนหลัง</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-sales-history" class="section-content admin-only"></div>
-
-            <div class="section-header header-reports admin-only" data-page="page-reports">
-                <span>รายงานกำไร/ขาดทุน</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-reports" class="section-content admin-only"></div>
-
-            <div class="section-header header-summary admin-only" data-page="page-summary">
-                <span>สรุปข้อมูล</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-summary" class="section-content admin-only"></div>
-            
-            <div class="section-header header-stores admin-only" data-page="page-stores">
-                <span>จัดการร้านค้า</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-stores" class="section-content admin-only"></div>
-
-            <div class="section-header header-users admin-only" data-page="page-users">
-                <span>จัดการผู้ใช้</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-users" class="section-content admin-only"></div>
-
-            <div class="section-header header-data" data-page="page-data">
-                <span>จัดการข้อมูล</span><span class="arrow">▶</span>
-            </div>
-            <div id="page-data" class="section-content"></div>
-        </div>
-    </div>
-
-    <!-- Modals and Notifications -->
-    <div id="toast-notification"></div>
-    <div id="summaryModal" class="modal-overlay">
-        <div class="modal-content-container">
-            <div id="modalBodyContent"></div>
-            <button class="modal-close-btn">ปิดหน้าต่างนี้</button>
-        </div>
-    </div>
-    <div id="summaryOutputModal" class="modal-overlay">
-        <div class="format-modal-content">
-            <h3>เลือกรูปแบบการแสดงผลสรุป</h3>
-            <div class="format-modal-buttons">
-                <button class="btn-display">แสดงบนจอ</button>
-                <button class="btn-csv">ส่งออกเป็น CSV</button>
-                <button class="btn-cancel">ยกเลิก</button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="resetModal" class="modal-overlay">
-        <div id="reset-modal-content">
-            <h3>เลือกข้อมูลที่จะรีเซ็ต</h3>
-            <p style="color: var(--danger-color); font-weight: bold;">คำเตือน: การกระทำนี้ไม่สามารถย้อนกลับได้! โปรดเลือกด้วยความระมัดระวัง</p>
-            <div id="reset-options-container">
-                <label><input type="checkbox" id="reset-sales-checkbox"> ลบประวัติการขายทั้งหมด (Sales)</label>
-                <label><input type="checkbox" id="reset-stockins-checkbox"> ลบประวัติการนำเข้าทั้งหมด (Stock-ins)</label>
-                <label><input type="checkbox" id="reset-products-checkbox"> ลบสินค้าทั้งหมด (Products)</label>
-                <label style="color: var(--danger-color);"><input type="checkbox" id="reset-sellers-checkbox"> ลบผู้ขายทั้งหมด (Sellers - ยกเว้น Admin)</label>
-                <label style="color: var(--danger-color);"><input type="checkbox" id="reset-stores-checkbox"> ลบร้านค้าทั้งหมด (Stores)</label>
-            </div>
-            <div id="reset-modal-actions">
-                <button type="button" id="cancel-reset-btn" style="background-color: #6c757d;">ยกเลิก</button>
-                <button type="button" id="confirm-selective-reset-btn" class="danger">ยืนยันการรีเซ็ต</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Link to external JS file (at the end of body) -->
-    <script src="app.js"></script>
-</body>
-</html>
