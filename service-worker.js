@@ -1,15 +1,16 @@
 // เปลี่ยนชื่อ Cache ทุกครั้งที่มีการอัปเดตไฟล์ใน urlsToCache
-const CACHE_NAME = 'juckim-pwa-cache-v9'; // <--- เปลี่ยนจาก v5 เป็น v6
+const CACHE_NAME = 'juckim-pwa-cache-v10'; // ชื่อเวอร์ชันถูกต้องแล้ว
 
 // รายการไฟล์ทั้งหมดที่ต้องการให้แอปทำงานแบบ Offline ได้
+// แก้ไขรายการไฟล์ให้ถูกต้อง
 const urlsToCache = [
   './',
   './index.html',
   './style.css',
   './app.js',
-  './manifest.json',
-  './192.png', // ชื่อไฟล์ไอคอนของคุณ
-  './512.png'  // ชื่อไฟล์ไอคอนของคุณ
+  './manifest.json', // แก้ไขจาก manifest.json.txt
+  './192.png',
+  './512.png'
 ];
 
 // Event: install - ติดตั้ง Service Worker และแคชไฟล์ทั้งหมดที่ระบุไว้
