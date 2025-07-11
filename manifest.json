@@ -1,6 +1,6 @@
 {
-  "name": "บัญชีขาย",
-  "short_name": "บัญชีขาย",
+  "name": "บัญชีส่วนตัว",
+  "short_name": "บัญชี",
   "description": "แอปพลิเคชันจัดการการขายและสต็อกสินค้า",
   "start_url": "./index.html",
   "id": "/lotto/",
