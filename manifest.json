@@ -37,14 +37,14 @@
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "หน้าขายสินค้า"
+      "label": "หน้าขายสินค้า (POS)"
     },
     {
       "src": "https://juckphai.github.io/lotto/screenshot2.png",
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "หน้าจัดการข้อมูล"
+      "label": "หน้าจัดการข้อมูลและรายงาน"
     }
   ]
 }
