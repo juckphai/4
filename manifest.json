@@ -1,6 +1,6 @@
 {
-  "name": "บัญชีขาย juckim",
-  "short_name": "บัญชีขาย",
+  "name": "juck",
+  "short_name": "juck",
   "description": "แอปพลิเคชันจัดการการขายและสต็อกสินค้า",
   "start_url": "./index.html",
   "display": "standalone",
