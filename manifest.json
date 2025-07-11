@@ -1,7 +1,7 @@
 {
   "name": "บัญชีส่วนตัว",
   "short_name": "บัญชี",
-  "description": "แอปพลิเคชันจัดการการขายและสต็อกสินค้า",
+  "description": "แอปพลิเคชันรายรับราจ่ายส่วนตัว",
   "start_url": "./index.html",
   "id": "/lotto/",
   "display": "standalone",
