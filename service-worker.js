@@ -1,66 +1,52 @@
-// เปลี่ยนชื่อ Cache ทุกครั้งที่มีการอัปเดตไฟล์ใน urlsToCache
-const CACHE_NAME = 'juckim-pwa-cache-v10'; // ชื่อเวอร์ชันถูกต้องแล้ว
-
-// รายการไฟล์ทั้งหมดที่ต้องการให้แอปทำงานแบบ Offline ได้
-// แก้ไขรายการไฟล์ให้ถูกต้อง
-const urlsToCache = [
+const CACHE_NAME = 'account-app-cache-v1';
+const URLS_TO_CACHE = [
   './',
   './index.html',
-  './style.css',
-  './app.js',
-  './manifest.json', // แก้ไขจาก manifest.json.txt
-  './192.png',
-  './512.png'
+  './manifest.json',
+  './icon-192x192.png',
+  './icon-512x512.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js'
 ];
 
-// Event: install - ติดตั้ง Service Worker และแคชไฟล์ทั้งหมดที่ระบุไว้
+// Event: install - ติดตั้ง Service Worker และแคชไฟล์ที่จำเป็น
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache and caching all app files');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(error => {
-        console.error('Failed to cache files during install:', error);
+        console.log('Opened cache');
+        return cache.addAll(URLS_TO_CACHE);
       })
   );
-  // บังคับให้ Service Worker ใหม่เริ่มทำงานทันที
-  self.skipWaiting();
 });
 
-// Event: activate - จัดการแคชเก่าที่ไม่ต้องการแล้ว
+// Event: activate - จัดการแคชเก่า (ถ้ามี)
 self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.filter(cache => {
-          // ค้นหา cache ที่เป็นของแอปนี้ แต่ไม่ใช่เวอร์ชันปัจจุบัน
-          return cache.startsWith('juckim-pwa-cache-') && cache !== CACHE_NAME;
-        }).map(cache => {
-          console.log('Service Worker: Clearing old cache:', cache);
-          return caches.delete(cache);
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
         })
       );
     })
   );
-  // ทำให้ Service Worker ที่ active อยู่ควบคุมหน้าเว็บได้ทันที
-  return self.clients.claim();
 });
 
-// Event: fetch - จัดการ request ทั้งหมดที่เกิดขึ้นจากแอป
+// Event: fetch - ดักจับ request และตอบกลับด้วยข้อมูลจากแคชก่อน (ถ้ามี)
 self.addEventListener('fetch', event => {
-  // เราจะจัดการเฉพาะ GET request เท่านั้น
-  if (event.request.method !== 'GET') {
-      return;
-  }
-  
-  // กลยุทธ์: Cache First (ค้นหาใน Cache ก่อน ถ้าไม่เจอก็ค่อยไปดึงจาก Network)
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // ถ้าเจอใน Cache ให้ส่งกลับไปเลย, ถ้าไม่เจอ (response เป็น null) ให้ fetch จาก Network
-        return response || fetch(event.request);
-      })
+        // ถ้าเจอไฟล์ในแคช, ส่งกลับจากแคชเลย
+        if (response) {
+          return response;
+        }
+        // ถ้าไม่เจอ, ไปดึงจาก network
+        return fetch(event.request);
+      }
+    )
   );
 });
