@@ -1,11 +1,11 @@
 {
-  "name": "juckim",
-  "short_name": "juckim",
-  "description": "ชุดเครื่องมือและแอปพลิเคชันโดย juckim",
+  "name": "บัญชีขาย juckim",
+  "short_name": "บัญชีขาย",
+  "description": "แอปพลิเคชันจัดการการขายและสต็อกสินค้า",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FAFAD2",
-  "theme_color": "#4CAF50",
+  "theme_color": "#4a90e2",
   "icons": [
     {
       "src": "./192.png",
