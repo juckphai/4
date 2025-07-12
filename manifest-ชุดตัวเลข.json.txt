@@ -1,0 +1,21 @@
+{
+  "short_name": "สร้างชุดตัวเลข",
+  "name": "ฟอร์มสร้างชุดตัวเลข",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./18.html",
+  "background_color": "#fffde7",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#7c3aed"
+}
