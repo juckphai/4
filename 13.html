@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ผลฉลากกินแบ่งรัฐบาล</title>
+
+       <!-- PWA-related tags -->
+    <meta name="theme-color" content="#e65100"/>
+    <link rel="manifest" href="manifest-รัฐบาล.json">
+    <link rel="apple-touch-icon" href="192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ผลรัฐบาล">
+    <!-- End of PWA-related additions -->
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e65100;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .form-container {
+            background-color: lightyellow;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid green;
+            padding: 10px;
+            line-height: 0.6;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 18px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            font-size: 18px;
+            padding: 8px;
+            margin: 5px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 150px;
+            transition: border-color 0.3s;
+        }
+
+        .input-pair {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* -------- START: POPUP STYLES -------- */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            /* === CHANGE HERE: ปรับ padding ให้ด้านซ้าย-ขวาเหลือ 5px === */
+            padding: 10px 5px; 
+            box-sizing: border-box;
+        }
+
+        .popup-content {
+            background-color: transparent; /* Make wrapper transparent */
+            border-radius: 10px; /* Match the inner container */
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            text-align: center; /* Center the close button */
+        }
+        
+        .close-popup {
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 10px 20px;
+            background-color: #f44336;
+            width: 100%;
+            max-width: 200px;
+            font-size: 16px;
+            margin-top: 15px; /* Space between results and button */
+        }
+
+        .close-popup:hover {
+            background-color: #d32f2f;
+        }
+        /* -------- END: POPUP STYLES -------- */
+
+
+        .result-display {
+            background-color: #FAFAD2;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid green;
+            text-align: center;
+            position: relative;
+        }
+
+        .result-section {
+            margin-top: 5px;
+        }
+
+.header-title {
+  display: inline-block;
+            font-size: 26px;
+            font-weight: bold;
+            border: 2px solid red;
+            border-radius: 20px;
+            display: inline-block;
+            padding: 20px;
+            margin-top: 4px;
+            margin-bottom: 7px;
+  color: #fff; /* ตัวหนังสือสีขาว */
+  background: linear-gradient(to bottom right, #ffb6c1, #ff69b4); /* สีชมพูมีมิติ */
+  box-shadow:
+    inset -4px -4px 10px rgba(0, 0, 0, 0.25),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.2),
+    0 3px 6px rgba(0, 0, 0, 0.2);
+  text-shadow:
+    -1px -1px 1px rgba(0, 0, 0, 0.5),
+     1px 1px 2px rgba(255, 255, 255, 0.15);
+}
+
+
+        .prize-title {
+            font-size: 22px;
+display: inline-block;
+            font-weight: bold;
+            border: 2px solid red;
+            border-radius: 20px;
+            display: inline-block;
+            padding: 15px;
+            margin-top: 4px;
+            margin-bottom: 7px;
+  background: linear-gradient(to bottom right, #ffb6c1, #FFFF00); /* สีชมพูมีมิติ */
+  box-shadow:
+    inset -4px -4px 10px rgba(0, 0, 0, 0.25),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.2),
+    0 3px 6px rgba(0, 0, 0, 0.2);
+  text-shadow:
+    -1px -1px 1px rgba(0, 0, 0, 0.5),
+     1px 1px 2px rgba(255, 255, 255, 0.15);
+        }
+
+.draw-date {
+    color: #fff; /* ตัวหนังสือสีขาว */
+    padding: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #FFA500; /* กรอบสีส้ม */
+    background-color: #FFB84D; /* พื้นหลังสีส้มอ่อน */
+    border-radius: 15px;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    /* สร้างเอฟเฟกต์ 3D สำหรับพื้นผิว */
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.35), /* เงาด้านนอก */
+        0 0 6px rgba(204, 153, 0, 0.4), /* เงาขอบสีส้ม */
+        inset -4px -4px 10px rgba(0, 0, 0, 0.25), /* เงาภายใน */
+        inset 4px 4px 8px rgba(255, 255, 255, 0.2); /* เงาภายในขาว */
+
+    /* เอฟเฟกต์เงาตัวหนังสือ */
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.6), /* เงาดำที่ตัวหนังสือ */
+         1px 1px 2px rgba(255, 255, 255, 0.2); /* เงาขาวที่ตัวหนังสือ */
+}
+
+
+/* พื้นฐานลูกปิงปองแบบฝังตัวเลข */
+.circle-number-base {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0.5px;
+  background: #ccc;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    0 0 6px rgba(204, 153, 0, 0.4),
+    inset -4px -4px 10px rgba(0, 0, 0, 0.25),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.2);
+
+  text-shadow:
+    -1px -1px 1px rgba(0, 0, 0, 0.6),
+     1px 1px 2px rgba(255, 255, 255, 0.2);
+
+  transition: box-shadow 0.3s ease;
+}
+
+/* ลูกปิงปองรางวัลที่ 1 - สีชมพู */
+.circle-number-red {
+  background: radial-gradient(circle at 30% 30%, #FFB3B3, #FF00FF);
+  width: 42px;
+  height: 42px;
+  font-size: 26px;
+}
+
+/* เลขหน้า 3 ตัว - สีน้ำเงิน */
+.circle-number-blue {
+  background: radial-gradient(circle at 30% 30%, #3399ff, #0066cc);
+}
+
+/* เลขท้าย 3 ตัว - สีเขียว */
+.circle-number-green {
+  background: radial-gradient(circle at 30% 30%, #47D359, #0066cc);
+}
+
+/* เลขท้าย 2 ตัว - สีส้ม (ขนาดใหญ่สุด) */
+.circle-number-orange {
+  background: radial-gradient(circle at 30% 30%, #ff9933, #cc6600);
+  width: 48px;
+  height: 48px;
+  font-size: 34px;
+}
+
+
+        .number-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+/* ปรับสีข้อความตามที่ระบุ พร้อมขนาด 28px ตัวหนา และ margin บน-ล่าง 5px */
+.first-prize-title {
+  color: white; 
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.front-three-title, .back-three-title, .back-two-title {
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    /* เพิ่มเงาและมิติ 3D */
+    text-shadow:
+        -1px -1px 2px rgba(0, 0, 0, 0.6), /* เงาดำเบาๆ ที่ขอบ */
+         1px 1px 2px rgba(255, 255, 255, 0.3); /* เงาขาวที่ขอบเพิ่มมิติ */
+}
+
+.front-three-title {
+    color: #0066cc; /* สีน้ำเงินเหมือนลูกปิงปอง */
+    font-size: 20px;
+}
+
+.back-three-title {
+    color: #009900; /* สีเขียวเหมือนลูกปิงปอง */
+    font-size: 20px;
+}
+
+.back-two-title {
+    color: blue;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    /* เงาเพิ่มเติมให้ดูมีมิติ */
+    text-shadow:
+        -1px -1px 2px rgba(0, 0, 0, 0.6), /* เงาดำเบาๆ ที่ขอบ */
+         1px 1px 2px rgba(255, 255, 255, 0.3); /* เงาขาวที่ขอบเพิ่มมิติ */
+}
+
+
+        .flex-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .button-container button {
+            font-size: 22px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    .back-button {
+      display: block;
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto 10px;
+      padding: 10px 20px;
+      background-color: orange;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .back-button:hover {
+      background-color: darkorange;
+    }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        #first-prize-display {
+            margin-top: 15px;
+        }
+
+        /* เพิ่มระยะห่างระหว่างข้อความและตัวเลข */
+        .result-title-with-margin {
+            margin-bottom: 15px;
+        }
+        
+        /* ปรับเฉพาะส่วนเลขท้าย 2 ตัวให้มีระยะห่างมากขึ้น */
+        .back-two-section {
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .back-two-number-group {
+            margin-bottom: 15px;
+        }
+
+.result-title,
+.header-title,
+.prize-title,
+.draw-date span,
+.back-two-title {
+  text-shadow:
+    1px 1px 2px rgba(255, 255, 255, 0.6),   /* ไฮไลต์แสงด้านบน */
+   -1px -1px 1px rgba(0, 0, 0, 0.4),         /* เงาด้านล่าง */
+    inset 1px 1px 2px rgba(255, 255, 255, 0.4), /* เอฟเฟกต์ฝังตัว */
+    inset -1px -1px 2px rgba(0, 0, 0, 0.5);     /* เงาลึกภายใน */
+  font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='https://juckmanphai.github.io/juck/01.html'">กลับสู่หน้าหลัก</button>
+    <h1>ผลฉลากกินแบ่งรัฐบาล</h1>
+
+    <div class="form-container">
+        <div class="form-group">
+            <label for="draw-date">งวดวันที่ (วัน เดือน พ.ศ.)</label>
+            <input type="text" id="draw-date" placeholder="กรอกวันที่ (ตัวอย่าง: 1 มกราคม 2567)">
+        </div>
+
+        <div class="form-group">
+            <label>เลขหน้า 3 ตัว</label>
+            <div class="input-pair">
+                <input type="text" id="front-three-1" maxlength="3" placeholder="ชุดที่ 1">
+                <input type="text" id="front-three-2" maxlength="3" placeholder="ชุดที่ 2">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>เลขท้าย 3 ตัว</label>
+            <div class="input-pair">
+                <input type="text" id="back-three-1" maxlength="3" placeholder="ชุดที่ 1">
+                <input type="text" id="back-three-2" maxlength="3" placeholder="ชุดที่ 2">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="back-two" maxlength="2" placeholder="กรอกเลขท้าย 2 ตัว">
+            <label for="back-two">เลขท้าย 2 ตัว</label>
+        </div>
+        <div class="form-group">
+            <input type="text" id="first-prize" maxlength="6" placeholder="กรอกเลขรางวัลที่ 1">
+            <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+        </div>
+
+        <div class="button-container">
+            <button onclick="displayResults()">แสดงผล</button>
+        </div>
+    </div>
+
+    <!-- START: MODIFIED RESULT CONTAINER TO BE A POPUP -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-content">
+            <div class="result-display">
+                <div style="position: relative; text-align: center; font-size: 18px; line-height: 0.5;">
+                    <!-- หัวข้อหลัก -->
+                    <h2 class="header-title">ผลฉลากกินแบ่งรัฐบาล</h2>
+                    <div class="draw-date">
+                        <span id="display-draw-date"></span>
+                    </div>
+
+                    <!-- ผลรางวัลที่ 1 -->
+                    <div class="result-section" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; position: relative;">
+                        <!-- โลโก้ด้านซ้าย -->
+                        <img src="logo.png" alt="Logo Left" style="width: 50px; height: 50px; margin-right: 10px;">
+                        <!-- หัวข้อรางวัล -->
+                        <div class="prize-title first-prize-title">รางวัลที่ 1</div>
+                        <!-- โลโก้ด้านขวา -->
+                        <img src="logo.png" alt="Logo Right" style="width: 50px; height: 50px; margin-left: 10px;">
+                    </div>
+
+                    <div id="first-prize-display" class="number-group" style="margin-top: 5px;"></div>
+
+                    <!-- เลขหน้า 3 ตัว และ เลขท้าย 3 ตัว -->
+                    <div class="result-section flex-row">
+                        <div>
+                            <h3 class="result-title front-three-title result-title-with-margin">เลขหน้า 3 ตัว</h3>
+                            <div id="display-front-three-1" class="number-group"></div>
+                            <div id="display-front-three-2" class="number-group"></div>
+                        </div>
+                        <div style="margin: 0 15px;"></div>
+                        <div>
+                            <h3 class="result-title back-three-title result-title-with-margin">เลขท้าย 3 ตัว</h3>
+                            <div id="display-back-three-1" class="number-group"></div>
+                            <div id="display-back-three-2" class="number-group"></div>
+                        </div>
+                    </div>
+
+                    <!-- เลขท้าย 2 ตัว -->
+                    <div class="result-section back-two-section">
+                        <div id="display-back-two" class="number-group back-two-number-group"></div>
+                        <h3 class="result-title back-two-title">เลขท้าย 2 ตัว</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- ปุ่มปิด Popup -->
+            <button class="close-popup" onclick="closePopup()">ปิดหน้าต่างนี้</button>
+        </div>
+    </div>
+    <!-- END: MODIFIED RESULT CONTAINER -->
+
+    <footer>
+        &copy; 2025 Juckmanphai. All Rights Reserved.
+    </footer>
+
+    <script>
+        // -------- START: JAVASCRIPT FOR POPUP --------
+        // แสดง Popup
+        function showPopup() {
+            const popup = document.getElementById("popupOverlay");
+            popup.style.display = "flex";
+        }
+
+        // ปิด Popup
+        function closePopup() {
+            const popup = document.getElementById("popupOverlay");
+            popup.style.display = "none";
+        }
+        // -------- END: JAVASCRIPT FOR POPUP --------
+
+        function formatThaiDate(dateString) {
+            const days = [
+                "วันอาทิตย์", "วันจันทร์", "วันอังคาร", 
+                "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"
+            ];
+
+            const months = [
+                "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", 
+                "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", 
+                "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+            ];
+
+            // ลองแปลงจากรูปแบบ "1 มกราคม 2567" เป็น Date object
+            let date;
+            const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
+            if (thDateParts) {
+                const day = parseInt(thDateParts[1], 10);
+                const monthName = thDateParts[2];
+                const thaiYear = parseInt(thDateParts[3], 10);
+                const monthIndex = months.indexOf(monthName);
+                if (monthIndex > -1) {
+                    date = new Date(thaiYear - 543, monthIndex, day);
+                    const dayOfWeek = days[date.getDay()];
+                    return `งวด${dayOfWeek}ที่ ${day} ${months[monthIndex]} พ.ศ. ${thaiYear}`;
+                }
+            }
+            
+            // ถ้าไม่สำเร็จ ให้คืนค่าเดิมไป
+            return `งวดวันที่ ${dateString}`;
+        }
+
+        function createNumberBall(number, colorClass) {
+            const ball = document.createElement("div");
+            ball.className = `circle-number-base ${colorClass}`;
+            ball.innerText = number;
+            return ball;
+        }
+
+        function displayNumberGroup(elementId, numberString, colorClass) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = "";
+            
+            for (let i = 0; i < numberString.length; i++) {
+                container.appendChild(createNumberBall(numberString[i], colorClass));
+            }
+        }
+
+        function displayResults() {
+            // ดึงข้อมูลและจัดรูปแบบวันที่
+            const rawDate = document.getElementById("draw-date").value;
+            const formattedDate = formatThaiDate(rawDate);
+            document.getElementById("display-draw-date").innerText = formattedDate;
+
+            // รางวัลที่ 1 (สีแดง)
+            displayNumberGroup(
+                "first-prize-display", 
+                document.getElementById("first-prize").value, 
+                "circle-number-red"
+            );
+
+            // เลขหน้า 3 ตัว (สีน้ำเงิน)
+            displayNumberGroup(
+                "display-front-three-1", 
+                document.getElementById("front-three-1").value, 
+                "circle-number-blue"
+            );
+            displayNumberGroup(
+                "display-front-three-2", 
+                document.getElementById("front-three-2").value, 
+                "circle-number-blue"
+            );
+
+            // เลขท้าย 3 ตัว (สีเขียว)
+            displayNumberGroup(
+                "display-back-three-1", 
+                document.getElementById("back-three-1").value, 
+                "circle-number-green"
+            );
+            displayNumberGroup(
+                "display-back-three-2", 
+                document.getElementById("back-three-2").value, 
+                "circle-number-green"
+            );
+
+            // เลขท้าย 2 ตัว (สีส้ม)
+            displayNumberGroup(
+                "display-back-two", 
+                document.getElementById("back-two").value, 
+                "circle-number-orange"
+            );
+            
+            // แสดง Popup หลังจากเตรียมข้อมูลเสร็จ
+            showPopup();
+        }
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
