@@ -7,8 +7,8 @@ const urlsToCache = [
   './06.html', // <-- เพิ่มไฟล์นี้
   './manifest-2digit.json',
   './logo.png',
-  './icon-192.png',
-  './icon-512.png'
+  './192.png',
+  './512.png'
 ];
 
 // ติดตั้ง Service Worker
