@@ -2,7 +2,12 @@ const CACHE_NAME = 'juckphai-lao-star-app-v1';
 const urlsToCache = [
   './',
   './10.html',
-  './01.html',  // หน้าเมนูหลัก
+  './18.html',
+  './01.html',      // หน้าเมนูหลัก
+  './02.html',      // แอป 2 ตัว
+  './index.html',   // แอป 3 ตัว
+  './06.html',      // แอป 4 ตัว
+  './10.html',
   './logo.png',
   './192.png',
   './512.png',
