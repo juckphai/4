@@ -1,0 +1,21 @@
+{
+  "short_name": "ผลลาวสามัคคี",
+  "name": "ฟอร์มกรอกผลกลุ่มลาวสามัคคี",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./11.html",
+  "background_color": "#fffde7",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#84cc16"
+}
