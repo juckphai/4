@@ -1,8 +1,10 @@
 const CACHE_NAME = 'juckphai-main-menu-v1';
 // รายการไฟล์ที่จำเป็นสำหรับหน้าเมนูหลัก
 const urlsToCache = [
+const urlsToCache = [
   './',
   './01.html',
+  './06.html', // <-- เพิ่มไฟล์นี้
   './icon-192.png',
   './icon-512.png',
   './manifest-main.json'
