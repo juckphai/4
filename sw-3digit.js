@@ -9,7 +9,7 @@ const urlsToCache = [
   './manifest-2digit.json', 
   './logo.png', 
   './icon-192.png',
-  './icon-512.png',
+  './512.png',
   'https://juckphai.github.io/juckphai/01.html'
 ];
 
