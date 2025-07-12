@@ -7,8 +7,8 @@ const urlsToCache = [
   './manifest-3digit.json',
   './manifest.json',
   './logo.png',
-  './icon-192.png',
-  './icon-512.png'
+  './192.png',
+  './512.png'
 ];
 
 // ติดตั้ง Service Worker และแคชไฟล์ทั้งหมด
