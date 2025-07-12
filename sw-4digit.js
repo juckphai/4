@@ -2,9 +2,10 @@ const CACHE_NAME = 'juckphai-4digit-app-v1';
 const urlsToCache = [
   './',
   './06.html',
-  './01.html', // แคชหน้าเมนูหลัก
-  './index.html', // แคชแอป 3 ตัว
-  './02.html', // แคชแอป 2 ตัว
+  './01.html',
+  './index.html',
+  './02.html',
+  './18.html', // <-- เพิ่มไฟล์นี้
   './manifest-4digit.json',
   './logo.png',
   './192.png',
