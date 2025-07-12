@@ -5,6 +5,7 @@ const urlsToCache = [
   './02.html',
   './index.html',
   './06.html',
+  './10.html',
   './18.html',
   './192.png',
   './512.png',
