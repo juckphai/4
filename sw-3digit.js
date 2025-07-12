@@ -3,9 +3,10 @@ const CACHE_NAME = 'juckphai-3digit-translator-v1';
 const urlsToCache = [
   './',
   './index.html',
-  './02.html', // <-- เพิ่มไฟล์นี้เข้ามา
+  './02.html',
+  './06.html', // <-- เพิ่มไฟล์นี้
   './manifest-3digit.json',
-  './manifest-2digit.json', // <-- เพิ่มไฟล์นี้เข้ามา
+  './manifest-2digit.json', 
   './logo.png', 
   './icon-192.png',
   './icon-512.png',
