@@ -1,6 +1,6 @@
 {
-  "name": "บัญชีส่วนตัว",
-  "short_name": "บัญชี",
+  "name": "แปล3ตัว",
+  "short_name": "แปลสามตัว",
   "description": "แอปพลิเคชันรายรับราจ่ายส่วนตัว",
   "start_url": "./index.html",
   "id": "/lotto/",
