@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ฟอร์มแปลตัวเลข 3 ตัว</title>
+    
+    <!-- PWA-related additions -->
+    <link rel="manifest" href="manifest-3digit.json">
+    <meta name="theme-color" content="orange"/>
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="แปลเลข 3 ตัว">
+    <!-- End of PWA-related additions -->
+
 <style>
     /* ===== Base Styles ===== */
     body {
@@ -366,6 +376,7 @@
     </footer>
 
 <script>
+    // โค้ด JavaScript เดิมของคุณทั้งหมดอยู่ที่นี่...
     // ===== Utility Functions =====
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
@@ -686,6 +697,19 @@
         // --- Attach Main Action ---
         document.getElementById("convertButton").addEventListener("click", openResultInNewWindow);
     });
+
+    // --- PWA Service Worker Registration ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw-3digit.js')
+                .then(registration => {
+                    console.log('Service Worker for 3-digit registered successfully:', registration);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        });
+    }
 </script>
 </body>
 </html>
