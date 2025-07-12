@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนูหลัก Juckphai</title>
+    
+    <!-- PWA-related additions for main menu -->
+    <link rel="manifest" href="manifest-main.json">
+    <meta name="theme-color" content="#1e40af"/>
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="เมนู Juckphai">
+    <!-- End of PWA-related additions -->
+    
+    <!-- Google Fonts: Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; 
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Kanit', 'Arial', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #1e40af;
+            line-height: 1.6;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- Card Style for Sections --- */
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden; /* Important for border-radius */
+            transition: transform 0.3s ease;
+        }
+        
+        /* --- Collapsible Section Styles --- */
+        .section-header {
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .section-header.active {
+             border-bottom-left-radius: 0;
+             border-bottom-right-radius: 0;
+        }
+        
+        .section-header .arrow { 
+            transition: transform 0.3s; 
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .section-header.active .arrow { 
+            transform: rotate(90deg); 
+        }
+        
+        .section-content {
+            display: none;
+            padding: 20px;
+            background-color: #f8fafc; /* Lighter content background */
+            text-align: center;
+        }
+        
+        .section-content.active { 
+            display: block; 
+        }
+        
+        .header-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        /* --- สีที่แตกต่างกันสำหรับแต่ละ Header --- */
+        .container .card:nth-of-type(1) .section-header { background-color: #2563eb; } /* Blue */
+        .container .card:nth-of-type(2) .section-header { background-color: #16a34a; } /* Green */
+        .container .card:nth-of-type(3) .section-header { background-color: #9333ea; } /* Purple */
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #4b5563; /* Gray text */
+            margin-bottom: 25px;
+        }
+
+        /* --- Button Grid Layout --- */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        /* --- Base Button Styling --- */
+        .btn {
+            display: block;
+            padding: 14px 20px; 
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem; 
+            font-weight: 500;
+            font-family: 'Kanit', sans-serif;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- สีปุ่มเมนูย่อยให้แตกต่างกันในแต่ละปุ่ม --- */
+        .button-grid .btn.color-1 { background-image: linear-gradient(45deg, #3b82f6, #60a5fa); }
+        .button-grid .btn.color-2 { background-image: linear-gradient(45deg, #22c55e, #4ade80); }
+        .button-grid .btn.color-3 { background-image: linear-gradient(45deg, #f97316, #fb923c); }
+        .button-grid .btn.color-4 { background-image: linear-gradient(45deg, #a855f7, #c084fc); }
+        .button-grid .btn.color-5 { background-image: linear-gradient(45deg, #ef4444, #f87171); }
+        .button-grid .btn.color-6 { background-image: linear-gradient(45deg, #6366f1, #818cf8); } /* Indigo */
+        .button-grid .btn.color-7 { background-image: linear-gradient(45deg, #84cc16, #a3e635); } /* Lime */
+        .button-grid .btn.color-8 { background-image: linear-gradient(45deg, #d946ef, #e879f9); } /* Fuchsia */
+        .button-grid .btn.color-9 { background-image: linear-gradient(45deg, #f59e0b, #facc15); } /* Amber */
+        
+        /* --- Footer --- */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* --- Responsive Styles for Mobile --- */
+        @media (max-width: 600px) {
+            body { padding: 15px 10px; }
+            .container { gap: 20px; }
+            .header-title { font-size: 1.2rem; }
+            .btn { font-size: 0.95rem; }
+            .button-grid { grid-template-columns: 1fr 1fr; } /* 2 columns on mobile */
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        function toggleSection(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const isActive = headerElement.classList.contains('active');
+
+            // ปิด section อื่นๆ ทั้งหมดก่อน
+            document.querySelectorAll('.section-header.active').forEach(activeHeader => {
+                if (activeHeader !== headerElement) {
+                    activeHeader.classList.remove('active');
+                    activeHeader.nextElementSibling.style.maxHeight = null;
+                }
+            });
+
+            // เปิด/ปิด section ที่เลือก
+            headerElement.classList.toggle('active', !isActive);
+            if (!isActive) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // ทำให้ส่วนของ Section แรกเปิดอยู่เสมอเมื่อโหลดหน้า
+            const firstHeader = document.querySelector('.section-header');
+            if (firstHeader) {
+                firstHeader.classList.add('active');
+                firstHeader.nextElementSibling.style.display = 'block'; // Set display to block
+            }
+
+            // เพิ่ม Event Listener ให้กับทุก Header
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const isActive = this.classList.toggle('active');
+                    
+                    if (isActive) {
+                        content.style.display = 'block';
+                    } else {
+                        content.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Section: แปลตัวเลข -->
+        <div class="card">
+            <div class="section-header active">
+                <span class="header-title">เมนูฟอร์มแปลตัวเลข</span>
+                <span class="arrow">▶</span>
+            </div>
+            <div id="translate-section" class="section-content active">
+                <p class="section-subtitle">เลือกรายการแปลตัวเลขที่ต้องการใช้งาน</p>
+                <div class="button-grid">
+                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/3/02.html')">แปล 2 ตัว</button>
+                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/3/index.html')">แปล 3 ตัว</button>
+                    <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/juckphai/06.html')">แปล 4 ตัว</button>
+                    <button class="btn color-4" onclick="navigateTo('https://juckphai.github.io/juckphai/18.html')">ไม่แปล 2 และ 3 ตัว</button>
+                    <button class="btn color-5" onclick="navigateTo('https://juckphai.github.io/juckphai/14.html')">บัญชี</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: กรอกผลตัวเลข -->
+        <div class="card">
+            <div class="section-header">
+                <span class="header-title">เมนูฟอร์มกรอกผลตัวเลข</span>
+                <span class="arrow">▶</span>
+            </div>
+            <div id="fill-form-section" class="section-content">
+                <p class="section-subtitle">เลือกกลุ่มเพื่อกรอกผล</p>
+                <div class="button-grid">
+                    <button class="btn color-6" onclick="navigateTo('https://juckphai.github.io/juckphai/10.html')">กลุ่มลาวสตาร์</button>
+                    <button class="btn color-7" onclick="navigateTo('https://juckphai.github.io/juckphai/11.html')">กลุ่มลาวสามัคคี</button>
+                    <button class="btn color-8" onclick="navigateTo('https://juckphai.github.io/juckphai/12.html')">ลาวพัฒนา</button>
+                    <button class="btn color-9" onclick="navigateTo('https://juckphai.github.io/juckphai/13.html')">รัฐบาล</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section: เข้าเว็บและอื่นๆ -->
+        <div class="card">
+            <div class="section-header">
+                <span class="header-title">เมนูเข้าเว็บและอื่นๆ</span>
+                <span class="arrow">▶</span>
+            </div>
+            <div id="other-links-section" class="section-content">
+                <p class="section-subtitle">เลือกเว็บไซต์ที่ต้องการเข้าชม</p>
+                <div class="button-grid">
+                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/juckphai/08.html')">ผลลาว</button>
+                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/juckphai/09.html')">ผลเวียดนาม</button>
+                    <button class="btn color-3" onclick="navigateTo('https://udon-p.github.io/Don/01.html')">เว็บ udon</button>
+                    <button class="btn color-4" onclick="navigateTo('https://juckmanphai.github.io/juck/01.html')">เว็บ manphai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+      
+    <footer>
+        &copy; 2025 Juckphai. All Rights Reserved.
+    </footer>
+    
+    <script>
+    // --- PWA Service Worker Registration for Main Menu ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw-main.js')
+                .then(registration => {
+                    console.log('Main Menu Service Worker registered successfully:', registration);
+                })
+                .catch(error => {
+                    console.log('Main Menu Service Worker registration failed:', error);
+                });
+        });
+    }
+    </script>
+</body>
+</html>
