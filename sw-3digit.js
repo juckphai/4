@@ -6,6 +6,7 @@ const urlsToCache = [
   './02.html',      // แอป 2 ตัว
   './06.html',      // แอป 4 ตัว
   './18.html',      // แอปสร้างชุด
+  './10.html',
   './logo.png',
   './192.png',
   './512.png',
