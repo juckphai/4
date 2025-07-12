@@ -3,7 +3,8 @@ const CACHE_NAME = 'juckphai-2digit-app-v1';
 const urlsToCache = [
   './',
   './02.html',
-  './index.html', // แคชหน้าแอป 3 ตัวไว้ด้วยเผื่อสลับหน้า
+  './index.html', 
+  './06.html', // <-- เพิ่มไฟล์นี้
   './manifest-2digit.json',
   './logo.png',
   './icon-192.png',
