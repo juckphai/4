@@ -8,6 +8,7 @@ const urlsToCache = [
   './style.css',
   './app.js',
   './manifest.json',
+    './logo.png',
   './192.png',
   './512.png'  // ตรวจสอบให้แน่ใจว่าคุณมีไฟล์นี้อยู่
 ];
