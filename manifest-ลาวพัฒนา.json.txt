@@ -1,0 +1,21 @@
+{
+  "short_name": "ผลลาวพัฒนา",
+  "name": "ฟอร์มกรอกผลลาวพัฒนา",
+  "icons": [
+    {
+      "src": "192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./12.html",
+  "background_color": "#fffde7",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#FF9800"
+}
