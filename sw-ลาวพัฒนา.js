@@ -19,7 +19,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache for Lao Star App');
+        console.log('Opened cache for lao-pattana App');
         return cache.addAll(urlsToCache);
       })
   );
