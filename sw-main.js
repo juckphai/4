@@ -4,7 +4,9 @@ const urlsToCache = [
 const urlsToCache = [
   './',
   './01.html',
-  './06.html', // <-- เพิ่มไฟล์นี้
+  './06.html', 
+  './18.html',
+  './02.html',
   './192.png',
   './512.png',
   './manifest-main.json'
