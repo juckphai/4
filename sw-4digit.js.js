@@ -7,7 +7,7 @@ const urlsToCache = [
   './02.html', // แคชแอป 2 ตัว
   './manifest-4digit.json',
   './logo.png',
-  './icon-192.png',
+  './192.png',
   './icon-512.png'
 ];
 
