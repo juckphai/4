@@ -6,8 +6,8 @@ const urlsToCache = [
   './18.html',
   './01.html',  // หน้าเมนูหลัก
   './logo.png',
-  './icon-192.png',
-  './icon-512.png',
+  './192.png',
+  './512.png',
   './manifest-ชุดตัวเลข.json'
 ];
 
