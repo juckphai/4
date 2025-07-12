@@ -4,10 +4,10 @@ const urlsToCache = [
   './',
   './index.html',
   './02.html',
-  './06.html', // <-- เพิ่มไฟล์นี้
+  './06.html',
+  './18.html', // <-- เพิ่มไฟล์นี้
   './manifest-3digit.json',
-  './manifest-2digit.json', 
-  './logo.png', 
+  './logo.png',
   './192.png',
   './512.png',
   'https://juckphai.github.io/juckphai/01.html'
