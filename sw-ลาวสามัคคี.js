@@ -1,8 +1,15 @@
 const CACHE_NAME = 'juckphai-lao-samakkhi-app-v1';
 const urlsToCache = [
   './',
-  './11.html',
-  './01.html',  // หน้าเมนูหลัก
+  './01.html',
+  './02.html',   
+  './03.html',   
+  './04.html',   
+  './05.html',  
+  './06.html',
+  './07.html',
+  './08.html',
+  './index.html',
   './logo.png',
   './192.png',
   './512.png',

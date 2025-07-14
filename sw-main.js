@@ -1,13 +1,16 @@
 const CACHE_NAME = 'juckphai-main-menu-v1';
 const urlsToCache = [
   './',
-  './01.html',
-  './02.html',
   './index.html',
+  './02.html',   
+  './03.html',   
+  './04.html',   
+  './05.html',  
   './06.html',
-  './10.html',
-  './11.html',
-  './18.html',
+  './07.html',
+  './08.html',
+  './01.html',
+  './logo.png',
   './192.png',
   './512.png',
   './manifest-main.json'

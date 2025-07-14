@@ -1,12 +1,15 @@
 const CACHE_NAME = 'juckphai-2digit-app-v1';
 const urlsToCache = [
   './',
-  './02.html',
-  './01.html',      // หน้าเมนูหลัก
-  './index.html',   // แอป 3 ตัว
-  './06.html',      // แอป 4 ตัว
-  './18.html',      // แอปสร้างชุด
-  './10.html',
+  './01.html',
+  './02.html',   
+  './03.html',   
+  './04.html',   
+  './05.html',  
+  './06.html',
+  './07.html',
+  './08.html',
+  './index.html',
   './logo.png',
   './192.png',
   './512.png',

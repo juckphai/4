@@ -1,12 +1,18 @@
 const CACHE_NAME = 'juckphai-3digit-translator-v1';
 const urlsToCache = [
   './',
+  './02.html',
+  './01.html',   
+  './03.html',   
+  './04.html',   
+  './05.html',  
+  './06.html',
+  './07.html',
+  './08.html',
   './index.html',
-  './01.html',      // หน้าเมนูหลัก
-  './02.html',      // แอป 2 ตัว
-  './06.html',      // แอป 4 ตัว
-  './18.html',      // แอปสร้างชุด
-  './10.html',
+  './logo.png',
+  './192.png',
+  './512.png',
   './logo.png',
   './192.png',
   './512.png',
