@@ -155,34 +155,30 @@
         display: none;
     }
 
-    /* ---------- Popup Styles (Modal) ---------- */
-    .popup-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        padding: 15px 5px;
-        box-sizing: border-box;
-    }
+.popup-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%; /* เพิ่มเข้ามา */
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    padding: 20px 0;
+    align-items: center;
+}
 
-    .popup-content {
-        background-color: #fffde7;
-        border-radius: 1px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        max-width: 600px;
-        padding: 15px 5px;
-        position: relative;
-        max-height: 95vh;
-        overflow-y: auto;
-        box-sizing: border-box;
-    }
+.popup-content {
+    background-color: #fffde7;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 600px;
+    padding: 25px 5px; 
+    position: relative;
+    box-sizing: border-box;
+}
     
     .result-container-popup {
         border: 2px solid #4CAF50;
