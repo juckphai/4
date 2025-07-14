@@ -125,29 +125,64 @@
         
         <div id="numberSetsContainer"></div>
 
-        <select id="topicSelect" onchange="checkCustomTopicOption(this)">
-            <option value="ลาวประตูชัย เวลา 05.45 น.">ลาวประตูชัย เวลา 05.45 น.</option>
-            <option value="ลาวสันติภาพ เวลา 06.45 น.">ลาวสันติภาพ เวลา 06.45 น.</option>
-            <option value="ประชาชนลาว เวลา 07.45 น.">ประชาชนลาว เวลา 07.45 น.</option>
-            <option value="custom">อื่นๆ (พิมพ์เอง)</option>
-        </select>
-        <div id="customTopicInputs" style="display: none;">
-            <div class="custom-topic-row">
-                <input type="text" id="customTopicName" placeholder="กรอกหัวข้อ" style="width: 60%;" />
-                <input type="text" id="customTopicTime" placeholder="เวลา" style="width: 40%;" />
+       <!-- แถวที่ 2: เลือกหัวข้อ -->
+        <div class="form-row">
+            <div class="form-col" style="width: 100%;">
+                <select id="topicSelect" onchange="checkCustomTopicOption(this)">
+                    <option value="ลาวประตูชัย เวลา 05.45 น.">ลาวประตูชัย เวลา 05.45 น.</option>
+                    <option value="ลาวสันติภาพ เวลา 06.45 น.">ลาวสันติภาพ เวลา 06.45 น.</option>
+                    <option value="custom">อื่นๆ (พิมพ์เอง)</option>
+                    <option value="ประชาชนลาว เวลา 07.45 น.">ประชาชนลาว เวลา 07.45 น.</option>
+                    <option value="ลาว Extra เวลา 08.30 น.">ลาว Extra เวลา 08.30 น.</option>
+                    <option value="ลาว TV เวลา 10.30 น.">ลาว TV เวลา 10.30 น.</option>
+                    <option value="ลาว HD เวลา 13.45 น.">ลาว HD เวลา 13.45 น.</option>
+                    <option value="ลาวสตาร์ เวลา 15.45 น.">ลาวสตาร์ เวลา 15.45 น.</option>
+                    <option value="ลาวสามัคคี เวลา 20.30 น.">ลาวสามัคคี เวลา 20.30 น.</option>
+                    <option value="ลาวพัฒนา เวลา 20.30 น.">ลาวพัฒนา เวลา 20.30 น.</option>
+                    <option value="ลาว VIP เวลา 21.30 น.">ลาว VIP เวลา 21.30 น.</option>
+                    <option value="ลาวอาเซียน เวลา 21.00 น.">ลาวอาเซียน เวลา 21.00 น.</option>
+                    <option value="ลาวสามัคคี VIP เวลา 21.30 น.">ลาวสามัคคี VIP เวลา 21.30 น.</option>
+                    <option value="ลาวสตาร์ VIP เวลา 22.00 น.">ลาวสตาร์ VIP เวลา 22.00 น.</option>
+                    <option value="ลาวกาชาด เวลา 23.30 น.">ลาวกาชาด เวลา 23.30 น.</option>
+                    <option value="รัฐบาล เวลา 15.45 น.">รัฐบาล เวลา 15.45 น.</option>
+                    <option value="ฮานอยกาชาด เวลา 16.30 น.">ฮานอยกาชาด เวลา 16.30 น.</option>
+                    <option value="อานอยพิเศษ เวลา 17.30 น.">อานอยพิเศษ เวลา 17.30 น.</option>
+                    <option value="ฮานอย เวลา 18.30 น.">ฮานอย เวลา 18.30 น.</option>
+                    <option value="ฮานอย VIP เวลา 19.30 น.">ฮานอย VIP เวลา 19.30 น.</option>
+                </select>
+                <div id="customTopicInputs" style="display: none;">
+                    <div class="custom-topic-row">
+                        <input type="text" id="customTopicName" placeholder="กรุณากรอกหัวข้อเอง" style="width: 60%;" />
+                        <input type="text" id="customTopicTime" placeholder="เวลา (เช่น 08.30 น)" style="width: 40%;" />
+                    </div>
+                </div>
             </div>
         </div>
 
-        <select id="personSelect" onchange="checkCustomOption(this)">
-            <option value="@">@</option>
-            <option value="Team">Team</option>
-            <option value="Udon Don">Udon Don</option>
-            <option value="custom">อื่นๆ (พิมพ์เอง)</option>
-        </select>
-        <input type="text" id="customPersonInput" placeholder="กรอกชื่อผู้บอก" style="display: none;" />
-        
-        <input type="date" id="dateInput" />
-        <input type="text" id="noteInput" placeholder="หมายเหตุ (ถ้ามี)" />
+        <!-- แถวที่ 3: ช่องเลือกผู้บอกกับวันเดือนปี -->
+        <div class="form-row">
+            <div class="form-col" style="width: 100%;">
+                <select id="personSelect" onchange="checkCustomOption(this)">
+                    <option value="@">@</option>  
+                    <option value="Team">Team</option>
+                    <option value="Udon Don">Udon Don</option>
+                    <option value="custom">อื่นๆ (พิมพ์เอง)</option>
+                </select>
+                <input type="text" id="customPersonInput" placeholder="กรุณากรอกชื่อผู้บอกเอง" style="display: none; width: 80%; margin: 10px auto; font-size: 18px; padding: 10px; border-radius: 6px; border: 1px solid #ddd; text-align: center;" />
+            </div>
+            <div class="form-col" style="width: 100%;">
+                <input type="date" id="dateInput" />
+            </div>
+        </div>
+
+        <!-- แถวที่ 4: หมายเหตุ -->
+        <div class="form-row">
+            <div class="form-col" style="width: 100%;">
+                <input type="text" id="noteInput" placeholder="หมายเหตุ (ถ้ามี)" />
+            </div>
+        </div>
+
+        <!-- ปุ่มสร้างผลลัพธ์ -->
         <button id="convertButton">สร้างผลลัพธ์</button>
     </div>
     
