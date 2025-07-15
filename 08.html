@@ -71,6 +71,14 @@
             transition: border-color 0.3s;
         }
 
+        /* --- START: ADJUSTMENT FOR DATE INPUT --- */
+        input[type="date"] {
+            max-width: 250px; /* ทำให้ช่องวันที่กว้างขึ้นเล็กน้อย */
+            -webkit-appearance: none; /* ปิดหน้าตาดีฟอลต์ของ iOS */
+            appearance: none;
+        }
+        /* --- END: ADJUSTMENT FOR DATE INPUT --- */
+
         .input-pair {
             display: flex;
             justify-content: center;
@@ -391,8 +399,10 @@ display: inline-block;
 
     <div class="form-container">
         <div class="form-group">
-            <label for="draw-date">งวดวันที่ (วัน เดือน พ.ศ.)</label>
-            <input type="text" id="draw-date" placeholder="กรอกวันที่ (ตัวอย่าง: 1 มกราคม 2567)">
+            <label for="draw-date">งวดวันที่ (เลือก หรือ กรอกเอง)</label>
+            <!-- START: MODIFIED INPUT -->
+            <input type="date" id="draw-date">
+            <!-- END: MODIFIED INPUT -->
         </div>
 
         <div class="form-group">
@@ -495,6 +505,7 @@ display: inline-block;
         }
         // -------- END: JAVASCRIPT FOR POPUP --------
 
+        // -------- START: MODIFIED JAVASCRIPT FUNCTION FOR DATE --------
         function formatThaiDate(dateString) {
             const days = [
                 "วันอาทิตย์", "วันจันทร์", "วันอังคาร", 
@@ -506,25 +517,44 @@ display: inline-block;
                 "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", 
                 "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             ];
-
-            // ลองแปลงจากรูปแบบ "1 มกราคม 2567" เป็น Date object
+            
             let date;
-            const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
-            if (thDateParts) {
-                const day = parseInt(thDateParts[1], 10);
-                const monthName = thDateParts[2];
-                const thaiYear = parseInt(thDateParts[3], 10);
-                const monthIndex = months.indexOf(monthName);
-                if (monthIndex > -1) {
-                    date = new Date(thaiYear - 543, monthIndex, day);
-                    const dayOfWeek = days[date.getDay()];
-                    return `งวด${dayOfWeek}ที่ ${day} ${months[monthIndex]} พ.ศ. ${thaiYear}`;
+
+            // ตรวจสอบว่าเป็นรูปแบบ YYYY-MM-DD ที่มาจาก input type="date" หรือไม่
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+                const parts = dateString.split('-');
+                const year = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1; // เดือนใน JavaScript เริ่มที่ 0
+                const day = parseInt(parts[2], 10);
+                date = new Date(year, month, day);
+            }
+            // ตรวจสอบว่าเป็นรูปแบบที่พิมพ์เอง "1 มกราคม 2567" หรือไม่
+            else {
+                const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
+                if (thDateParts) {
+                    const day = parseInt(thDateParts[1], 10);
+                    const monthName = thDateParts[2];
+                    const thaiYear = parseInt(thDateParts[3], 10);
+                    const monthIndex = months.indexOf(monthName);
+                    if (monthIndex > -1) {
+                        date = new Date(thaiYear - 543, monthIndex, day);
+                    }
                 }
             }
+
+            // ถ้าแปลงเป็น date object สำเร็จ ให้จัดรูปแบบ
+            if (date instanceof Date && !isNaN(date)) {
+                const dayOfWeek = days[date.getDay()];
+                const dayOfMonth = date.getDate();
+                const monthName = months[date.getMonth()];
+                const thaiYear = date.getFullYear() + 543;
+                return `งวด${dayOfWeek}ที่ ${dayOfMonth} ${monthName} พ.ศ. ${thaiYear}`;
+            }
             
-            // ถ้าไม่สำเร็จ ให้คืนค่าเดิมไป
+            // ถ้าไม่สำเร็จ ให้คืนค่าเดิมที่ผู้ใช้กรอกมา
             return `งวดวันที่ ${dateString}`;
         }
+        // -------- END: MODIFIED JAVASCRIPT FUNCTION FOR DATE --------
 
         function createNumberBall(number, colorClass) {
             const ball = document.createElement("div");
@@ -545,6 +575,12 @@ display: inline-block;
         function displayResults() {
             // ดึงข้อมูลและจัดรูปแบบวันที่
             const rawDate = document.getElementById("draw-date").value;
+            // ถ้าผู้ใช้ไม่ได้เลือกหรือกรอกวันที่ ให้แจ้งเตือน
+            if (!rawDate) {
+                alert("กรุณาเลือกหรือกรอกวันที่ก่อน");
+                return;
+            }
+
             const formattedDate = formatThaiDate(rawDate);
             document.getElementById("display-draw-date").innerText = formattedDate;
 
