@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ผลฉลากกินแบ่งรัฐบาล</title>
 
-       <!-- PWA-related tags -->
+    <!-- PWA-related tags -->
     <meta name="theme-color" content="#e65100"/>
     <link rel="manifest" href="manifest-รัฐบาล.json">
     <link rel="apple-touch-icon" href="192.png">
@@ -13,6 +13,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ผลรัฐบาล">
     <!-- End of PWA-related additions -->
+
+    <!-- START: Dependencies for Datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!-- Thai localization for Datepicker -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
+    <!-- END: Dependencies for Datepicker -->
 
 
     <style>
@@ -70,14 +78,6 @@
             max-width: 150px;
             transition: border-color 0.3s;
         }
-
-        /* --- START: ADJUSTMENT FOR DATE INPUT --- */
-        input[type="date"] {
-            max-width: 250px; /* ทำให้ช่องวันที่กว้างขึ้นเล็กน้อย */
-            -webkit-appearance: none; /* ปิดหน้าตาดีฟอลต์ของ iOS */
-            appearance: none;
-        }
-        /* --- END: ADJUSTMENT FOR DATE INPUT --- */
 
         .input-pair {
             display: flex;
@@ -399,10 +399,9 @@ display: inline-block;
 
     <div class="form-container">
         <div class="form-group">
-            <label for="draw-date">งวดวันที่ (เลือก หรือ กรอกเอง)</label>
-            <!-- START: MODIFIED INPUT -->
-            <input type="date" id="draw-date">
-            <!-- END: MODIFIED INPUT -->
+            <label for="draw-date">งวดวันที่ (วัน เดือน พ.ศ.)</label>
+            <!-- MODIFIED: Changed placeholder to be more intuitive -->
+            <input type="text" id="draw-date" placeholder="กรอกหรือเลือกวันที่">
         </div>
 
         <div class="form-group">
@@ -487,7 +486,7 @@ display: inline-block;
     <!-- END: MODIFIED RESULT CONTAINER -->
 
     <footer>
-        &copy; 2025 Juckmanphai. All Rights Reserved.
+        &copy; 2025 Juckphai. All Rights Reserved.
     </footer>
 
     <script>
@@ -505,7 +504,6 @@ display: inline-block;
         }
         // -------- END: JAVASCRIPT FOR POPUP --------
 
-        // -------- START: MODIFIED JAVASCRIPT FUNCTION FOR DATE --------
         function formatThaiDate(dateString) {
             const days = [
                 "วันอาทิตย์", "วันจันทร์", "วันอังคาร", 
@@ -517,44 +515,25 @@ display: inline-block;
                 "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", 
                 "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             ];
-            
-            let date;
 
-            // ตรวจสอบว่าเป็นรูปแบบ YYYY-MM-DD ที่มาจาก input type="date" หรือไม่
-            if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-                const parts = dateString.split('-');
-                const year = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10) - 1; // เดือนใน JavaScript เริ่มที่ 0
-                const day = parseInt(parts[2], 10);
-                date = new Date(year, month, day);
-            }
-            // ตรวจสอบว่าเป็นรูปแบบที่พิมพ์เอง "1 มกราคม 2567" หรือไม่
-            else {
-                const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
-                if (thDateParts) {
-                    const day = parseInt(thDateParts[1], 10);
-                    const monthName = thDateParts[2];
-                    const thaiYear = parseInt(thDateParts[3], 10);
-                    const monthIndex = months.indexOf(monthName);
-                    if (monthIndex > -1) {
-                        date = new Date(thaiYear - 543, monthIndex, day);
-                    }
+            // ลองแปลงจากรูปแบบ "1 มกราคม 2567" เป็น Date object
+            let date;
+            const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
+            if (thDateParts) {
+                const day = parseInt(thDateParts[1], 10);
+                const monthName = thDateParts[2];
+                const thaiYear = parseInt(thDateParts[3], 10);
+                const monthIndex = months.indexOf(monthName);
+                if (monthIndex > -1) {
+                    date = new Date(thaiYear - 543, monthIndex, day);
+                    const dayOfWeek = days[date.getDay()];
+                    return `งวด${dayOfWeek}ที่ ${day} ${months[monthIndex]} พ.ศ. ${thaiYear}`;
                 }
             }
-
-            // ถ้าแปลงเป็น date object สำเร็จ ให้จัดรูปแบบ
-            if (date instanceof Date && !isNaN(date)) {
-                const dayOfWeek = days[date.getDay()];
-                const dayOfMonth = date.getDate();
-                const monthName = months[date.getMonth()];
-                const thaiYear = date.getFullYear() + 543;
-                return `งวด${dayOfWeek}ที่ ${dayOfMonth} ${monthName} พ.ศ. ${thaiYear}`;
-            }
             
-            // ถ้าไม่สำเร็จ ให้คืนค่าเดิมที่ผู้ใช้กรอกมา
+            // ถ้าไม่สำเร็จ ให้คืนค่าเดิมไป
             return `งวดวันที่ ${dateString}`;
         }
-        // -------- END: MODIFIED JAVASCRIPT FUNCTION FOR DATE --------
 
         function createNumberBall(number, colorClass) {
             const ball = document.createElement("div");
@@ -575,12 +554,6 @@ display: inline-block;
         function displayResults() {
             // ดึงข้อมูลและจัดรูปแบบวันที่
             const rawDate = document.getElementById("draw-date").value;
-            // ถ้าผู้ใช้ไม่ได้เลือกหรือกรอกวันที่ ให้แจ้งเตือน
-            if (!rawDate) {
-                alert("กรุณาเลือกหรือกรอกวันที่ก่อน");
-                return;
-            }
-
             const formattedDate = formatThaiDate(rawDate);
             document.getElementById("display-draw-date").innerText = formattedDate;
 
@@ -626,6 +599,59 @@ display: inline-block;
             showPopup();
         }
     </script>
+    
+    <!-- START: Datepicker Initialization Script -->
+    <script>
+    $(function() {
+        // Set Thai localization from the i18n file
+        $.datepicker.setDefaults($.datepicker.regional['th']);
+
+        $("#draw-date").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'd MM yy', // Format: 1 มกราคม 2567
+            yearRange: "c-10:c+5", // Year range: 10 years past to 5 years future
+            isBuddhist: true,
+            defaultDate: new Date(),
+            // When the calendar is opened, convert Buddhist year from input to Gregorian for the calendar to understand
+            beforeShow: function() {
+                if ($(this).val() != "") {
+                    var dateArray = $(this).val().split(' ');
+                    if (dateArray.length === 3) {
+                        var year = parseInt(dateArray[2], 10);
+                        if (year > 2500) {
+                             // Adjust to Gregorian year for the datepicker's internal use
+                            dateArray[2] = year - 543;
+                            $(this).datepicker("setDate", $.datepicker.parseDate('d MM yy', dateArray.join(' ')));
+                        }
+                    }
+                }
+            },
+            // When a date is selected, convert Gregorian year back to Buddhist year for display
+            onSelect: function(dateText, inst) {
+                var date = $(this).datepicker('getDate');
+                date.setFullYear(date.getFullYear() + 543);
+                // Manually format the date to ensure correct Buddhist year is displayed
+                var day = date.getDate();
+                var month = $.datepicker.regional['th'].monthNames[date.getMonth()];
+                var year = date.getFullYear();
+                $(this).val(day + ' ' + month + ' ' + year);
+            }
+        });
+
+        // Set initial value to today's date in Thai format
+        var today = new Date();
+        var day = today.getDate();
+        var month = $.datepicker.regional['th'].monthNames[today.getMonth()];
+        var year = today.getFullYear() + 543; // Buddhist year
+        // To avoid conflicts on first load, check if the input is empty before setting a value
+        if ($("#draw-date").val() === '') {
+            $("#draw-date").val(day + ' ' + month + ' ' + year);
+        }
+    });
+    </script>
+    <!-- END: Datepicker Initialization Script -->
+
 
     <!-- PWA Service Worker Registration -->
     <script>
