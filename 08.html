@@ -84,37 +84,36 @@
             justify-content: center;
         }
         
-        /* -------- START: POPUP STYLES (MODIFIED) -------- */
+        /* -------- START: POPUP STYLES (MODIFIED TO MATCH 01.HTML) -------- */
         .popup-overlay {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             justify-content: center;
+            padding: 20px 0; /* No horizontal padding */
             align-items: center;
-            /* === CHANGED: Removed horizontal padding to allow content to fill the screen width === */
-            padding: 10px 0; 
             box-sizing: border-box;
         }
 
         .popup-content {
-            background-color: lightyellow; 
-            border-radius: 10px; 
+            background-color: #fffde7; /* Yellow background from 01.html */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
             width: 100%;
             max-width: 600px;
+            padding: 25px 5px; /* Padding from 01.html to create inner space */
             position: relative;
-            text-align: center;
-            /* Padding ensures the green-bordered result-display inside has space from the edges */
-            padding: 15px; 
-            box-sizing: border-box; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-sizing: border-box;
         }
         
         .close-popup {
+            display: block;
+            margin: 15px auto 0;
             border: none;
             border-radius: 5px;
             font-weight: bold;
@@ -123,10 +122,9 @@
             transition: background-color 0.3s;
             padding: 10px 20px;
             background-color: #f44336;
-            width: 100%;
+            width: 90%;
             max-width: 200px;
             font-size: 16px;
-            margin-top: 15px; /* Space between results and button */
         }
 
         .close-popup:hover {
@@ -136,12 +134,13 @@
 
 
         .result-display {
-            background-color: #FFFFE7;
-            padding: 5px;
+            background-color: #FAFAD2; /* Inner background color from 01.html */
+            padding: 10px;
             border-radius: 10px;
-            border: 1.5px solid green;
+            border: 1.5px solid #4CAF50; /* Green border color from 01.html */
             text-align: center;
             position: relative;
+            box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); /* Shadow from 01.html */
         }
 
         .result-section {
