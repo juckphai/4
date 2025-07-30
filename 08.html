@@ -84,7 +84,7 @@
             justify-content: center;
         }
         
-        /* -------- START: POPUP STYLES -------- */
+        /* -------- START: POPUP STYLES (MODIFIED) -------- */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -96,18 +96,20 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            /* === CHANGE HERE: ปรับ padding ให้ด้านซ้าย-ขวาเหลือ 5px === */
             padding: 10px 5px; 
             box-sizing: border-box;
         }
 
         .popup-content {
-            background-color: transparent; /* Make wrapper transparent */
-            border-radius: 10px; /* Match the inner container */
+            background-color: lightyellow; /* CHANGED: Set background to yellow */
+            border-radius: 10px; 
             width: 100%;
             max-width: 600px;
             position: relative;
-            text-align: center; /* Center the close button */
+            text-align: center;
+            padding: 15px; /* ADDED: Padding to create space for the inner content */
+            box-sizing: border-box; /* ADDED: To ensure padding is calculated correctly */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* ADDED: Shadow for better visual depth */
         }
         
         .close-popup {
@@ -128,7 +130,7 @@
         .close-popup:hover {
             background-color: #d32f2f;
         }
-        /* -------- END: POPUP STYLES -------- */
+        /* -------- END: POPUP STYLES (MODIFIED) -------- */
 
 
         .result-display {
