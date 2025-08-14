@@ -196,6 +196,10 @@ input, select, button, .custom-input-container, .date-input-wrapper { width: 90%
             </div>
         </div>
         <div class="controls">
+            <!-- ===== START: ปุ่มบันทึกเป็นรูปภาพ (ย้ายมาเป็นอันดับแรก) ===== -->
+            <button id="saveResultAsImageBtn" class="close-popup-btn" style="background-color: #007bff; margin-bottom: 15px;">บันทึกเป็นรูปภาพ</button>
+            <!-- ===== END: ปุ่มบันทึกเป็นรูปภาพ ===== -->
+
             <div class="control-group">
                 <label for="popupFontSizeSlider">ปรับขนาดตัวอักษร:</label>
                 <input type="range" id="popupFontSizeSlider" min="0.7" max="1.5" step="0.05" value="1.0">
@@ -206,9 +210,6 @@ input, select, button, .custom-input-container, .date-input-wrapper { width: 90%
                 <input type="range" id="popupLineHeightSlider" min="0.5" max="2.0" step="0.1" value="1.3">
                 <span id="popupLineHeightValue">ความสูงบรรทัด: 1.3</span>
             </div>
-            <!-- ===== START: เพิ่มปุ่มบันทึกเป็นรูปภาพ ===== -->
-            <button id="saveResultAsImageBtn" class="close-popup-btn" style="background-color: #007bff; margin-top: 15px;">บันทึกเป็นรูปภาพ</button>
-            <!-- ===== END: เพิ่มปุ่มบันทึกเป็นรูปภาพ ===== -->
             <button class="close-popup-btn" onclick="closeResultPopup()">ปิดหน้าต่างนี้</button>
         </div>
     </div>
