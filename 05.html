@@ -98,7 +98,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 
 /* พื้นหลังสีชมพู สำหรับ "รางวัลเลข 5 ตัว" */
 .prize-title {
-    border: 5px solid #AD1457;
+    border: 3px solid #AD1457;
     background: linear-gradient(to bottom, #F48FB1, #EC407A);
 }
 
@@ -128,20 +128,32 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
 .ball-group svg { margin: 0 0px; }
 
-/* START: Prize Label (ฉบับแก้ไข) */
+/* --- START: โค้ดที่ปรับปรุงสีตามคำขอ --- */
+/* สไตล์ร่วมของป้าย */
 .prize-label-blue, .prize-label-orange {
+    display: inline-block;
     font-weight: bold;
     font-size: 22px;
-    margin: 5px 0;
-    /* START: ปรับปรุงโค้ด - เพิ่มขนาดขอบสีขาว */
-    -webkit-text-stroke: 2px white; /* เพิ่มขนาดขอบ */
-    paint-order: stroke fill;
-    /* text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.5); */
-    /* END: ปรับปรุงโค้ด */
+    margin: 0;
+    padding: 5px 15px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.prize-label-blue { color: blue; } /* สีตัวหนังสือ 3 ตัวบน */
-.prize-label-orange { color: orange; } /* สีตัวหนังสือ 2 ตัวล่าง */
-/* END: Prize Label (ฉบับแก้ไข) */
+
+/* สไตล์สำหรับ "3 ตัวบน" - ธีมสีน้ำเงิน/เขียว */
+.prize-label-blue {
+    background: linear-gradient(to bottom, #47D359, #0066cc);
+    border: 2px solid #004C99; /* สีน้ำเงินเข้ม */
+    border-radius: 10px;
+}
+
+/* สไตล์สำหรับ "2 ตัวล่าง" - ธีมสีส้ม */
+.prize-label-orange {
+    background: linear-gradient(to bottom, #FFB74D, #FF8C00);
+    border: 2px solid #C66900; /* สีส้มเข้ม */
+    border-radius: 50px;
+}
+/* --- END: โค้ดที่ปรับปรุงสีตามคำขอ --- */
 
 /* Number Containers */
 .circle-container, .square-container, .square-two-container { display: inline-flex; justify-content: center; align-items: center; height: 38px; margin: 0 0.5px; padding: 5px; background: transparent; box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4); }
@@ -150,7 +162,15 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .square-two-container { width: 88px; border: 3px solid blue; }
 /* Numbers Display */
 .numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: 8px 0; }
-.number-group { text-align: center; min-width: 120px; }
+
+.number-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 150px;
+}
+
 /* Responsive */
 @media (max-width: 480px) { #numberInput { font-size: 18px; padding: 8px; } }
 footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
