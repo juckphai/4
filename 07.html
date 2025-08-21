@@ -174,7 +174,6 @@ select {
   text-align: center;
 }
 
-/* START: ปรับปรุงโค้ด - Popup Date */
 #popupDateDisplay {
     margin: 3px 0;
     color: blue;
@@ -182,9 +181,7 @@ select {
     paint-order: stroke fill;
     font-size: clamp(16px, 3.4vw, 20px);
 }
-/* END: ปรับปรุงโค้ด */
 
-/* START: ปรับปรุงโค้ด - CSS สำหรับหัวข้อรางวัล */
 .prize-title, .prize-title-red {
     display: inline-block;
     font-size: 22px;
@@ -194,24 +191,20 @@ select {
     margin: 4px 0 7px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
-    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); */
 }
-/* END: ปรับปรุงโค้ด */
+
 .prize-title {
     border: 5px solid #AD1457;
     background: linear-gradient(to bottom, #F48FB1, #EC407A);
 }
 
-/* --- START: โค้ดที่ได้รับการปรับปรุงตามคำขอ --- */
 .prize-title-red {
-    border: 5px solid #B71C1C;
+    border: 3px solid #B71C1C;
     background: linear-gradient(to bottom, #E53935, #C62828);
-    font-size: 36px;      /* เพิ่มขนาดตัวอักษร */
-    padding: 5px 10px;    /* เพิ่มขนาดพื้นหลัง */
-    border-radius: 50px;  /* ทำให้ขอบเป็นวงกลม/โค้งมน */
+    font-size: 36px;
+    padding: 5px 10px;
+    border-radius: 50px;
 }
-/* --- END: โค้ดที่ได้รับการปรับปรุงตามคำขอ --- */
-
 
 /* ปุ่มใน Popup */
 .popup-buttons-container {
@@ -221,22 +214,18 @@ select {
   gap: 10px;
   padding-top: 15px;
 }
-
 .popup-buttons {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
-
 .popup-button {
   padding: 8px 15px;
   background-color: #FF9800;
 }
-
 .popup-button:hover { background-color: #F57C00; }
 .popup-button.active { background-color: #4CAF50; }
-
 .close-popup {
   padding: 8px 15px;
   background-color: #f44336;
@@ -245,22 +234,41 @@ select {
 }
 .close-popup:hover { background-color: #d32f2f; }
 
-/* START: ปรับปรุงโค้ด - CSS ป้ายรางวัล */
-.prize-label-blue,
-.prize-label-orange {
-  font-weight: bold;
-  font-size: 22px;
-  margin: 5px 0;
-  -webkit-text-stroke: 2px white;
-  paint-order: stroke fill;
+
+/* --- START: โค้ดที่ปรับปรุงตามคำขอ --- */
+/* สไตล์ร่วมของป้าย */
+.prize-label-blue, .prize-label-orange {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0;
+    padding: 5px 15px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-/* END: ปรับปรุงโค้ด */
+
+/* สไตล์สำหรับ "3 ตัวบน" - ธีมสีน้ำเงิน/เขียว */
 .prize-label-blue {
-  color: #0066cc;
+    background: linear-gradient(to bottom, #47D359, #0066cc);
+    border: 2px solid #004C99; /* สีน้ำเงินเข้ม */
+    border-radius: 10px;
 }
+
+/* สไตล์สำหรับ "2 ตัวล่าง" - ธีมสีส้ม */
 .prize-label-orange {
-  color: #FF8C00;
+    background: linear-gradient(to bottom, #FFB74D, #FF8C00);
+    border: 2px solid #C66900; /* สีส้มเข้ม */
+    border-radius: 50px;
 }
+
+.number-group {
+    display: flex;
+    flex-direction: column; /* จัดเรียง ป้าย และ ตัวเลข ในแนวตั้ง */
+    align-items: center;   /* จัดให้อยู่กึ่งกลางแนวนอน */
+    gap: 8px;              /* เพิ่มระยะห่างระหว่างป้ายกับตัวเลข */
+    min-width: 150px;      /* ปรับความกว้างขั้นต่ำ */
+}
+/* --- END: โค้ดที่ปรับปรุงตามคำขอ --- */
 
 
 /* กลุ่มลูกปิงปอง */
@@ -287,7 +295,6 @@ select {
   background: transparent;
   box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4);
 }
-
 .circle-container { width: 88px; border: 3px solid #FF00FF; border-radius: 2%; }
 .square-container { width: 131px; border: 3px solid red; }
 .square-two-container { width: 88px; border: 3px solid blue; }
@@ -300,11 +307,6 @@ select {
   flex-wrap: wrap;
   gap: 10px;
   margin: 8px 0;
-}
-
-.number-group {
-  text-align: center;
-  min-width: 120px;
 }
 
 @media (max-width: 480px) {
