@@ -14,12 +14,15 @@
     <meta name="apple-mobile-web-app-title" content="ผลลาวสตาร์">
     <!-- End of PWA-related additions -->
 
+    <!-- เพิ่มสคริปต์ html2canvas สำหรับการบันทึกรูปภาพ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 /* ---------- พื้นหลังและฟอนต์ของหน้า ---------- */
 body { font-family: Arial, sans-serif; background-color: #fffde7; margin: 0 auto; padding: 0 20px; max-width: 600px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 /* ---------- หัวเรื่อง ---------- */
 h1 { text-align: center; color: #e65100; margin: 10px 0 15px; font-size: 24px; }
-.blue { color: blue; font-size: 22px; }
+.blue { color: blue; }
 .red { color: red; }
 /* ---------- ปุ่มทั่วไป ---------- */
 .convert-button, .back-button, .popup-button, .close-popup { border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color 0.3s; }
@@ -40,35 +43,111 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .form-footer { display: flex; justify-content: center; margin-top: 15px; }
 /* ---------- Popup Overlay ---------- */
 .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; }
-/* ---------- Popup Content ---------- */
-.popup-content { background-color: #fffde7; border-radius: 1px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); width: 100%; max-width: 600px; padding: 20px 2px; position: relative; }
-.popup-main-content { position: relative; background-color: #FFFFD1; margin: 20px 5px; padding: 20px 0; border-radius: 10px; border: 1.5px solid green; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: calc(100% - 4px); text-align: center; width: auto; }
+
+.popup-content {
+    background-color: #fffde7;
+    border-radius: 1px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 600px;
+    padding: 8px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.popup-main-content {
+    position: relative;
+    background-color: #FFFFD1;
+    margin: 0;
+    padding: 8px 8px;
+    border-radius: 10px;
+    border: 1.5px solid green;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* --- START: นำโลโก้พื้นหลังออก --- */
+/*
 .popup-main-content::before { content: ""; background-image: url('logo.png'); background-size: 80% auto; background-repeat: no-repeat; background-position: center; opacity: 0.4; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; }
+*/
+/* --- END: นำโลโก้พื้นหลังออก --- */
+
 /* Popup Header and Date */
-#popupTopicDisplay, #popupDateDisplay { margin: 3px 0; color: blue; text-shadow: -2px -2px 1px #fff8dc, -1px -1px 1px #fff8dc, 1px 1px 0 #cc9900, 2px 2px 2px #996600, 3px 3px 3px rgba(0, 0, 0, 0.25); }
-#popupTopicDisplay { font-weight: bold; font-size: clamp(18px, 4.4vw, 26px); }
-#popupDateDisplay { font-size: clamp(16px, 3.4vw, 20px); }
+/* START: ปรับปรุงโค้ด - เพิ่มขนาดขอบสีขาว */
+#popupTimeDisplay, #popupDateDisplay {
+    margin: 3px 0;
+    color: blue;
+    -webkit-text-stroke: 2px white; /* เพิ่มขนาดขอบ */
+    paint-order: stroke fill;
+}
+/* END: ปรับปรุงโค้ด */
+#popupTimeDisplay, #popupDateDisplay { font-size: clamp(16px, 3.4vw, 20px); }
+
+/* START: CSS สำหรับหัวข้อรางวัล (ฉบับแก้ไข) */
+.prize-title, .prize-title-red {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 5px 15px;
+    margin: 4px 0 7px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); */
+}
+
+/* พื้นหลังสีชมพู สำหรับ "รางวัลเลข 5 ตัว" */
+.prize-title {
+    border: 2px solid #AD1457;
+    background: linear-gradient(to bottom, #F48FB1, #EC407A);
+}
+
+/* พื้นหลังสีแดง สำหรับหัวข้อบนสุด (ฉบับปรับปรุง) */
+.prize-title-red {
+    border: 5px solid #B71C1C;
+    background: linear-gradient(to bottom, #E53935, #C62828);
+    /* --- START: โค้ดที่ได้รับการปรับปรุงตามคำขอ --- */
+    font-size: 30px;      /* เพิ่มขนาดตัวอักษร */
+    padding: 5px 10px;    /* เพิ่มขนาดพื้นหลัง (padding) */
+    border-radius: 50px;  /* ทำให้ขอบเป็นวงกลม/โค้งมน */
+    /* --- END: โค้ดที่ได้รับการปรับปรุงตามคำขอ --- */
+}
+/* END: CSS สำหรับหัวข้อรางวัล (ฉบับแก้ไข) */
+
+
 /* Popup Buttons */
-.popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 15px; }
 .popup-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
 .popup-button { padding: 8px 15px; background-color: #FF9800; }
 .popup-button:hover { background-color: #F57C00; }
 .popup-button.active { background-color: #4CAF50; }
 .close-popup { padding: 8px 15px; background-color: #f44336; width: 100%; max-width: 200px; }
 .close-popup:hover { background-color: #d32f2f; }
-/* Pingpong Ball */
-.pingpong-ball { display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 50%; color: #fff; font-size: 22px; font-weight: bold; margin: 0 0.5px; background: radial-gradient(circle at 30% 30%, #e0e0e0, #888888); box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 -4px 8px rgba(255, 255, 255, 0.2), inset -4px -4px 6px rgba(0, 0, 0, 0.25), inset 4px 4px 6px rgba(255, 255, 255, 0.25); text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.7), 1px 1px 2px rgba(255, 255, 255, 0.3); transition: box-shadow 0.3s ease; }
-.pingpong-ball-red { background: radial-gradient(circle at 30% 30%, #FFB3B3, #FF00FF); box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.6), inset 0 -4px 8px rgba(255, 255, 255, 0.2), inset -4px -4px 6px rgba(0, 0, 0, 0.3), inset 4px 4px 6px rgba(255, 255, 255, 0.3); }
-.pingpong-ball-blue { background: radial-gradient(circle at 30% 30%, #47D359, #0066cc); }
-.pingpong-ball-orange { background: radial-gradient(circle at 30% 30%, #ff9933, #cc6600); }
-/* Prize Label */
-.prize-label-red, .prize-label-blue, .prize-label-orange { font-weight: bold; font-size: 22px; color: blue; margin: 5px 0; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.5); }
-.ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; }
+
+/* --- CSS สำหรับ SVG และส่วนอื่นๆ --- */
+.ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
+.ball-group svg { margin: 0 0px; }
+
+/* START: Prize Label (ฉบับแก้ไข) */
+.prize-label-blue, .prize-label-orange {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 5px 0;
+    /* START: ปรับปรุงโค้ด - เพิ่มขนาดขอบสีขาว */
+    -webkit-text-stroke: 2px white; /* เพิ่มขนาดขอบ */
+    paint-order: stroke fill;
+    /* text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.5); */
+    /* END: ปรับปรุงโค้ด */
+}
+.prize-label-blue { color: blue; } /* สีตัวหนังสือ 3 ตัวบน */
+.prize-label-orange { color: orange; } /* สีตัวหนังสือ 2 ตัวล่าง */
+/* END: Prize Label (ฉบับแก้ไข) */
+
 /* Number Containers */
 .circle-container, .square-container, .square-two-container { display: inline-flex; justify-content: center; align-items: center; height: 38px; margin: 0 0.5px; padding: 5px; background: transparent; box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4); }
-.circle-container { width: 82px; border: 3px solid #FF00FF; border-radius: 2%; }
-.square-container { width: 125px; border: 3px solid red; }
-.square-two-container { width: 82px; border: 3px solid blue; }
+.circle-container { width: 88px; border: 3px solid #FF00FF; border-radius: 2%; }
+.square-container { width: 131px; border: 3px solid red; }
+.square-two-container { width: 88px; border: 3px solid blue; }
 /* Numbers Display */
 .numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: 8px 0; }
 .number-group { text-align: center; min-width: 120px; }
@@ -105,11 +184,18 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
     <div id="popupOverlay" class="popup-overlay">
         <div class="popup-content">
-            <div class="popup-main-content">
+            <div id="captureArea" class="popup-main-content">
                 <div style="position: relative; z-index: 1;">
-                    <h3 id="popupTopicDisplay" class="blue"></h3>
+                    <div id="popupNameDisplay" class="prize-title-red"></div>
+                    <p id="popupTimeDisplay" class="blue"></p>
                     <p id="popupDateDisplay" class="blue"></p>
-                    <h2 class="prize-label-red">รางวัลเลข 5 ตัว</h2>
+                    
+                    <div style="margin-top: 15px; display: flex; align-items: center; justify-content: center;">
+                        <img src="logo.png" alt="Logo Left" style="width: 60px; height: 60px; margin-right: 10px;">
+                        <div class="prize-title">รางวัลเลข 5 ตัว</div>
+                        <img src="logo.png" alt="Logo Right" style="width: 60px; height: 60px; margin-left: 10px;">
+                    </div>
+
                     <div id="popupFiveDigitsDisplay" class="ball-group"></div>
                     <div class="numbers-display">
                         <div class="number-group">
@@ -129,6 +215,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     <button id="popupSquareButton" class="popup-button" onclick="toggleSquarePopup()">สี่เหลี่ยมสามตัวบน</button>
                     <button id="popupCircleTopButton" class="popup-button" onclick="toggleSquareTopPopup()">สี่เหลี่ยมสองตัวบน</button>
                 </div>
+                <button id="saveAsImageButton" class="popup-button" style="background-color: #007bff; max-width: 200px; width: 100%;">บันทึกเป็นรูปภาพ</button>
                 <button class="close-popup" onclick="closePopup()">ปิดหน้าต่างนี้</button>
             </div>
         </div>
@@ -137,16 +224,136 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     <footer>&copy; 2025 Juckphai. All Rights Reserved.</footer>
     
     <script>
+        // --- START: ฟังก์ชันสร้างลูกบอล SVG (ฉบับแก้ไขเฉพาะสีฟ้า) ---
+        function createPingPongBall(number, type = 'red') {
+            const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
+
+            // เงื่อนไขพิเศษสำหรับลูกบอลสีฟ้า (blue)
+            if (type === 'blue') {
+                return `
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="${gradientId}" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#47D359" />
+                                <stop offset="100%" stop-color="#0066cc" />
+                            </radialGradient>
+                        </defs>
+                        <circle cx="25" cy="25" r="24" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                            font-family="Arial, sans-serif" font-size="26" font-weight="bold"
+                            fill="white">
+                            ${number}
+                        </text>
+                    </svg>
+                `;
+            }
+
+            // โค้ดสำหรับลูกบอลสีอื่นๆ (ชมพู และ ส้ม) จะยังคงเหมือนเดิม
+            let highlightColor, midColor, shadowColor;
+
+            if (type === 'red') { // สีชมพู
+                highlightColor = '#FFD6FF';
+                midColor = '#E800E8';
+                shadowColor = '#A100A1';
+            } else { // 'orange' - สีส้ม
+                highlightColor = '#FFE3A0';
+                midColor = '#FF8C00';
+                shadowColor = '#D97200';
+            }
+             
+            // สร้าง SVG สำหรับสีชมพูและสีส้ม
+            return `
+                <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
+                            <stop offset="0%" stop-color="${highlightColor}" />
+                            <stop offset="50%" stop-color="${midColor}" />
+                            <stop offset="100%" stop-color="${shadowColor}" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="25" cy="25" r="24" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                          font-family="Arial, sans-serif" font-size="26" font-weight="bold"
+                          fill="white">
+                        ${number}
+                    </text>
+                </svg>
+            `;
+        }
+        // --- END: ฟังก์ชันสร้างลูกบอล SVG ---
+
         function setDefaultDate() { const dateInput = document.getElementById("dateInput"); if (dateInput) { const localDate = new Date(new Date().getTime() + (7 * 60 * 60 * 1000)); dateInput.value = localDate.toISOString().split('T')[0]; } }
-        function createPingPongBall(number, type = 'red') { return `<span class="pingpong-ball pingpong-ball-${type}">${number}</span>`; }
         function createPingPongNumbers(numbers, type = 'red') { return numbers.split('').map(digit => createPingPongBall(digit, type)).join(''); }
         function showPopup() { document.getElementById("popupOverlay").style.display = "flex"; }
         function closePopup() { document.getElementById("popupOverlay").style.display = "none"; }
-        function convertNumber() { const num = document.getElementById("numberInput").value; if (num.length !== 5 || isNaN(num)) { alert("กรุณากรอกตัวเลข 5 หลัก"); return; } const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date(); document.getElementById("popupTopicDisplay").textContent = `ผล${document.getElementById("topicSelect").value}`; document.getElementById("popupDateDisplay").textContent = getThaiDate(date); document.getElementById("popupFiveDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red'); document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(2), 'blue'); document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(0, 2), 'orange'); ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active")); showPopup(); }
-        function toggleCirclePopup() { const display = document.getElementById("popupTwoDigitsDisplay"); const button = document.getElementById("popupCircleButton"); if (button.classList.toggle("active")) { const numbers = display.textContent.replace(/\D/g, ''); display.innerHTML = `<div class="circle-container">${createPingPongNumbers(numbers, 'orange')}</div>`; } else { display.innerHTML = createPingPongNumbers(display.textContent.replace(/\D/g, ''), 'orange'); } }
-        function toggleSquarePopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupSquareButton"); if (button.classList.toggle("active")) { const numbers = display.textContent.replace(/\D/g, ''); display.innerHTML = `<div class="square-container">${createPingPongNumbers(numbers, 'blue')}</div>`; } else { display.innerHTML = createPingPongNumbers(display.textContent.replace(/\D/g, ''), 'blue'); } }
-        function toggleSquareTopPopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupCircleTopButton"); if (button.classList.toggle("active")) { const numbers = display.textContent.replace(/\D/g, ''); display.innerHTML = `${createPingPongBall(numbers[0], 'blue')}<div class="square-two-container">${createPingPongNumbers(numbers.slice(1), 'blue')}</div>`; } else { display.innerHTML = createPingPongNumbers(display.textContent.replace(/\D/g, ''), 'blue'); } }
+        
+        function convertNumber() { 
+            const num = document.getElementById("numberInput").value; 
+            if (num.length !== 5 || isNaN(num)) { 
+                alert("กรุณากรอกตัวเลข 5 หลัก"); 
+                return; 
+            } 
+            const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date(); 
+            
+            const fullTopic = document.getElementById("topicSelect").value;
+            const topicParts = fullTopic.split(' เวลา ');
+            const topicName = topicParts[0];
+            const topicTime = topicParts.length > 1 ? `เวลา ${topicParts[1]}` : '';
+
+            document.getElementById("popupNameDisplay").textContent = `ผล${topicName}`;
+            document.getElementById("popupTimeDisplay").textContent = topicTime;
+            
+            document.getElementById("popupDateDisplay").textContent = getThaiDate(date); 
+            document.getElementById("popupFiveDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red'); 
+            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(2), 'blue'); 
+            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(0, 2), 'orange'); 
+            ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active")); 
+            
+            showPopup(); 
+            setupSaveImageButton();
+        }
+
+        function toggleCirclePopup() { const display = document.getElementById("popupTwoDigitsDisplay"); const button = document.getElementById("popupCircleButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(0, 2); display.innerHTML = `<div class="circle-container">${createPingPongNumbers(numbers, 'orange')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(0, 2); display.innerHTML = createPingPongNumbers(numbers, 'orange'); } }
+        function toggleSquarePopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupSquareButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = `<div class="square-container">${createPingPongNumbers(numbers, 'blue')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = createPingPongNumbers(numbers, 'blue'); } }
+        function toggleSquareTopPopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupCircleTopButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = `${createPingPongBall(numbers[0], 'blue')}<div class="square-two-container">${createPingPongNumbers(numbers.slice(1), 'blue')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = createPingPongNumbers(numbers, 'blue'); } }
         function getThaiDate(date = new Date()) { const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]; const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]; return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`; }
+        
+        function setupSaveImageButton() {
+            const saveBtn = document.getElementById("saveAsImageButton");
+            const newSaveBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+            newSaveBtn.addEventListener("click", function() {
+                const captureElement = document.querySelector(".popup-content");
+                const controlsElement = captureElement.querySelector('.popup-buttons-container');
+
+                if (controlsElement) {
+                    controlsElement.style.display = 'none';
+                }
+
+                html2canvas(captureElement, {
+                    useCORS: true,
+                    scale: 2.5,
+                    backgroundColor: '#fffde7'
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    const num = document.getElementById("numberInput").value || "XXXXX";
+                    const topic = document.getElementById("topicSelect").value.split(' ')[0] || "Result";
+                    
+                    link.download = `Result-${topic}-${num}-${Date.now()}.png`;
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                }).catch(err => {
+                    console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
+                    alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
+                }).finally(() => {
+                    if (controlsElement) {
+                        controlsElement.style.display = 'flex';
+                    }
+                });
+            });
+        }
+
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener("DOMContentLoaded", () => { document.getElementById("convertButton").addEventListener("click", convertNumber); setDefaultDate(); });
 
