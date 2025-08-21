@@ -114,7 +114,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 3px;
             margin-top: 15px;
         }
 
@@ -143,7 +143,7 @@
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color: 0.3s;
             padding: 10px 20px;
             background-color: #f44336;
             width: 90%;
@@ -211,33 +211,40 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
         }
 
-        .result-title {
+        .prize-label-blue, .prize-label-green, .prize-label-orange {
+            display: inline-block;
             font-weight: bold;
-            margin-bottom: 5px;
-            margin-top: 5px;
-        }
-
-        .front-three-title {
-            color: #1565C0;
             font-size: 20px;
-            font-weight: bold;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
+            margin: 0;
+            padding: 8px 15px;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        .back-three-title {
-            color: #2E7D32;
-            font-size: 20px;
-            font-weight: bold;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
+        .prize-label-blue {
+            background: linear-gradient(to bottom, #89CFF0, #007FFF);
+            border: 2px solid #0059B3;
+            border-radius: 10px;
         }
-        .back-two-title {
-            color: #BF360C;
-            font-size: 24px;
-            font-weight: bold;
+        .prize-label-green {
+            background: linear-gradient(to bottom, #90EE90, #008000);
+            border: 2px solid #006400;
+            border-radius: 10px;
+        }
+        .prize-label-orange {
+            font-size: 22px;
+            background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
+            border: 2px solid #D97200;
+            border-radius: 50px;
+        }
+        .prize-group-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
             margin-top: 10px;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
         }
-
+        
         .number-group {
             display: flex;
             justify-content: center;
@@ -246,12 +253,15 @@
             min-height: 50px;
         }
 
+        /* --- START: โค้ดที่ปรับปรุงตามคำขอ --- */
         .flex-row {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             flex-wrap: wrap;
+            gap: 3px 20px; /* <-- ปรับลดระยะห่างแนวตั้ง (row-gap) เป็น 15px */
         }
+        /* --- END: โค้ดที่ปรับปรุงตามคำขอ --- */
 
         .button-container button {
             font-size: 22px;
@@ -282,19 +292,7 @@
         #first-prize-display {
             margin-top: 15px;
         }
-
-        .result-title-with-margin {
-            margin-bottom: 15px;
-        }
         
-        .back-two-section {
-            margin-top: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .back-two-number-group {
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 <body>
@@ -342,29 +340,31 @@
                     <div class="draw-date">
                         <span id="display-draw-date"></span>
                     </div>
-                    <div class="result-section" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <div class="result-section" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
                         <img src="logo.png" alt="Logo Left" style="width: 50px; height: 50px; margin-right: 10px;">
                         <div class="prize-title">รางวัลที่ 1</div>
                         <img src="logo.png" alt="Logo Right" style="width: 50px; height: 50px; margin-left: 10px;">
                     </div>
                     <div id="first-prize-display" class="number-group" style="margin-top: 5px;"></div>
+                    
                     <div class="result-section flex-row">
-                        <div>
-                            <h3 class="result-title front-three-title result-title-with-margin">เลขหน้า 3 ตัว</h3>
+                        <div class="prize-group-vertical">
+                            <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
                             <div id="display-front-three-1" class="number-group"></div>
                             <div id="display-front-three-2" class="number-group"></div>
                         </div>
-                        <div style="margin: 0 15px;"></div>
-                        <div>
-                            <h3 class="result-title back-three-title result-title-with-margin">เลขท้าย 3 ตัว</h3>
+                        <div class="prize-group-vertical">
+                            <p class="prize-label-green">เลขท้าย 3 ตัว</p>
                             <div id="display-back-three-1" class="number-group"></div>
                             <div id="display-back-three-2" class="number-group"></div>
                         </div>
                     </div>
-                    <div class="result-section back-two-section">
-                        <div id="display-back-two" class="number-group back-two-number-group"></div>
-                        <h3 class="result-title back-two-title">เลขท้าย 2 ตัว</h3>
+                    
+                    <div class="result-section prize-group-vertical">
+                        <div id="display-back-two" class="number-group"></div>
+                        <p class="prize-label-orange">เลขท้าย 2 ตัว</p>
                     </div>
+
                 </div>
             </div>
             <div class="popup-controls">
@@ -449,7 +449,6 @@
             return `งวดวันที่ ${dateString}`;
         }
 
-        // --- START: ฟังก์ชันสร้างลูกบอล SVG (ปรับปรุงสีฟ้าและเขียว) ---
         function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
             const r = (size / 2) - 1;
@@ -460,9 +459,9 @@
             let highlightColor, midColor, shadowColor;
             
             if (type === 'blue') {
-                highlightColor = '#89CFF0'; // Baby Blue
-                midColor = '#007FFF';   // Azure
-                shadowColor = '#0059B3';  // Darker Azure
+                highlightColor = '#89CFF0';
+                midColor = '#007FFF';
+                shadowColor = '#0059B3';
                  gradientHtml = `
                     <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
                         <stop offset="0%" stop-color="${highlightColor}" />
@@ -471,9 +470,9 @@
                     </radialGradient>
                 `;
             } else if (type === 'green') {
-                highlightColor = '#90EE90'; // Light Green
-                midColor = '#008000';   // Green
-                shadowColor = '#006400';  // Dark Green
+                highlightColor = '#90EE90';
+                midColor = '#008000';
+                shadowColor = '#006400';
                  gradientHtml = `
                     <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
                         <stop offset="0%" stop-color="${highlightColor}" />
@@ -514,7 +513,6 @@
                 </svg>
             `;
         }
-        // --- END: ฟังก์ชันสร้างลูกบอล SVG ---
         
         function displayNumberGroup(elementId, numberString, type, size, fontSize) {
             const container = document.getElementById(elementId);
