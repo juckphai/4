@@ -184,7 +184,6 @@
     box-sizing: border-box;
 }
     
-    /* ===== START: แก้ไข CSS Popup ให้เหมือน 002.html ===== */
     .result-container-popup {
         border: 1.5px solid #4CAF50;
         background-color: #FFFFD1;
@@ -196,34 +195,55 @@
         position: relative;
         min-height: 300px;
         box-sizing: border-box;
-        overflow: hidden; /* ป้องกันโลโก้ล้น */
+        overflow: hidden;
     }
 
-    /* เพิ่ม CSS สำหรับโลโก้ที่เป็นรูปภาพจริง */
-    .result-bg-logo {
-        position: absolute;
-        top: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
+    /* ===== START: เพิ่ม CSS จากไฟล์ 01 สำหรับ Header และ Logo ===== */
+    .result-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* ระยะห่างระหว่างโลโก้กับกล่องข้อความ */
+        margin-bottom: 5px;
+    }
+    
+    .header-logo {
+        width: 60px; /* ปรับขนาดโลโก้ตามต้องการ */
         height: auto;
-        opacity: 0.4;
-        z-index: 0; /* ให้อยู่หลังสุด */
     }
 
-    /* แก้ไข #resultContent เป็น Wrapper */
+    .topic-box {
+        background-color: red;
+        color: white;
+        border-radius: 50px; /* ทำให้ขอบกลม */
+        padding: 8px 15px;
+        font-size: 22px;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        text-align: center;
+    }
+    
+    .topic-time {
+        font-size: 18px;
+        color: blue;
+        font-weight: bold;
+        text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    /* ===== END: เพิ่ม CSS จากไฟล์ 01 ===== */
+
     #resultContentWrapper {
         position: relative;
-        z-index: 1; /* ให้อยู่ด้านหน้าโลโก้ */
+        z-index: 1; 
         color: blue;
-        line-height: 0.7; /* default line height for result */
+        line-height: 0.7; 
     }
 
     #resultContentWrapper p, #resultContentWrapper h2, #resultContentWrapper h3 {
-        margin: 0 0 10px 0; /* consistent margin for result elements */
-        line-height: inherit; /* inherit from #resultContentWrapper */
+        margin: 0 0 10px 0;
+        line-height: inherit;
     }
-    /* ===== END: แก้ไข CSS Popup ===== */
 
     .controls {
         display: flex;
@@ -350,19 +370,17 @@
     <!-- ---------- Popup Container ---------- -->
     <div id="resultPopupOverlay" class="popup-overlay">
         <div class="popup-content">
-            <!-- ===== START: แก้ไขโครงสร้าง HTML Popup ให้เหมือน 002.html ===== -->
             <div id="resultContainerDiv" class="result-container-popup">
-                <img src="logo.png" class="result-bg-logo" alt="">
+                <!-- ===== START: ลบ img logo พื้นหลังออก ===== -->
+                <!-- <img src="logo.png" class="result-bg-logo" alt=""> -->
+                <!-- ===== END: ลบ img logo พื้นหลังออก ===== -->
                 <div id="resultContentWrapper">
                     <!-- เนื้อหาผลลัพธ์จะถูกใส่ที่นี่โดย JavaScript -->
                 </div>
             </div>
-            <!-- ===== END: แก้ไขโครงสร้าง HTML Popup ===== -->
             <div class="controls">
-                <!-- ปุ่มบันทึกเป็นรูปภาพ (ย้ายมาไว้เป็นลำดับแรก) -->
                 <button id="saveResultAsImageBtn" class="close-popup-btn" style="background-color: #007bff; margin-bottom: 20px;">บันทึกเป็นรูปภาพ</button>
                 
-                <!-- ส่วนควบคุมอื่นๆ -->
                 <div class="control-group">
                     <label for="popupFontSizeSlider">ปรับขนาดตัวอักษร:</label>
                     <input type="range" id="popupFontSizeSlider" min="0.5" max="1.5" step="0.05" value="1.0">
@@ -370,8 +388,8 @@
                 </div>
                 <div class="control-group">
                     <label for="popupLineHeightSlider">ปรับขนาดของบรรทัด:</label>
-                    <input type="range" id="popupLineHeightSlider" min="0.5" max="2.5" step="0.1" value="0.9">
-                    <span id="popupLineHeightValue">ความสูงของบรรทัด: 0.9</span>
+                    <input type="range" id="popupLineHeightSlider" min="0.5" max="2.5" step="0.1" value="0.7">
+                    <span id="popupLineHeightValue">ความสูงของบรรทัด: 0.7</span>
                 </div>
                 <button class="close-popup-btn" onclick="closeResultPopup()">ปิดหน้าต่างนี้</button>
             </div>
@@ -384,7 +402,6 @@
         </div>
     </footer>
 
-<!-- ===== START: แก้ไข JavaScript ทั้งหมด ===== -->
 <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -446,13 +463,22 @@
             return null;
         }
 
+        // ===== START: แก้ไขการดึงข้อมูล Topic ให้แยกชื่อและเวลา =====
         const topicSelect = document.getElementById("topicSelect");
-        let selectedTopic = topicSelect.value;
-        if (selectedTopic === "custom") {
-            const name = document.getElementById("topicNameInput").value.trim();
-            const time = document.getElementById("topicTimeInput").value.trim();
-            selectedTopic = name && time ? `${name} เวลา ${time}` : name || time || "(ไม่ระบุหัวข้อ)";
+        let topicName = '';
+        let topicTime = '';
+
+        if (topicSelect.value === "custom") {
+            topicName = document.getElementById("topicNameInput").value.trim() || "(ไม่ระบุหัวข้อ)";
+            const timeInput = document.getElementById("topicTimeInput").value.trim();
+            topicTime = timeInput ? `เวลา ${timeInput}` : '';
+        } else {
+            const selectedText = topicSelect.options[topicSelect.selectedIndex].text;
+            const parts = selectedText.split(' เวลา ');
+            topicName = parts[0];
+            topicTime = parts.length > 1 ? `เวลา ${parts[1]}` : '';
         }
+        // ===== END: แก้ไขการดึงข้อมูล Topic =====
 
         const personSelect = document.getElementById("personSelect");
         let selectedPerson = personSelect.value;
@@ -467,6 +493,10 @@
 
         const lunarDate = getLunarDate(date);
         const lunarHtml = lunarDate ? `<p style="font-size: 14px; color: ${lunarDate.includes('วันพระ') ? 'red' : '#002060'}; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDate} )</p>` : '';
+        
+        // ===== START: เพิ่มตัวแปรสำหรับ HTML ของเวลา =====
+        const topicTimeHtml = topicTime ? `<p class="topic-time">${topicTime}</p>` : '';
+        // ===== END: เพิ่มตัวแปรสำหรับ HTML ของเวลา =====
 
         const transformRules = {'0':'1','1':'7','2':'5','3':'8','4':'9','5':'2','6':'9','7':'1','8':'3','9':'6'};
         const transformed = num.split('').map(d => transformRules[d]).join('');
@@ -486,8 +516,14 @@
         const greenSpan = (text) => `<span style="color: green;">${text}</span>`;
         const noDataSpan = '<span style="color: green; font-size: 18px;">ไม่มีชุดตัวเลขเพิ่ม</span>';
 
+        // ===== START: แก้ไขโครงสร้าง HTML ที่ return ให้มี Header แบบใหม่ =====
         return `<div style="position: relative; text-align: center; color: blue;">
-            <p style="font-size: 24px; font-weight: bold; ${textShadow}">${selectedTopic}</p>
+            <div class="result-header">
+                <img src="logo.png" class="header-logo" alt="logo">
+                <div class="topic-box">${topicName}</div>
+                <img src="logo.png" class="header-logo" alt="logo">
+            </div>
+            ${topicTimeHtml}
             <p style="font-size: 18px; ${textShadow}">${getThaiDate(date)}</p>
             ${lunarHtml}
             <h2 style="font-weight: bold; ${textShadow}">3 ตัว ${redSpan(num)} By : ${greenSpan(selectedPerson)}</h2>
@@ -499,14 +535,16 @@
             <p style="font-size: 13px; ${textShadow}">แปล: ${getThaiDate()} ${getThaiTime()}</p>
             <p style="font-size: 20px; ${textShadow}">หมายเหตุ : ${noteInput.startsWith('<span') ? noteInput : redSpan(noteInput)}</p>
         </div>`;
+        // ===== END: แก้ไขโครงสร้าง HTML =====
     }
 
-    // ===== START: แก้ไขฟังก์ชันควบคุม Popup และเพิ่มฟังก์ชันบันทึกรูปภาพ =====
     function setupPopupControls() {
         const resultContentWrapper = document.getElementById("resultContentWrapper");
         if (!resultContentWrapper) return;
         
-        const textElements = resultContentWrapper.querySelectorAll('p, h2, h3');
+        // ===== START: เพิ่ม .topic-box เข้าไปใน list เพื่อให้ปรับขนาดได้ =====
+        const textElements = resultContentWrapper.querySelectorAll('p, h2, h3, .topic-box');
+        // ===== END: เพิ่ม .topic-box =====
         const fsSlider = document.getElementById("popupFontSizeSlider");
         const fsValueSpan = document.getElementById("popupFontSizeValue");
         
@@ -533,7 +571,7 @@
 
         function updateLineHeight() {
             const lineHeight = lhSlider.value;
-            resultContentWrapper.style.lineHeight = lineHeight; // Apply to the wrapper
+            resultContentWrapper.style.lineHeight = lineHeight;
             lhValueSpan.textContent = "ความสูงของบรรทัด: " + lineHeight;
         }
         lhSlider.addEventListener("input", updateLineHeight);
@@ -543,23 +581,19 @@
         const newSaveBtn = saveBtn.cloneNode(true);
         saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
-        // ===== START: จุดที่แก้ไขการทำงานของปุ่มบันทึก =====
         newSaveBtn.addEventListener("click", function() {
-            // เปลี่ยนเป้าหมายเป็น .popup-content ซึ่งเป็นคอนเทนเนอร์แม่
             const captureElement = document.querySelector(".popup-content");
             const controlsElement = captureElement.querySelector('.controls');
 
-            // ซ่อนปุ่มควบคุมต่างๆ ก่อนการจับภาพ
             controlsElement.style.display = 'none';
             
-            // เก็บค่า padding เดิมเอาไว้ และกำหนดค่าใหม่ชั่วคราวเพื่อสร้างขอบ
             const originalPadding = captureElement.style.padding;
-            captureElement.style.padding = '7px'; // กำหนดให้มีขอบ 15px รอบด้าน
+            captureElement.style.padding = '7px';
 
             html2canvas(captureElement, {
                 useCORS: true,
                 scale: 2,
-                backgroundColor: '#FFFFD1' // กำหนดสีพื้นหลังของขอบ
+                backgroundColor: '#FFFFD1'
             }).then(canvas => {
                 const link = document.createElement('a');
                 const num = document.getElementById("numberInput").value || "XXX";
@@ -570,19 +604,15 @@
                 console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
                 alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
             }).finally(() => {
-                // คืนค่าทุกอย่างให้เหมือนเดิมหลังจับภาพเสร็จ (ไม่ว่าจะสำเร็จหรือล้มเหลว)
-                controlsElement.style.display = ''; // แสดงส่วนควบคุมอีกครั้ง
-                captureElement.style.padding = originalPadding; // คืนค่า padding เดิม
+                controlsElement.style.display = '';
+                captureElement.style.padding = originalPadding;
             });
         });
-        // ===== END: จุดที่แก้ไขการทำงานของปุ่มบันทึก =====
         
         updateFontSize();
         updateLineHeight();
     }
-    // ===== END: แก้ไขฟังก์ชันควบคุม Popup =====
 
-    // ===== START: แก้ไขฟังก์ชันแสดงผลใน Popup =====
     function displayResultInPopup() {
         const resultHtml = generateResultHTML();
         if (resultHtml) {
@@ -591,7 +621,6 @@
             showResultPopup();
         }
     }
-    // ===== END: แก้ไขฟังก์ชันแสดงผลใน Popup =====
 
     // ===== Page Initialization =====
     document.addEventListener('DOMContentLoaded', () => {
@@ -621,6 +650,5 @@
         });
     }
 </script>
-<!-- ===== สิ้นสุดการแก้ไข JavaScript ===== -->
 </body>
 </html>
