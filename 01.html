@@ -170,15 +170,42 @@
         overflow: hidden;
     }
 
-    .result-bg-logo {
-        position: absolute;
-        top: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
+    /* สไตล์สำหรับจัดวาง Header ของผลลัพธ์ */
+    .result-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* ระยะห่างระหว่างโลโก้กับกล่องข้อความ */
+        margin-bottom: 5px;
+    }
+    
+    /* สไตล์สำหรับโลโก้ด้านซ้ายและขวา */
+    .header-logo {
+        width: 60px; /* ปรับขนาดโลโก้ตามต้องการ */
         height: auto;
-        opacity: 0.4;
-        z-index: 0;
+    }
+
+    /* สไตล์สำหรับกล่องหัวข้อสีฟ้า */
+    .topic-box {
+        background-color: red;
+        color: white;
+        border-radius: 50px; /* ทำให้ขอบกลม */
+        padding: 8px 15px;
+        font-size: 22px;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        /* ไม่ต้องใช้ flex-grow: 1; แล้ว เพื่อให้กรอบพอดีกับเนื้อหา */
+        text-align: center;
+    }
+    
+    /* สไตล์สำหรับแสดงเวลาใต้หัวข้อ */
+    .topic-time {
+        font-size: 18px;
+        color: blue;
+        font-weight: bold;
+        text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+        margin-top: 0;
+        margin-bottom: 10px;
     }
 
     #resultContentWrapper {
@@ -325,7 +352,6 @@
     <div id="resultPopupOverlay" class="popup-overlay">
         <div class="popup-content">
             <div id="resultContainerDiv" class="result-container-popup">
-                <img src="logo.png" class="result-bg-logo" alt="">
                 <div id="resultContentWrapper">
                     <!-- เนื้อหาผลลัพธ์จะถูกใส่ที่นี่โดย JavaScript -->
                 </div>
@@ -390,13 +416,36 @@ const lunarData = {
     function checkCustomOption(select) { const customInput = document.getElementById('customPersonInput'); if (select.value === 'custom') { customInput.style.display = 'block'; customInput.focus(); } else { customInput.style.display = 'none'; } }
     function checkCustomTopicOption(select) { const customInputs = document.getElementById('customTopicInputs'); if (select.value === 'custom') { customInputs.style.display = 'block'; document.getElementById('customTopicName').focus(); } else { customInputs.style.display = 'none'; } }
     function getSelectedPerson() { const personSelect = document.getElementById('personSelect'); if (personSelect.value === 'custom') { const customInput = document.getElementById('customPersonInput'); return customInput.value.trim() || '@'; } return personSelect.value; }
-    function getSelectedTopic() { const topicSelect = document.getElementById('topicSelect'); if (topicSelect.value === 'custom') { const topicName = document.getElementById('customTopicName').value.trim(); const topicTime = document.getElementById('customTopicTime').value.trim(); if (!topicName && !topicTime) { return 'All laos ไม่ระบุ'; } return `${topicName}${topicTime ? ' เวลา ' + topicTime : ''}`; } return topicSelect.options[topicSelect.selectedIndex].text; }
+    
+    // --- ฟังก์ชันใหม่: แยกเอาเฉพาะ "ชื่อหัวข้อ" ---
+    function getTopicName() {
+        const topicSelect = document.getElementById('topicSelect');
+        if (topicSelect.value === 'custom') {
+            return document.getElementById('customTopicName').value.trim() || 'ไม่ระบุหัวข้อ';
+        }
+        const selectedText = topicSelect.options[topicSelect.selectedIndex].text;
+        return selectedText.split(' เวลา ')[0];
+    }
+
+    // --- ฟังก์ชันใหม่: แยกเอาเฉพาะ "เวลา" ---
+    function getTopicTime() {
+        const topicSelect = document.getElementById('topicSelect');
+        if (topicSelect.value === 'custom') {
+            const topicTime = document.getElementById('customTopicTime').value.trim();
+            return topicTime ? `เวลา ${topicTime}` : '';
+        }
+        const parts = topicSelect.options[topicSelect.selectedIndex].text.split(' เวลา ');
+        return parts.length > 1 ? `เวลา ${parts[1]}` : '';
+    }
+
     function getThaiDate(date = new Date()) { const daysOfWeek = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]; const day = String(date.getDate()).padStart(2, '0'); const month = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"][date.getMonth()]; const year = date.getFullYear() + 543; const dayOfWeek = daysOfWeek[date.getDay()]; return `วัน${dayOfWeek}ที่ ${day} ${month} พ.ศ. ${year}`; }
     function getThaiTime() { const now = new Date(); const time = String(now.getHours()).padStart(2, '0') + '.' + String(now.getMinutes()).padStart(2, '0'); return `เวลา ${time} น.`; }
     
+    // --- ฟังก์ชัน `convertNumber` ที่ปรับปรุงการแสดงผล ---
     function convertNumber() { 
         const num = document.getElementById("numberInput").value; 
-        const selectedTopic = getSelectedTopic(); 
+        const topicName = getTopicName(); // เรียกใช้ฟังก์ชันใหม่
+        const topicTime = getTopicTime(); // เรียกใช้ฟังก์ชันใหม่
         const selectedPerson = getSelectedPerson(); 
         let noteInput = document.getElementById("noteInput").value.trim() || '<span style="color: red;">No remarks</span>';
         
@@ -433,10 +482,29 @@ const lunarData = {
         const lunarDisplay = getLunarDate(selectedDate); 
         const lunarHtml = lunarDisplay ? `<p style="font-size: 14px; color: ${lunarDisplay.includes('(วันพระ)') ? 'red' : '#002060'}; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDisplay} )</p>` : '';
         const noteHtml = `หมายเหตุ : ${noteInput.startsWith('<span') ? noteInput : `<span style="color: red;">${noteInput}</span>`}`;
-        
-        return ` <div style="position: relative; text-align: center; color: blue;"> <p style="font-size: 24px; font-weight: bold; color: blue; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"> ${selectedTopic} </p> <p style="font-size: 18px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"> ${dateDisplay} </p> ${lunarHtml} <h2 style="font-size: 22px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"> 2 ตัว <span style="color: red; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${num}</span> By : <span style="color: green; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${selectedPerson}</span> </h2> <h3 style="font-size: 22px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">จัดชุด 2 ตัว</h3> <p style="font-size: 26px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"> ${sortedPairs.join(' - ')} </p> <h2 style="font-size: 24px; font-weight: bold; color: red; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">แนวทางเท่านั้น</h2> <p style="font-size: 13px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">แปล: ${getThaiDate(new Date())} ${getThaiTime()}</p> <p style="font-size: 20px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"> ${noteHtml} </p> </div> `; 
+        const topicTimeHtml = topicTime ? `<p class="topic-time">${topicTime}</p>` : '';
+
+        // --- นี่คือโครงสร้าง HTML ใหม่สำหรับ Popup ---
+        return `
+            <div style="position: relative; text-align: center; color: blue;">
+                <div class="result-header">
+                    <img src="logo.png" class="header-logo" alt="logo">
+                    <div class="topic-box">${topicName}</div>
+                    <img src="logo.png" class="header-logo" alt="logo">
+                </div>
+                ${topicTimeHtml}
+                <p style="font-size: 18px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${dateDisplay}</p>
+                ${lunarHtml}
+                <h2 style="font-size: 22px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">2 ตัว <span style="color: red; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${num}</span> By : <span style="color: green; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${selectedPerson}</span></h2>
+                <h3 style="font-size: 22px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">จัดชุด 2 ตัว</h3>
+                <p style="font-size: 26px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${sortedPairs.join(' - ')}</p>
+                <h2 style="font-size: 24px; font-weight: bold; color: red; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">แนวทางเท่านั้น</h2>
+                <p style="font-size: 13px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">แปล: ${getThaiDate(new Date())} ${getThaiTime()}</p>
+                <p style="font-size: 20px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${noteHtml}</p>
+            </div>
+        `;
     }
-    
+
     function displayResultInPopup() {
         const resultHtml = convertNumber();
         if (!resultHtml) return;
@@ -452,7 +520,7 @@ const lunarData = {
         const resultContentWrapper = document.getElementById("resultContentWrapper");
         if (!resultContentWrapper) return;
         
-        const textElements = resultContentWrapper.querySelectorAll('p, h2, h3');
+        const textElements = resultContentWrapper.querySelectorAll('p, h2, h3, .topic-box'); // เพิ่ม .topic-box เพื่อให้ปรับขนาดได้
         const fsSlider = document.getElementById("popupFontSizeSlider");
         const fsValueSpan = document.getElementById("popupFontSizeValue");
         
@@ -488,7 +556,6 @@ const lunarData = {
         const newSaveBtn = saveBtn.cloneNode(true);
         saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
-        // ===== START: จุดที่แก้ไขการทำงานของปุ่มบันทึกให้เหมือน 02.html =====
         newSaveBtn.addEventListener("click", function() {
             const captureElement = document.querySelector(".popup-content");
             const controlsElement = captureElement.querySelector('.controls');
@@ -516,7 +583,6 @@ const lunarData = {
                 captureElement.style.padding = originalPadding;
             });
         });
-        // ===== END: จุดที่แก้ไขการทำงานของปุ่มบันทึก =====
         
         updateFontSize();
         updateLineHeight();
