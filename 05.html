@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ผลกลุ่มลาวสตาร์</title>
-
+    <title>ผลรางวัลกลุ่มลาว</title>
+    
     <!-- PWA-related additions -->
-    <link rel="manifest" href="manifest-ลาวสตาร์.json">
+    <link rel="manifest" href="manifest-all-lao.json">
     <meta name="theme-color" content="#FF9800"/>
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ผลลาวสตาร์">
+    <meta name="apple-mobile-web-app-title" content="ผลรางวัลกลุ่มลาว">
     <!-- End of PWA-related additions -->
-
-    <!-- เพิ่มสคริปต์ html2canvas สำหรับการบันทึกรูปภาพ -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
@@ -75,7 +74,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     font-size: clamp(16px, 3.4vw, 20px);
 }
 
-/* --- START: โค้ดที่ปรับปรุงตามไฟล์ 07.html --- */
 .prize-title, .prize-title-red {
     display: inline-block;
     font-size: 22px;
@@ -99,8 +97,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     padding: 5px 10px;
     border-radius: 15px;
 }
-/* --- END: โค้ดที่ปรับปรุงตามไฟล์ 07.html --- */
-
 /* Popup Buttons */
 .popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 15px; }
 .popup-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
@@ -109,11 +105,9 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .popup-button.active { background-color: #4CAF50; }
 .close-popup { padding: 8px 15px; background-color: #f44336; width: 100%; max-width: 200px; }
 .close-popup:hover { background-color: #d32f2f; }
-
 /* --- CSS สำหรับ SVG และส่วนอื่นๆ --- */
 .ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
 .ball-group svg { margin: 0 0px; }
-
 /* สไตล์ร่วมของป้าย */
 .prize-label-blue, .prize-label-orange {
     display: inline-block;
@@ -123,22 +117,18 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     padding: 5px 15px;
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 50px;
 }
-
-/* สไตล์สำหรับ "3 ตัวบน" - ธีมสีน้ำเงิน/เขียว */
+/* สไตล์สำหรับ "3 ตัวบน" */
 .prize-label-blue {
     background: linear-gradient(to bottom, #47D359, #0066cc);
-    border: 2px solid #004C99; /* สีน้ำเงินเข้ม */
-    border-radius: 50px;
+    border: 2px solid #004C99;
 }
-
-/* สไตล์สำหรับ "2 ตัวล่าง" - ธีมสีส้ม */
+/* สไตล์สำหรับ "2 ตัวล่าง" */
 .prize-label-orange {
     background: linear-gradient(to bottom, #FFB74D, #FF8C00);
-    border: 2px solid #C66900; /* สีส้มเข้ม */
-    border-radius: 50px;
+    border: 2px solid #C66900;
 }
-
 /* Number Containers */
 .circle-container, .square-container, .square-two-container { display: inline-flex; justify-content: center; align-items: center; height: 38px; margin: 0 0.5px; padding: 5px; background: transparent; box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4); }
 .circle-container { width: 88px; border: 3px solid #FF00FF; border-radius: 2%; }
@@ -146,7 +136,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .square-two-container { width: 88px; border: 3px solid blue; }
 /* Numbers Display */
 .numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin: 8px 0; }
-
 .number-group {
     display: flex;
     flex-direction: column;
@@ -154,7 +143,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     gap: 8px;
     min-width: 150px;
 }
-
 /* Responsive */
 @media (max-width: 480px) { #numberInput { font-size: 18px; padding: 8px; } }
 footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
@@ -162,28 +150,26 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 </head>
 <body>
     <button class="back-button" onclick="window.location.href='https://juckphai.github.io/4/index.html'">กลับสู่หน้าหลัก</button>
-    <h1>ผลกลุ่มลาวสตาร์</h1>
+    <h1>ผลรางวัลกลุ่มลาว</h1>
 
     <div class="form-container">
         <div class="form-group">
-            <input type="text" id="numberInput" placeholder="กรุณากรอกตัวเลข 5 หลัก" pattern="\d{5}" maxlength="5" inputmode="numeric" />
-        </div>
-        <div class="form-group">
+            <label for="topicSelect">1. เลือกชนิดผลรางวัล</label>
             <select id="topicSelect">
-                <option value="ลาวประตูชัย เวลา 05.45 น">ลาวประตูชัย เวลา 05.45 น</option>
-                <option value="ลาวสันติภาพ เวลา 06.45 น">ลาวสันติภาพ เวลา 06.45 น</option>
-                <option value="ประชาชนลาว เวลา 07.45 น">ประชาชนลาว เวลา 07.45 น</option>
-                <option value="ลาว Extra เวลา 08.30 น">ลาว Extra เวลา 08.30 น</option>
-                <option value="ลาว TV เวลา 10.30 น">ลาว TV เวลา 10.30 น</option>
-                <option value="ลาว HD เวลา 13.45 น">ลาว HD เวลา 13.45 น</option>
-                <option value="ลาวสตาร์ เวลา 15.45 น">ลาวสตาร์ เวลา 15.45 น</option>
-                <option value="ลาวอาเซียน เวลา 21.00 น">ลาวอาเซียน เวลา 21.00 น</option>
-                <option value="ลาวสตาร์ VIP เวลา 22.00 น">ลาวสตาร์ VIP เวลา 22.00 น</option>
-                <option value="ลาวกาชาด เวลา 23.30 น">ลาวกาชาด เวลา 23.30 น</option>
+                <!-- Options will be populated by JavaScript -->
             </select>
         </div>
-        <div class="form-group"><input type="date" id="dateInput"></div>
-        <div class="form-footer"><button id="convertButton" class="convert-button">แจงรายละเอียด</button></div>
+        <div class="form-group">
+            <label for="dateInput">2. เลือกวันที่</label>
+            <input type="date" id="dateInput">
+        </div>
+        <div class="form-group">
+            <label for="numberInput">3. กรอกตัวเลข</label>
+            <input type="text" id="numberInput" placeholder="กรุณาเลือกชนิดผลรางวัลก่อน" pattern="\d*" inputmode="numeric" />
+        </div>
+        <div class="form-footer">
+            <button id="convertButton" class="convert-button">แจงรายละเอียด</button>
+        </div>
     </div>
 
     <div id="popupOverlay" class="popup-overlay">
@@ -196,11 +182,11 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     
                     <div style="margin-top: 15px; display: flex; align-items: center; justify-content: center;">
                         <img src="logo.png" alt="Logo Left" style="width: 60px; height: 60px; margin-right: 10px;">
-                        <div class="prize-title">รางวัลเลข 5 ตัว</div>
+                        <div id="popupPrizeTitle" class="prize-title"></div>
                         <img src="logo.png" alt="Logo Right" style="width: 60px; height: 60px; margin-left: 10px;">
                     </div>
 
-                    <div id="popupFiveDigitsDisplay" class="ball-group"></div>
+                    <div id="popupMainDigitsDisplay" class="ball-group"></div>
                     <div class="numbers-display">
                         <div class="number-group">
                             <p class="prize-label-blue">3 ตัวบน</p>
@@ -228,46 +214,47 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     <footer>&copy; 2025 Juckphai. All Rights Reserved.</footer>
     
     <script>
-        // --- START: ฟังก์ชันสร้างลูกบอล SVG (ฉบับแก้ไขเฉพาะสีฟ้า) ---
+        // --- Data Configuration ---
+        const lotteryTypes = {
+            'laostar-0545': { name: 'ลาวประตูชัย', time: '05.45 น', digits: 5, type: 'star' },
+            'laostar-0645': { name: 'ลาวสันติภาพ', time: '06.45 น', digits: 5, type: 'star' },
+            'laostar-0745': { name: 'ประชาชนลาว', time: '07.45 น', digits: 5, type: 'star' },
+            'laostar-0830': { name: 'ลาว Extra', time: '08.30 น', digits: 5, type: 'star' },
+            'laostar-1030': { name: 'ลาว TV', time: '10.30 น', digits: 5, type: 'star' },
+            'laostar-1345': { name: 'ลาว HD', time: '13.45 น', digits: 5, type: 'star' },
+            'laostar-1545': { name: 'ลาวสตาร์', time: '15.45 น', digits: 5, type: 'star' },
+            'laopattana':   { name: 'ลาวพัฒนา', time: '20.30 น', digits: 6, type: 'pattana' },
+            'laosamakkee':  { name: 'ลาวสามัคคี', time: '20.30 น', digits: 5, type: 'samakkhee' },
+            'laostar-2100': { name: 'ลาวอาเซียน', time: '21.00 น', digits: 5, type: 'star' },
+            'laovip-2130':  { name: 'ลาว VIP', time: '21.30 น', digits: 5, type: 'samakkhee' }, // Re-using samakkhee logic
+            'laosamakkeevip': { name: 'ลาวสามัคคี VIP', time: '21.30 น', digits: 5, type: 'samakkhee' },
+            'laostar-2200': { name: 'ลาวสตาร์ VIP', time: '22.00 น', digits: 5, type: 'star' },
+            'laostar-2330': { name: 'ลาวกาชาด', time: '23.30 น', digits: 5, type: 'star' },
+        };
+
+        // --- Core Functions ---
         function createPingPongBall(number, type = 'red') {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
+            let svgContent = '';
 
-            // เงื่อนไขพิเศษสำหรับลูกบอลสีฟ้า (blue)
             if (type === 'blue') {
-                return `
-                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <radialGradient id="${gradientId}" cx="30%" cy="30%" r="70%">
-                                <stop offset="0%" stop-color="#47D359" />
-                                <stop offset="100%" stop-color="#0066cc" />
-                            </radialGradient>
-                        </defs>
-                        <circle cx="25" cy="25" r="24" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-                            font-family="Arial, sans-serif" font-size="26" font-weight="bold"
-                            fill="white">
-                            ${number}
-                        </text>
-                    </svg>
+                svgContent = `
+                    <defs>
+                        <radialGradient id="${gradientId}" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#47D359" />
+                            <stop offset="100%" stop-color="#0066cc" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="25" cy="25" r="24" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
                 `;
-            }
-
-            // โค้ดสำหรับลูกบอลสีอื่นๆ (ชมพู และ ส้ม) จะยังคงเหมือนเดิม
-            let highlightColor, midColor, shadowColor;
-
-            if (type === 'red') { // สีชมพู
-                highlightColor = '#FFD6FF';
-                midColor = '#E800E8';
-                shadowColor = '#A100A1';
-            } else { // 'orange' - สีส้ม
-                highlightColor = '#FFE3A0';
-                midColor = '#FF8C00';
-                shadowColor = '#D97200';
-            }
-             
-            // สร้าง SVG สำหรับสีชมพูและสีส้ม
-            return `
-                <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            } else {
+                let highlightColor, midColor, shadowColor;
+                if (type === 'red') { // Pink
+                    highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1';
+                } else { // 'orange'
+                    highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
+                }
+                svgContent = `
                     <defs>
                         <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
                             <stop offset="0%" stop-color="${highlightColor}" />
@@ -276,6 +263,12 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                         </radialGradient>
                     </defs>
                     <circle cx="25" cy="25" r="24" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                `;
+            }
+            
+            return `
+                <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                    ${svgContent}
                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
                           font-family="Arial, sans-serif" font-size="26" font-weight="bold"
                           fill="white">
@@ -284,43 +277,171 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 </svg>
             `;
         }
-        // --- END: ฟังก์ชันสร้างลูกบอล SVG ---
 
-        function setDefaultDate() { const dateInput = document.getElementById("dateInput"); if (dateInput) { const localDate = new Date(new Date().getTime() + (7 * 60 * 60 * 1000)); dateInput.value = localDate.toISOString().split('T')[0]; } }
-        function createPingPongNumbers(numbers, type = 'red') { return numbers.split('').map(digit => createPingPongBall(digit, type)).join(''); }
+        function createPingPongNumbers(numbers, type = 'red') {
+            return numbers.split('').map(digit => createPingPongBall(digit, type)).join('');
+        }
+        
+        function setDefaultDate() {
+            const dateInput = document.getElementById("dateInput");
+            if (dateInput) {
+                const localDate = new Date(new Date().getTime() + (7 * 60 * 60 * 1000));
+                dateInput.value = localDate.toISOString().split('T')[0];
+            }
+        }
+
+        function getThaiDate(date = new Date()) {
+            const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`;
+        }
+        
         function showPopup() { document.getElementById("popupOverlay").style.display = "flex"; }
         function closePopup() { document.getElementById("popupOverlay").style.display = "none"; }
-        
-        function convertNumber() { 
-            const num = document.getElementById("numberInput").value; 
-            if (num.length !== 5 || isNaN(num)) { 
-                alert("กรุณากรอกตัวเลข 5 หลัก"); 
-                return; 
-            } 
-            const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date(); 
-            
-            const fullTopic = document.getElementById("topicSelect").value;
-            const topicParts = fullTopic.split(' เวลา ');
-            const topicName = topicParts[0];
-            const topicTime = topicParts.length > 1 ? `เวลา ${topicParts[1]}` : '';
 
-            document.getElementById("popupNameDisplay").textContent = `ผล${topicName}`;
-            document.getElementById("popupTimeDisplay").textContent = topicTime;
+        function updateNumberInput() {
+            const selectedKey = document.getElementById("topicSelect").value;
+            const config = lotteryTypes[selectedKey];
+            const numberInput = document.getElementById("numberInput");
+
+            if (config) {
+                numberInput.maxLength = config.digits;
+                numberInput.placeholder = `กรุณากรอกตัวเลข ${config.digits} หลัก`;
+                numberInput.value = ""; // Clear previous input
+            }
+        }
+
+        function populateTopicSelect() {
+            const select = document.getElementById("topicSelect");
+            select.innerHTML = ''; // Clear existing options
+
+            // Sort keys by time
+            const sortedKeys = Object.keys(lotteryTypes).sort((a, b) => {
+                const timeA = lotteryTypes[a].time.replace('.', '');
+                const timeB = lotteryTypes[b].time.replace('.', '');
+                return parseInt(timeA) - parseInt(timeB);
+            });
+
+            sortedKeys.forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${lotteryTypes[key].name} เวลา ${lotteryTypes[key].time}`;
+                select.appendChild(option);
+            });
+        }
+        
+        function convertNumber() {
+            const selectedKey = document.getElementById("topicSelect").value;
+            const config = lotteryTypes[selectedKey];
+            const num = document.getElementById("numberInput").value;
+
+            if (num.length !== config.digits || isNaN(num)) {
+                alert(`กรุณากรอกตัวเลข ${config.digits} หลัก`);
+                return;
+            }
+
+            const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date();
             
-            document.getElementById("popupDateDisplay").textContent = getThaiDate(date); 
-            document.getElementById("popupFiveDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red'); 
-            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(2), 'blue'); 
-            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(num.slice(0, 2), 'orange'); 
-            ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active")); 
+            // Update Popup Display
+            document.getElementById("popupNameDisplay").textContent = `ผล${config.name}`;
+            document.getElementById("popupTimeDisplay").textContent = `เวลา ${config.time}`;
+            document.getElementById("popupDateDisplay").textContent = getThaiDate(date);
+            document.getElementById("popupPrizeTitle").textContent = `รางวัลเลข ${config.digits} ตัว`;
+
+            let twoDigits, threeDigits;
             
-            showPopup(); 
+            // Slicing logic based on lottery type
+            switch (config.type) {
+                case 'pattana': // 6 digits
+                    threeDigits = num.slice(3);
+                    twoDigits = num.slice(2, 4);
+                    break;
+                case 'samakkhee': // 5 digits
+                    threeDigits = num.slice(2);
+                    twoDigits = num.slice(1, 3);
+                    break;
+                case 'star': // 5 digits
+                default:
+                    threeDigits = num.slice(2);
+                    twoDigits = num.slice(0, 2);
+                    break;
+            }
+
+            document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red');
+            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue');
+            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange');
+
+            // Reset toggle buttons
+            ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active"));
+            
+            showPopup();
             setupSaveImageButton();
         }
 
-        function toggleCirclePopup() { const display = document.getElementById("popupTwoDigitsDisplay"); const button = document.getElementById("popupCircleButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(0, 2); display.innerHTML = `<div class="circle-container">${createPingPongNumbers(numbers, 'orange')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(0, 2); display.innerHTML = createPingPongNumbers(numbers, 'orange'); } }
-        function toggleSquarePopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupSquareButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = `<div class="square-container">${createPingPongNumbers(numbers, 'blue')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = createPingPongNumbers(numbers, 'blue'); } }
-        function toggleSquareTopPopup() { const display = document.getElementById("popupThreeDigitsDisplay"); const button = document.getElementById("popupCircleTopButton"); if (button.classList.toggle("active")) { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = `${createPingPongBall(numbers[0], 'blue')}<div class="square-two-container">${createPingPongNumbers(numbers.slice(1), 'blue')}</div>`; } else { const numbers = document.getElementById('numberInput').value.slice(2); display.innerHTML = createPingPongNumbers(numbers, 'blue'); } }
-        function getThaiDate(date = new Date()) { const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]; const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]; return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`; }
+        // --- Popup Button Functions ---
+        function getNumbersForToggle() {
+            const selectedKey = document.getElementById("topicSelect").value;
+            const config = lotteryTypes[selectedKey];
+            const num = document.getElementById('numberInput').value;
+
+            let twoDigits, threeDigits, threeDigits_first, threeDigits_lastTwo;
+
+            switch (config.type) {
+                case 'pattana':
+                    threeDigits = num.slice(3);
+                    twoDigits = num.slice(2, 4);
+                    break;
+                case 'samakkhee':
+                    threeDigits = num.slice(2);
+                    twoDigits = num.slice(1, 3);
+                    break;
+                case 'star':
+                default:
+                    threeDigits = num.slice(2);
+                    twoDigits = num.slice(0, 2);
+                    break;
+            }
+            threeDigits_first = threeDigits[0];
+            threeDigits_lastTwo = threeDigits.slice(1);
+            
+            return { twoDigits, threeDigits, threeDigits_first, threeDigits_lastTwo };
+        }
+
+        function toggleCirclePopup() {
+            const display = document.getElementById("popupTwoDigitsDisplay");
+            const button = document.getElementById("popupCircleButton");
+            const { twoDigits } = getNumbersForToggle();
+            
+            if (button.classList.toggle("active")) {
+                display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange')}</div>`;
+            } else {
+                display.innerHTML = createPingPongNumbers(twoDigits, 'orange');
+            }
+        }
+
+        function toggleSquarePopup() {
+            const display = document.getElementById("popupThreeDigitsDisplay");
+            const button = document.getElementById("popupSquareButton");
+            const { threeDigits } = getNumbersForToggle();
+
+            if (button.classList.toggle("active")) {
+                display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue')}</div>`;
+            } else {
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue');
+            }
+        }
+
+        function toggleSquareTopPopup() {
+            const display = document.getElementById("popupThreeDigitsDisplay");
+            const button = document.getElementById("popupCircleTopButton");
+            const { threeDigits, threeDigits_first, threeDigits_lastTwo } = getNumbersForToggle();
+
+            if (button.classList.toggle("active")) {
+                display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue')}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue')}</div>`;
+            } else {
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue');
+            }
+        }
         
         function setupSaveImageButton() {
             const saveBtn = document.getElementById("saveAsImageButton");
@@ -331,9 +452,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 const captureElement = document.querySelector(".popup-content");
                 const controlsElement = captureElement.querySelector('.popup-buttons-container');
 
-                if (controlsElement) {
-                    controlsElement.style.display = 'none';
-                }
+                if (controlsElement) controlsElement.style.display = 'none';
 
                 html2canvas(captureElement, {
                     useCORS: true,
@@ -341,31 +460,38 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     backgroundColor: '#fffde7'
                 }).then(canvas => {
                     const link = document.createElement('a');
-                    const num = document.getElementById("numberInput").value || "XXXXX";
-                    const topic = document.getElementById("topicSelect").value.split(' ')[0] || "Result";
+                    const num = document.getElementById("numberInput").value || "result";
+                    const selectedKey = document.getElementById("topicSelect").value;
+                    const topicName = lotteryTypes[selectedKey].name.replace(/\s+/g, '');
                     
-                    link.download = `Result-${topic}-${num}-${Date.now()}.png`;
+                    link.download = `Result-${topicName}-${num}-${Date.now()}.png`;
                     link.href = canvas.toDataURL("image/png");
                     link.click();
                 }).catch(err => {
                     console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
                     alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
                 }).finally(() => {
-                    if (controlsElement) {
-                        controlsElement.style.display = 'flex';
-                    }
+                    if (controlsElement) controlsElement.style.display = 'flex';
                 });
             });
         }
-
+        
+        // --- Event Listeners ---
         document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener("DOMContentLoaded", () => { document.getElementById("convertButton").addEventListener("click", convertNumber); setDefaultDate(); });
+        document.addEventListener("DOMContentLoaded", () => {
+            populateTopicSelect();
+            setDefaultDate();
+            updateNumberInput(); // Set initial placeholder
+            
+            document.getElementById("topicSelect").addEventListener("change", updateNumberInput);
+            document.getElementById("convertButton").addEventListener("click", convertNumber);
+        });
 
         // --- PWA Service Worker Registration ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw-ลาวสตาร์.js')
-                    .then(reg => console.log('Service Worker for Lao Star registered.', reg))
+                navigator.serviceWorker.register('./sw-all-lao.js')
+                    .then(reg => console.log('Service Worker for All Lao registered.', reg))
                     .catch(err => console.error('Service Worker registration failed:', err));
             });
         }
