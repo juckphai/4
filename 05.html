@@ -108,17 +108,23 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 /* --- CSS สำหรับ SVG และส่วนอื่นๆ --- */
 .ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
 .ball-group svg { margin: 0 0px; }
-/* สไตล์ร่วมของป้าย */
+
+/* --- START: โค้ดที่ปรับปรุง --- */
+/* สไตล์ร่วมของป้าย (เอฟเฟกต์ร่องลึก ตัวอักษรสีขาว) */
 .prize-label-blue, .prize-label-orange {
     display: inline-block;
     font-weight: bold;
     font-size: 22px;
     margin: 0;
     padding: 5px 15px;
-    color: white;
+    color: white; /* ตัวอักษรสีขาว */
+    /* เงาสีดำด้านบนซ้าย + ไฮไลท์สีขาวด้านล่างขวา เพื่อสร้างมิติร่องลึก */
+    text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
 }
+/* --- END: โค้ดที่ปรับปรุง --- */
+
 /* สไตล์สำหรับ "3 ตัวบน" */
 .prize-label-blue {
     background: linear-gradient(to bottom, #47D359, #0066cc);
@@ -149,6 +155,19 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 </style>
 </head>
 <body>
+    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) -->
+    <svg style="position:absolute; width:0; height:0; overflow:hidden;">
+      <defs>
+        <filter id="inset-effect">
+          <!-- เงาสีเข้มสำหรับขอบบนซ้ายของร่อง -->
+          <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
+          <!-- ไฮไลท์สีสว่างสำหรับขอบล่างขวาของร่อง -->
+          <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
+        </filter>
+      </defs>
+    </svg>
+    <!-- END: SVG Filter -->
+
     <button class="back-button" onclick="window.location.href='https://juckphai.github.io/4/index.html'">กลับสู่หน้าหลัก</button>
     <h1>ผลรางวัลกลุ่มลาว</h1>
 
@@ -266,16 +285,19 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 `;
             }
             
+            // --- START: โค้ดที่ปรับปรุง ---
+            // เปลี่ยน fill เป็น "white"
             return `
                 <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     ${svgContent}
                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
                           font-family="Arial, sans-serif" font-size="26" font-weight="bold"
-                          fill="white">
+                          fill="white" filter="url(#inset-effect)">
                         ${number}
                     </text>
                 </svg>
             `;
+            // --- END: โค้ดที่ปรับปรุง ---
         }
 
         function createPingPongNumbers(numbers, type = 'red') {
