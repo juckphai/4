@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ผลฉบากกินแบ่งรัฐบาล</title>
+    <title>ผลฉลากกินแบ่งรัฐบาล</title>
 
     <!-- PWA-related tags -->
     <meta name="theme-color" content="#e65100"/>
@@ -211,16 +211,20 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
         }
 
+        /* --- START: โค้ดที่ปรับปรุง --- */
         .prize-label-blue, .prize-label-green, .prize-label-orange {
             display: inline-block;
             font-weight: bold;
             font-size: 20px;
             margin: 0;
             padding: 8px 15px;
-            color: white;
+            color: white; /* ตัวอักษรสีขาว */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            /* เงาดำด้านบนซ้าย + ไฮไลท์ขาวด้านล่างขวา = ร่องลึก */
+            text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.5);
         }
+        /* --- END: โค้ดที่ปรับปรุง --- */
+
         .prize-label-blue {
             background: linear-gradient(to bottom, #89CFF0, #007FFF);
             border: 2px solid #0059B3;
@@ -253,15 +257,13 @@
             min-height: 50px;
         }
 
-        /* --- START: โค้ดที่ปรับปรุงตามคำขอ --- */
         .flex-row {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             flex-wrap: wrap;
-            gap: 3px 20px; /* <-- ปรับลดระยะห่างแนวตั้ง (row-gap) เป็น 15px */
+            gap: 3px 20px;
         }
-        /* --- END: โค้ดที่ปรับปรุงตามคำขอ --- */
 
         .button-container button {
             font-size: 22px;
@@ -296,6 +298,19 @@
     </style>
 </head>
 <body>
+    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) -->
+    <svg style="position:absolute; width:0; height:0; overflow:hidden;">
+      <defs>
+        <filter id="inset-effect">
+          <!-- เงาสีเข้มสำหรับขอบบนซ้ายของร่อง -->
+          <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
+          <!-- ไฮไลท์สีสว่างสำหรับขอบล่างขวาของร่อง -->
+          <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
+        </filter>
+      </defs>
+    </svg>
+    <!-- END: SVG Filter -->
+
     <button class="back-button" onclick="window.location.href='https://juckphai.github.io/4/index.html'">กลับสู่หน้าหลัก</button>
     <h1>ผลฉลากกินแบ่งรัฐบาล</h1>
 
@@ -449,6 +464,7 @@
             return `งวดวันที่ ${dateString}`;
         }
 
+        // --- START: โค้ดที่ปรับปรุง ---
         function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
             const r = (size / 2) - 1;
@@ -507,12 +523,13 @@
                     <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
                         font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
-                        fill="white" style="text-shadow: 1px 2px 3px rgba(0,0,0,0.5);">
+                        fill="white" filter="url(#inset-effect)">
                         ${number}
                     </text>
                 </svg>
             `;
         }
+        // --- END: โค้ดที่ปรับปรุง ---
         
         function displayNumberGroup(elementId, numberString, type, size, fontSize) {
             const container = document.getElementById(elementId);
