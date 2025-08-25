@@ -97,10 +97,33 @@
     .result-container-popup { border: 1.5px solid #4CAF50; background-color: #FFFFD1; margin: 0; padding: 15px 5px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); position: relative; min-height: 300px; box-sizing: border-box; overflow: hidden; }
 
     /* Result Header & Logo */
-    .result-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
-    .header-logo { width: 60px; height: auto; }
-    .topic-box { background-color: #FF75FF; border: 3px solid #0070C0; color: white; border-radius: 15px; padding: 8px 15px; font-size: 22px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); text-align: center; }
-    .topic-time { font-size: 18px; color: blue; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; margin-top: 0; margin-bottom: 10px; }
+    .result-header { display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+    .header-logo { width: 50px; height: auto; }
+    .topic-box {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: #FF75FF;
+        border: 2px solid #0070C0;
+        color: white;
+        border-radius: 50px;
+        padding: 5px 15px;
+        font-size: 22px;
+        font-weight: bold;
+        /* Engraved effect for white text */
+        text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.5);
+    }
+    .topic-time { 
+        font-size: 18px; 
+        color: blue; 
+        font-weight: bold; 
+        /* Engraved effect for dark text */
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);
+        margin-top: 0; 
+        margin-bottom: 10px; 
+    }
+
 
     /* Result Content & Controls */
     #resultContentWrapper { position: relative; z-index: 1; color: blue; line-height: 1.3; }
@@ -281,7 +304,7 @@ function generate4DigitHTML(num, commonData) {
     
     return `
     <div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-        <div class="result-header"> <img src="logo.png" class="header-logo" alt="logo"> <div class="topic-box">${commonData.topicName}</div> <img src="logo.png" class="header-logo" alt="logo"> </div>
+        <div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
         ${commonData.topicTimeHtml}
         <p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
         ${commonData.lunarHtml}
@@ -321,7 +344,7 @@ function generate3DigitHTML(num, commonData) {
     const noDataSpan = '<span style="color: green; font-size: 18px;">ไม่มีชุดตัวเลขเพิ่ม</span>';
 
     return `<div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-        <div class="result-header"> <img src="logo.png" class="header-logo" alt="logo"> <div class="topic-box">${commonData.topicName}</div> <img src="logo.png" class="header-logo" alt="logo"> </div>
+        <div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
         ${commonData.topicTimeHtml}
         <p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
         ${commonData.lunarHtml}
@@ -350,7 +373,7 @@ function generate2DigitHTML(num, commonData) {
     
     return `
         <div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-            <div class="result-header"><img src="logo.png" class="header-logo" alt="logo"><div class="topic-box">${commonData.topicName}</div><img src="logo.png" class="header-logo" alt="logo"></div>
+            <div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
             ${commonData.topicTimeHtml}
             <p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
             ${commonData.lunarHtml}
@@ -381,14 +404,16 @@ function generateResultHTML() {
 
     const lunarDate = getLunarDate(date);
     let noteValue = document.getElementById("noteInput").value.trim();
+    const engravedShadowStyle = "text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);";
+
     const commonData = {
         date: date,
         topicName: getTopicName(),
         topicTimeHtml: (() => { const t = getTopicTime(); return t ? `<p class="topic-time">${t}</p>` : ''; })(),
         selectedPerson: getSelectedPerson(),
-        lunarHtml: lunarDate ? `<p style="font-size: 14px; color: ${lunarDate.includes('วันพระ') ? 'red' : '#002060'}; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDate} )</p>` : '',
+        lunarHtml: lunarDate ? `<p style="font-size: 14px; color: ${lunarDate.includes('วันพระ') ? 'red' : '#002060'}; font-weight: bold; ${engravedShadowStyle}">( ${lunarDate} )</p>` : '',
         noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
-        textShadow: "text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;"
+        textShadow: engravedShadowStyle
     };
 
     if (num.length === 2) { return generate2DigitHTML(num, commonData); } 
