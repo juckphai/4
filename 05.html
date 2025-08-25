@@ -65,15 +65,26 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     text-align: center;
 }
 
-/* Popup Header and Date */
+/* START: Popup Header and Date - UPDATED */
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+.header-logo {
+    width: 60px; /* Adjusted to match original logo size in this file */
+    height: auto;
+}
 #popupTimeDisplay, #popupDateDisplay {
     margin: 3px 0;
     color: blue;
+    -webkit-text-stroke: 2px white;
+    paint-order: stroke fill;
     font-size: clamp(16px, 3.4vw, 20px);
-    text-shadow: 1px 1px 1px rgba(255,255,255,0.8), -1px -1px 1px rgba(0,0,0,0.2);
 }
 
-.prize-title {
+.prize-title, .prize-title-red {
     display: inline-block;
     font-size: 22px;
     font-weight: bold;
@@ -82,33 +93,30 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     margin: 4px 0 7px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
-    text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
+}
+
+.prize-title {
     border: 2px solid #4EA72E;
     background: linear-gradient(to bottom, #EE8D5C, #E800E8);
 }
-/* --- START: โค้ดที่ปรับปรุง --- */
+
+/* --- UPDATED with clamp() --- */
 .prize-title-red {
-    display: inline-flex; /* เปลี่ยนเป็น flex เพื่อจัดวาง logo และ text */
-    align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
-    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
-    gap: 10px; /* ระยะห่างระหว่าง logo กับ text */
-    font-weight: bold;
-    border-radius: 50px;
-    padding: 5px 15px;
-    margin: 4px 0 7px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
     border: 2px solid #0070C0;
     background: linear-gradient(to bottom, #FFD6FF, #E800E8);
-    font-size: 28px; /* ปรับลดขนาดตัวอักษร */
+    /* ใช้ clamp() เพื่อปรับขนาดฟอนต์อัตโนมัติ: clamp(ขนาดเล็กสุด, ขนาดที่ต้องการ, ขนาดใหญ่สุด) */
+    font-size: clamp(16px, 4.2vw, 28px);
+    white-space: nowrap;
+    padding: 5px 15px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /* เพิ่ม flex-shrink เพื่อให้ข้อความถูกบีบอัดก่อนโลโก้ */
+    flex-shrink: 1; 
 }
-
-.banner-logo {
-    width: 40px;
-    height: 40px;
-}
-/* --- END: โค้ดที่ปรับปรุง --- */
+/* END: Popup Header and Date - UPDATED */
 
 /* Popup Buttons */
 .popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 15px; }
@@ -122,6 +130,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
 .ball-group svg { margin: 0 0px; }
 
+/* --- START: โค้ดที่ปรับปรุง --- */
 /* สไตล์ร่วมของป้าย (เอฟเฟกต์ร่องลึก ตัวอักษรสีขาว) */
 .prize-label-blue, .prize-label-orange {
     display: inline-block;
@@ -130,10 +139,12 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     margin: 0;
     padding: 5px 15px;
     color: white; /* ตัวอักษรสีขาว */
+    /* เงาสีดำด้านบนซ้าย + ไฮไลท์สีขาวด้านล่างขวา เพื่อสร้างมิติร่องลึก */
     text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
 }
+/* --- END: โค้ดที่ปรับปรุง --- */
 
 /* สไตล์สำหรับ "3 ตัวบน" */
 .prize-label-blue {
@@ -205,15 +216,19 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
         <div class="popup-content">
             <div id="captureArea" class="popup-main-content">
                 <div style="position: relative; z-index: 1;">
-                    <div id="popupNameDisplay" class="prize-title-red"></div>
+                    <!-- START: UPDATED HTML STRUCTURE -->
+                    <div class="result-header">
+                        <div id="popupNameDisplay" class="prize-title-red">
+                            <!-- JS will inject: img, span, img -->
+                        </div>
+                    </div>
                     <p id="popupTimeDisplay" class="blue"></p>
                     <p id="popupDateDisplay" class="blue"></p>
                     
-                    <!-- --- START: โค้ดที่ปรับปรุง --- -->
-                    <div style="margin-top: 15px;">
+                    <div style="margin-top: 15px; display: flex; align-items: center; justify-content: center;">
                         <div id="popupPrizeTitle" class="prize-title"></div>
                     </div>
-                    <!-- --- END: โค้ดที่ปรับปรุง --- -->
+                    <!-- END: UPDATED HTML STRUCTURE -->
 
                     <div id="popupMainDigitsDisplay" class="ball-group"></div>
                     <div class="numbers-display">
@@ -295,7 +310,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 `;
             }
             
-            // Apply the SVG filter for the engraved effect on the number
+            // --- START: โค้ดที่ปรับปรุง ---
+            // เปลี่ยน fill เป็น "white"
             return `
                 <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     ${svgContent}
@@ -306,6 +322,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     </text>
                 </svg>
             `;
+            // --- END: โค้ดที่ปรับปรุง ---
         }
 
         function createPingPongNumbers(numbers, type = 'red') {
@@ -372,19 +389,17 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
             const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date();
             
-            // --- START: โค้ดที่ปรับปรุง ---
-            // Update Popup Display with logos inside the top banner
+            // START: Update Popup Display - UPDATED
             const popupNameDisplay = document.getElementById("popupNameDisplay");
             popupNameDisplay.innerHTML = `
-                <img src="logo.png" alt="Logo" class="banner-logo">
+                <img src="logo.png" class="header-logo" alt="logo">
                 <span>ผล${config.name}</span>
-                <img src="logo.png" alt="Logo" class="banner-logo">
+                <img src="logo.png" class="header-logo" alt="logo">
             `;
-            // --- END: โค้ดที่ปรับปรุง ---
-
             document.getElementById("popupTimeDisplay").textContent = `เวลา ${config.time}`;
             document.getElementById("popupDateDisplay").textContent = getThaiDate(date);
             document.getElementById("popupPrizeTitle").textContent = `รางวัลเลข ${config.digits} ตัว`;
+            // END: Update Popup Display - UPDATED
 
             let twoDigits, threeDigits;
             
