@@ -65,15 +65,17 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     text-align: center;
 }
 
-/* Popup Header and Date */
+/* --- START: โค้ดที่ปรับปรุง --- */
+/* Popup Header and Date with Engraved Effect */
 #popupTimeDisplay, #popupDateDisplay {
     margin: 3px 0;
     color: blue;
-    -webkit-text-stroke: 2px white;
-    paint-order: stroke fill;
     font-size: clamp(16px, 3.4vw, 20px);
+    /* Inset effect for dark text on light background */
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8), -1px -1px 1px rgba(0,0,0,0.2);
 }
 
+/* All titles with Engraved Effect */
 .prize-title, .prize-title-red {
     display: inline-block;
     font-size: 22px;
@@ -83,7 +85,10 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     margin: 4px 0 7px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
+    /* Inset effect for white text on colored background */
+    text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
 }
+/* --- END: โค้ดที่ปรับปรุง --- */
 
 .prize-title {
     border: 2px solid #4EA72E;
@@ -109,7 +114,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
 .ball-group svg { margin: 0 0px; }
 
-/* --- START: โค้ดที่ปรับปรุง --- */
 /* สไตล์ร่วมของป้าย (เอฟเฟกต์ร่องลึก ตัวอักษรสีขาว) */
 .prize-label-blue, .prize-label-orange {
     display: inline-block;
@@ -123,7 +127,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 50px;
 }
-/* --- END: โค้ดที่ปรับปรุง --- */
 
 /* สไตล์สำหรับ "3 ตัวบน" */
 .prize-label-blue {
@@ -285,8 +288,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 `;
             }
             
-            // --- START: โค้ดที่ปรับปรุง ---
-            // เปลี่ยน fill เป็น "white"
+            // Apply the SVG filter for the engraved effect on the number
             return `
                 <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                     ${svgContent}
@@ -297,7 +299,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     </text>
                 </svg>
             `;
-            // --- END: โค้ดที่ปรับปรุง ---
         }
 
         function createPingPongNumbers(numbers, type = 'red') {
