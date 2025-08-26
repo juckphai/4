@@ -83,7 +83,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .square-container { width: 131px; border: 3px solid red; }
 .square-two-container { width: 88px; border: 3px solid blue; }
 
-
 /* Thai Gov Result Specific Styles */
 .thai-result-header { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
 .thai-header-logo { width: 40px; height: auto; }
@@ -97,6 +96,19 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .thai-prize-group-vertical { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 10px; }
 .thai-number-group { display: flex; justify-content: center; align-items: center; margin: 0; min-height: 42px; }
 .thai-flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 3px 20px; }
+
+/* === START: โค้ดที่แก้ไขสำหรับหน้าจอมือถือ === */
+@media (max-width: 480px) {
+    .thai-flex-row {
+        flex-direction: column; /* เปลี่ยนการจัดเรียงเป็นแนวตั้ง */
+        align-items: center;    /* จัดองค์ประกอบให้อยู่กึ่งกลาง */
+        gap: 15px;              /* กำหนดระยะห่างระหว่างกลุ่มบน-ล่าง */
+    }
+    .thai-prize-group-vertical {
+        margin-top: 0; /* ลบระยะห่างด้านบนที่ไม่จำเป็นออก */
+    }
+}
+/* === END: โค้ดที่แก้ไข === */
 
 </style>
 </head>
