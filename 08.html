@@ -14,14 +14,6 @@
     <meta name="apple-mobile-web-app-title" content="ผลรัฐบาล">
     <!-- End of PWA-related additions -->
 
-    <!-- START: Dependencies for Datepicker -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <!-- Thai localization for Datepicker -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
-    <!-- END: Dependencies for Datepicker -->
-
     <!-- START: Dependency for Image Capture -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- END: Dependency for Image Capture -->
@@ -56,12 +48,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 2px solid green;
             padding: 10px;
-            line-height: 0.6;
+            line-height: 1.2; /* ปรับ line-height ให้เหมาะสม */
             max-width: 500px;
             text-align: center;
         }
 
         label {
+            display: block;
             font-size: 18px;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -74,8 +67,9 @@
             border: 2px solid #ddd;
             border-radius: 2px;
             width: 100%;
-            max-width: 150px;
+            max-width: 150px; /* กฎส่วนกลางที่สร้างปัญหา */
             transition: border-color: 0.3s;
+            box-sizing: border-box;
         }
 
         .input-pair {
@@ -83,242 +77,94 @@
             justify-content: center;
         }
         
-        /* -------- POPUP STYLES -------- */
-        .popup-overlay {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            min-height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            padding: 10px 0;
+        /* === START: CSS สำหรับช่องวันที่ (ฉบับแก้ไขสมบูรณ์) === */
+        .date-input-wrapper {
+            display: flex;
             align-items: center;
-            box-sizing: border-box;
-        }
-
-        .popup-content {
-            background-color:  #FFFFD1;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            max-width: 600px;
-            padding: 10px 10px; 
-            position: relative;
-            box-sizing: border-box;
+            max-width: 320px;
+            margin: 5px auto;
         }
         
-        .popup-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            margin-top: 15px;
-        }
-
-        .popup-button {
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: background-color: 0.3s;
-            padding: 10px 20px;
-            background-color: #007bff;
-            width: 90%;
-            max-width: 200px;
-            font-size: 16px;
-        }
-        .popup-button:hover {
-            background-color: #0056b3;
-        }
-
-        .close-popup {
-            display: block;
-            margin: 0 auto;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: background-color: 0.3s;
-            padding: 10px 20px;
-            background-color: #f44336;
-            width: 90%;
-            max-width: 200px;
-            font-size: 16px;
-        }
-        .close-popup:hover {
-            background-color: #d32f2f;
-        }
-
-        .result-display {
-            background-color:  #FFFFD1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1.5px solid #4CAF50;
+        /* Override กฎส่วนกลางที่สร้างปัญหา เฉพาะสำหรับช่องวันที่ */
+        .date-input-wrapper input#draw-date {
+            flex-grow: 1;         /* ทำให้ขยายเต็มพื้นที่ที่เหลือ */
+            width: auto;          /* ให้ flexbox จัดการความกว้าง */
+            max-width: none;      /* (สำคัญ) ลบข้อจำกัดความกว้างสูงสุด */
+            margin: 0;            /* ลบ margin ส่วนเกิน */
             text-align: center;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
-        }
-
-        .result-section {
-            margin-top: 5px;
         }
         
-         .header-title {
-            display: inline-block;
-            font-size: 26px;
-            font-weight: bold;
-            border: 5px solid #C2185B;
-            border-radius: 15px;
-            padding: 15px 20px;
-            margin-top: 4px;
-            margin-bottom: 10px;
-            color: #fff;
-            background: linear-gradient(to bottom, #F06292, #E91E63);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-        }
-
-        .draw-date {
-            display: inline-block;
-            color: #fff;
-            padding: 10px 15px;
-            font-size: 15px;
-            font-weight: bold;
-            border: 2px solid #E65100;
-            background: linear-gradient(to bottom, #FFB74D, #FB8C00);
-            border-radius: 10px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-        }
-
-        .prize-title {
-            font-size: 22px;
-            font-weight: bold;
-            border: 2px solid #D32F2F;
-            border-radius: 10px;
-            padding: 10px 15px;
-            margin: 4px 0 7px;
-            background: linear-gradient(to bottom, #EF9A9A, #E53935);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-        }
-
-        /* --- START: โค้ดที่ปรับปรุง --- */
-        .prize-label-blue, .prize-label-green, .prize-label-orange {
-            display: inline-block;
-            font-weight: bold;
-            font-size: 20px;
+        .date-input-wrapper button#calendarButton {
+            flex-shrink: 0;
+            width: auto;
+            max-width: none;
             margin: 0;
-            padding: 8px 15px;
-            color: white; /* ตัวอักษรสีขาว */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            /* เงาดำด้านบนซ้าย + ไฮไลท์ขาวด้านล่างขวา = ร่องลึก */
-            text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.5);
-        }
-        /* --- END: โค้ดที่ปรับปรุง --- */
-
-        .prize-label-blue {
-            background: linear-gradient(to bottom, #89CFF0, #007FFF);
-            border: 2px solid #0059B3;
-            border-radius: 20px;
-        }
-        .prize-label-green {
-            background: linear-gradient(to bottom, #90EE90, #008000);
-            border: 2px solid #006400;
-            border-radius: 20px;
-        }
-        .prize-label-orange {
-            font-size: 22px;
-            background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
-            border: 2px solid #D97200;
-            border-radius: 50px;
-        }
-        .prize-group-vertical {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            margin-top: 10px;
-        }
-        
-        .number-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 5px 0;
-            min-height: 50px;
-        }
-
-        .flex-row {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 3px 20px;
-        }
-
-        .button-container button {
-            font-size: 22px;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 20px;
+            background-color: #f0f0f0;
+            border: 1.5px solid #ccc;
             cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
+            border-radius: 2px;
         }
+        .date-input-wrapper button#calendarButton:hover {
+            background-color: #e0e0e0;
+        }
+        /* === END: CSS สำหรับช่องวันที่ === */
 
-        .back-button {
-            display: block;
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto 10px;
-            padding: 10px 20px;
-            background-color: orange;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .back-button:hover {
-            background-color: darkorange;
-        }
-
-        #first-prize-display {
-            margin-top: 15px;
-        }
+        /* -------- POPUP STYLES -------- */
+        .popup-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; min-height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; padding: 10px 0; align-items: center; box-sizing: border-box; }
+        .popup-content { background-color: #FFFFD1; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); width: 100%; max-width: 600px; padding: 10px 10px; position: relative; box-sizing: border-box; }
+        .popup-controls { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 15px; }
+        .popup-button { border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #007bff; width: 90%; max-width: 200px; font-size: 16px; }
+        .popup-button:hover { background-color: #0056b3; }
+        .close-popup { display: block; margin: 0 auto; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #f44336; width: 90%; max-width: 200px; font-size: 16px; }
+        .close-popup:hover { background-color: #d32f2f; }
+        .result-display { background-color: #FFFFD1; padding: 10px; border-radius: 10px; border: 1.5px solid #4CAF50; text-align: center; position: relative; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); }
+        .result-section { margin-top: 5px; }
+        .header-title { display: inline-block; font-size: 26px; font-weight: bold; border: 5px solid #00B0F0; border-radius: 15px; padding: 15px 20px; margin-top: 4px; margin-bottom: 10px; color: #fff; background: linear-gradient(to bottom, #F06292, #E91E63); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); }
+        .draw-date { display: inline-block; color: #fff; padding: 10px 15px; font-size: 15px; font-weight: bold; border: 2px solid #E65100; background: linear-gradient(to bottom, #FFB74D, #FB8C00); border-radius: 10px; margin-top: 5px; margin-bottom: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
+        .prize-title { font-size: 22px; font-weight: bold; border: 2px solid #0070C0; border-radius: 50px; padding: 2px 2px; margin: 10px 0 7px; background: linear-gradient(to bottom, #EF9A9A, #E53935); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+        .prize-title-logo { width: 40px; height: auto; }
+        .prize-label-blue, .prize-label-green, .prize-label-orange { display: inline-block; font-weight: bold; font-size: 20px; margin: 0; padding: 8px 15px; color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.5); }
+        .prize-label-blue { background: linear-gradient(to bottom, #89CFF0, #007FFF); border: 2px solid #0059B3; border-radius: 20px; }
+        .prize-label-green { background: linear-gradient(to bottom, #90EE90, #008000); border: 2px solid #006400; border-radius: 20px; }
+        .prize-label-orange { font-size: 22px; background: linear-gradient(to bottom, #FFE3A0, #FF8C00); border: 2px solid #D97200; border-radius: 50px; }
+        .prize-group-vertical { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 10px; }
+        .number-group { display: flex; justify-content: center; align-items: center; margin: 0; min-height: 42px; }
+        .flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 3px 20px; }
+        .button-container button { font-size: 22px; padding: 12px 20px; border-radius: 8px; cursor: pointer; background-color: #4CAF50; color: white; }
+        .back-button { display: block; width: 90%; max-width: 600px; margin: 20px auto 10px; padding: 10px 20px; background-color: orange; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .back-button:hover { background-color: darkorange; }
+        #first-prize-display { margin-top: 15px; }
         
     </style>
 </head>
 <body>
-    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) -->
     <svg style="position:absolute; width:0; height:0; overflow:hidden;">
       <defs>
         <filter id="inset-effect">
-          <!-- เงาสีเข้มสำหรับขอบบนซ้ายของร่อง -->
           <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
-          <!-- ไฮไลท์สีสว่างสำหรับขอบล่างขวาของร่อง -->
           <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
         </filter>
       </defs>
     </svg>
-    <!-- END: SVG Filter -->
 
     <button class="back-button" onclick="window.location.href='https://juckphai.github.io/4/index.html'">กลับสู่หน้าหลัก</button>
     <h1>ผลฉลากกินแบ่งรัฐบาล</h1>
 
     <div class="form-container">
         <div class="form-group">
-            <label for="draw-date">งวดวันที่ (วัน เดือน พ.ศ.)</label>
-            <input type="text" id="draw-date" placeholder="กรอกหรือเลือกวันที่">
+            <label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label>
+            <div class="date-input-wrapper">
+                <input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" />
+                <button type="button" id="calendarButton">📅</button>
+            </div>
+            <input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;">
         </div>
+
         <div class="form-group">
             <label>เลขหน้า 3 ตัว</label>
             <div class="input-pair">
@@ -334,12 +180,12 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="text" id="back-two" maxlength="2" placeholder="กรอกเลขท้าย 2 ตัว">
             <label for="back-two">เลขท้าย 2 ตัว</label>
+            <input type="text" id="back-two" maxlength="2" placeholder="กรอกเลขท้าย 2 ตัว">
         </div>
         <div class="form-group">
-            <input type="text" id="first-prize" maxlength="6" placeholder="กรอกเลขรางวัลที่ 1">
             <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+            <input type="text" id="first-prize" maxlength="6" placeholder="กรอกเลขรางวัลที่ 1">
         </div>
         <div class="button-container">
             <button onclick="displayResults()">แสดงผล</button>
@@ -355,13 +201,14 @@
                     <div class="draw-date">
                         <span id="display-draw-date"></span>
                     </div>
-                    <div class="result-section" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; position: relative;">
-                        <img src="logo.png" alt="Logo Left" style="width: 50px; height: 50px; margin-right: 10px;">
-                        <div class="prize-title">รางวัลที่ 1</div>
-                        <img src="logo.png" alt="Logo Right" style="width: 50px; height: 50px; margin-left: 10px;">
+                    <div class="result-section" style="margin-top: 5px;">
+                        <div class="prize-title">
+                            <img src="logo.png" alt="Logo" class="prize-title-logo">
+                            <span>รางวัลที่ 1</span>
+                            <img src="logo.png" alt="Logo" class="prize-title-logo">
+                        </div>
                     </div>
                     <div id="first-prize-display" class="number-group" style="margin-top: 5px;"></div>
-                    
                     <div class="result-section flex-row">
                         <div class="prize-group-vertical">
                             <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
@@ -374,12 +221,10 @@
                             <div id="display-back-three-2" class="number-group"></div>
                         </div>
                     </div>
-                    
                     <div class="result-section prize-group-vertical">
                         <div id="display-back-two" class="number-group"></div>
                         <p class="prize-label-orange">เลขท้าย 2 ตัว</p>
                     </div>
-
                 </div>
             </div>
             <div class="popup-controls">
@@ -394,165 +239,72 @@
     </footer>
 
     <script>
-        function showPopup() {
-            document.getElementById("popupOverlay").style.display = "flex";
-        }
-        function closePopup() {
-            document.getElementById("popupOverlay").style.display = "none";
-        }
+        function showPopup() { document.getElementById("popupOverlay").style.display = "flex"; }
+        function closePopup() { document.getElementById("popupOverlay").style.display = "none"; }
 
         function attachSaveAsImageListener() {
             const saveBtn = document.getElementById("saveAsImageButton");
             if (!saveBtn) return;
-
             const newSaveBtn = saveBtn.cloneNode(true);
             saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-
             newSaveBtn.addEventListener("click", function() {
                 const captureElement = document.querySelector(".popup-content");
                 const controlsElement = document.querySelector('.popup-controls');
                 const dateText = document.getElementById("display-draw-date").innerText.replace(/[^a-zA-Z0-9-]/g, '_');
                 const firstPrize = document.getElementById("first-prize").value || "XXXXXX";
-
-                if (controlsElement) {
-                    controlsElement.style.display = 'none';
-                }
-
-                html2canvas(captureElement, {
-                    useCORS: true,
-                    scale: 3,
-                    backgroundColor: '#FFFFD1',
-                    logging: false,
-                    onclone: (document) => {
-                        const clonedElement = document.querySelector(".popup-content");
-                        if (clonedElement) {
-                            clonedElement.style.boxShadow = 'none';
-                        }
-                    }
-                }).then(canvas => {
+                if (controlsElement) { controlsElement.style.display = 'none'; }
+                html2canvas(captureElement, { useCORS: true, scale: 3, backgroundColor: '#FFFFD1', logging: false, onclone: (doc) => { const el = doc.querySelector(".popup-content"); if (el) { el.style.boxShadow = 'none'; } } }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `ผลสลาก-${firstPrize}-${dateText}.png`;
                     link.href = canvas.toDataURL("image/png", 1.0);
                     link.click();
-                }).catch(err => {
-                    console.error("Error creating image:", err);
-                    alert("ขออภัย, ไม่สามารถบันทึกรูปภาพได้");
-                }).finally(() => {
-                    if (controlsElement) {
-                        controlsElement.style.display = 'flex';
-                    }
-                });
+                }).catch(err => { console.error("Error creating image:", err); alert("ขออภัย, ไม่สามารถบันทึกรูปภาพได้"); }).finally(() => { if (controlsElement) { controlsElement.style.display = 'flex'; } });
             });
         }
 
         function formatThaiDate(dateString) {
+            const parts = dateString.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (!parts) return `งวดวันที่ ${dateString}`;
+            const day = parseInt(parts[1], 10); const month = parseInt(parts[2], 10); const thaiYear = parseInt(parts[3], 10);
+            const gregorianYear = thaiYear - 543;
+            const date = new Date(gregorianYear, month - 1, day);
+            if (isNaN(date.getTime()) || date.getDate() !== day || date.getMonth() !== month - 1) { return `งวดวันที่ ${dateString}`; }
             const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
             const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
-            let date;
-            const thDateParts = dateString.match(/(\d+)\s+([^\s]+)\s+(\d+)/);
-            if (thDateParts) {
-                const day = parseInt(thDateParts[1], 10);
-                const monthName = thDateParts[2];
-                const thaiYear = parseInt(thDateParts[3], 10);
-                const monthIndex = months.indexOf(monthName);
-                if (monthIndex > -1) {
-                    date = new Date(thaiYear - 543, monthIndex, day);
-                    const dayOfWeek = days[date.getDay()];
-                    return `งวดวัน${dayOfWeek}ที่ ${day} ${months[monthIndex]} พ.ศ. ${thaiYear}`;
-                }
-            }
-            return `งวดวันที่ ${dateString}`;
+            const dayOfWeek = days[date.getDay()]; const monthName = months[date.getMonth()];
+            return `งวดวัน${dayOfWeek}ที่ ${day} ${monthName} พ.ศ. ${thaiYear}`;
         }
 
-        // --- START: โค้ดที่ปรับปรุง ---
         function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
-            const r = (size / 2) - 1;
-            const cx = size / 2;
-            const cy = size / 2;
-
-            let gradientHtml = '';
+            const r = (size / 2) - 1; const cx = size / 2; const cy = size / 2;
             let highlightColor, midColor, shadowColor;
-            
-            if (type === 'blue') {
-                highlightColor = '#89CFF0';
-                midColor = '#007FFF';
-                shadowColor = '#0059B3';
-                 gradientHtml = `
-                    <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
-                        <stop offset="0%" stop-color="${highlightColor}" />
-                        <stop offset="50%" stop-color="${midColor}" />
-                        <stop offset="100%" stop-color="${shadowColor}" />
-                    </radialGradient>
-                `;
-            } else if (type === 'green') {
-                highlightColor = '#90EE90';
-                midColor = '#008000';
-                shadowColor = '#006400';
-                 gradientHtml = `
-                    <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
-                        <stop offset="0%" stop-color="${highlightColor}" />
-                        <stop offset="50%" stop-color="${midColor}" />
-                        <stop offset="100%" stop-color="${shadowColor}" />
-                    </radialGradient>
-                `;
-            } else {
-                 if (type === 'red') {
-                    highlightColor = '#FFD6FF';
-                    midColor = '#E800E8';
-                    shadowColor = '#A100A1';
-                } else { // 'orange'
-                    highlightColor = '#FFE3A0';
-                    midColor = '#FF8C00';
-                    shadowColor = '#D97200';
-                }
-                gradientHtml = `
-                    <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
-                        <stop offset="0%" stop-color="${highlightColor}" />
-                        <stop offset="50%" stop-color="${midColor}" />
-                        <stop offset="100%" stop-color="${shadowColor}" />
-                    </radialGradient>
-                `;
-            }
-
-            return `
-                <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0px;">
-                    <defs>
-                        ${gradientHtml}
-                    </defs>
-                    <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
-                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-                        font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
-                        fill="white" filter="url(#inset-effect)">
-                        ${number}
-                    </text>
-                </svg>
-            `;
+            if (type === 'blue') { highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3'; } else if (type === 'green') { highlightColor = '#90EE90'; midColor = '#008000'; shadowColor = '#006400'; } else if (type === 'orange') { highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200'; } else { highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1'; }
+            const gradientHtml = `<radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%"><stop offset="0%" stop-color="${highlightColor}" /><stop offset="50%" stop-color="${midColor}" /><stop offset="100%" stop-color="${shadowColor}" /></radialGradient>`;
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0px;"><defs>${gradientHtml}</defs><circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold" fill="white" filter="url(#inset-effect)">${number}</text></svg>`;
         }
-        // --- END: โค้ดที่ปรับปรุง ---
         
         function displayNumberGroup(elementId, numberString, type, size, fontSize) {
             const container = document.getElementById(elementId);
             container.innerHTML = "";
             if (!numberString) return;
             let ballsHtml = "";
-            for (let i = 0; i < numberString.length; i++) {
-                ballsHtml += createPingPongBall(numberString[i], type, size, fontSize);
-            }
+            for (let i = 0; i < numberString.length; i++) { ballsHtml += createPingPongBall(numberString[i], type, size, fontSize); }
             container.innerHTML = ballsHtml;
         }
 
         function displayResults() {
             const rawDate = document.getElementById("draw-date").value;
+            if (!rawDate || !rawDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/)) {
+                alert("กรุณากรอกวันที่ให้ถูกต้องตามรูปแบบ วว/ดด/ปปปป"); return;
+            }
             document.getElementById("display-draw-date").innerText = formatThaiDate(rawDate);
-            
             displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "red", 50, 26);
             displayNumberGroup("display-front-three-1", document.getElementById("front-three-1").value, "blue", 40, 20);
             displayNumberGroup("display-front-three-2", document.getElementById("front-three-2").value, "blue", 40, 20);
             displayNumberGroup("display-back-three-1", document.getElementById("back-three-1").value, "green", 40, 20);
             displayNumberGroup("display-back-three-2", document.getElementById("back-three-2").value, "green", 40, 20);
             displayNumberGroup("display-back-two", document.getElementById("back-two").value, "orange", 56, 34);
-            
             showPopup();
             attachSaveAsImageListener();
         }
@@ -560,55 +312,27 @@
     
     <!-- Datepicker Initialization Script -->
     <script>
-    $(function() {
-        $.datepicker.setDefaults($.datepicker.regional['th']);
-        $("#draw-date").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'd MM yy',
-            yearRange: "c-10:c+5",
-            isBuddhist: true,
-            defaultDate: new Date(),
-            beforeShow: function() {
-                if ($(this).val() != "") {
-                    var dateArray = $(this).val().split(' ');
-                    if (dateArray.length === 3) {
-                        var year = parseInt(dateArray[2], 10);
-                        if (year > 2500) {
-                            dateArray[2] = year - 543;
-                            $(this).datepicker("setDate", $.datepicker.parseDate('d MM yy', dateArray.join(' ')));
-                        }
-                    }
-                }
-            },
-            onSelect: function(dateText, inst) {
-                var date = $(this).datepicker('getDate');
-                date.setFullYear(date.getFullYear() + 543);
-                var day = date.getDate();
-                var month = $.datepicker.regional['th'].monthNames[date.getMonth()];
-                var year = date.getFullYear();
-                $(this).val(day + ' ' + month + ' ' + year);
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateInput = document.getElementById('draw-date');
+        const calendarButton = document.getElementById('calendarButton');
+        const hiddenDateInput = document.getElementById('hiddenDateInput');
+        const today = new Date();
+        dateInput.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear() + 543}`;
+        calendarButton.addEventListener('click', () => { try { hiddenDateInput.showPicker(); } catch (error) { hiddenDateInput.click(); } });
+        hiddenDateInput.addEventListener('change', (e) => {
+            const selectedDate = e.target.value;
+            if (selectedDate) {
+                const parts = selectedDate.split('-');
+                const thaiYear = parseInt(parts[0], 10) + 543;
+                dateInput.value = `${parts[2]}/${parts[1]}/${thaiYear}`;
             }
         });
-        var today = new Date();
-        var day = today.getDate();
-        var month = $.datepicker.regional['th'].monthNames[today.getMonth()];
-        var year = today.getFullYear() + 543;
-        if ($("#draw-date").val() === '') {
-            $("#draw-date").val(day + ' ' + month + ' ' + year);
-        }
     });
     </script>
 
     <!-- PWA Service Worker Registration -->
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker registered.'))
-                    .catch(err => console.log('Service Worker registration failed:', err));
-            });
-        }
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').then(reg => console.log('Service Worker registered.')).catch(err => console.log('Service Worker registration failed:', err)); }); }
     </script>
 </body>
 </html>
