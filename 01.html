@@ -1023,7 +1023,7 @@ function getThaiDate(date) {
   const month = months[date.getMonth()];
   const year = date.getFullYear() + 543;
 
-  return `วันที่ ${day} ${month} พ.ศ. ${year}`;
+  return `${day} ${month} พ.ศ. ${year}`;
 }
 function getLunarDate(date = new Date()) { const key = `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()+543}`; return lunarData[key] || ""; }
 function getThaiTime() { const now = new Date(); return `เวลา ${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} น.`; }
