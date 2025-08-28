@@ -149,17 +149,36 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     border: 2px solid #C66900;
 }
 /* Number Containers */
-.circle-container, .square-container, .square-two-container { display: inline-flex; justify-content: center; align-items: center; height: 38px; margin: 0 0.5px; padding: 5px; background: transparent; box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4); }
-.circle-container { width: 88px; border: 3px solid #FF00FF; border-radius: 2%; }
-.square-container { width: 131px; border: 3px solid red; }
-.square-two-container { width: 88px; border: 3px solid blue; }
+.circle-container, .square-container, .square-two-container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* เพิ่มความสูงเป็น 60px (50px ลูกบอล + 5px padding บน + 5px padding ล่าง) */
+    margin: 0 0.5px;
+    padding: 2px;
+    background: transparent;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4);
+}
+.circle-container {
+    width: 120px; /* เดิม 88px, สำหรับ 2 ลูกบอล 50px + 5px*4 padding + 3px*2 border + ช่องว่าง */
+    border: 3px solid #FF00FF;
+    border-radius: 2%;
+}
+.square-container {
+    width: 180px; /* เดิม 131px, สำหรับ 3 ลูกบอล 50px + 5px*4 padding + 3px*2 border + ช่องว่าง */
+    border: 3px solid red;
+}
+.square-two-container {
+    width: 120px; /* เดิม 88px, สำหรับ 2 ลูกบอล 50px + 5px*4 padding + 3px*2 border + ช่องว่าง */
+    border: 3px solid blue;
+}
 /* Numbers Display */
 .numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
 .number-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     min-width: 150px;
 }
 /* Responsive */
@@ -712,7 +731,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             const { twoDigits } = getNumbersForToggle();
             
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange', 38, 20)}</div>`;
+                display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange', 50, 26)}</div>`;
             } else {
                 display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 50, 26);
             }
@@ -724,7 +743,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             const { threeDigits } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue', 38, 20)}</div>`;
+                display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue', 50, 26)}</div>`;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
@@ -736,7 +755,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             const { threeDigits, threeDigits_first, threeDigits_lastTwo } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue', 38, 20)}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue', 38, 20)}</div>`;
+                display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue', 50, 26)}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}</div>`;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
