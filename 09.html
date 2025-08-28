@@ -420,7 +420,7 @@ margin-bottom: 10px;
   const month = months[date.getMonth()];
   const year = date.getFullYear() + 543;
 
-  return `วันที่ ${day} ${month} พ.ศ. ${year}`;
+  return ` ${day} ${month} พ.ศ. ${year}`;
 }
     
     const getThaiTime = () => `เวลา ${String(new Date().getHours()).padStart(2, '0')}.${String(new Date().getMinutes()).padStart(2, '0')} น.`;
