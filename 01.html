@@ -1405,11 +1405,15 @@ calendarButton.addEventListener('click', () => {
 try { hiddenDateInput.showPicker(); } catch (error) { hiddenDateInput.click(); }
 });
 hiddenDateInput.addEventListener('change', (e) => {
-const selectedDate = e.target.value;
-if (selectedDate) {
-const parts = selectedDate.split('-');
-dateInput.value = `${parts[2]}/${parts[1]}/${parseInt(parts[0], 10) + 543}`;
-}
+    const selectedDate = e.target.value;
+    if (selectedDate) {
+        const parts = selectedDate.split('-');
+        dateInput.value = `${parts[2]}/${parts[1]}/${parseInt(parts[0], 10) + 543}`;
+    } else {
+        // เมื่อผู้ใช้ล้างค่า ให้ตั้งเป็นวันปัจจุบัน
+        const today = new Date();
+        dateInput.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear() + 543}`;
+    }
 });
 });
 
