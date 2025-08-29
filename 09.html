@@ -420,11 +420,18 @@ margin-bottom: 10px;
   const month = months[date.getMonth()];
   const year = date.getFullYear() + 543;
 
-  return ` ${day} ${month} พ.ศ. ${year}`;
+  return ` วันที่ ${day} ${month} พ.ศ. ${year}`;
 }
     
     const getThaiTime = () => `เวลา ${String(new Date().getHours()).padStart(2, '0')}.${String(new Date().getMinutes()).padStart(2, '0')} น.`;
-
+const getFormattedDateTime = (date = new Date()) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear() + 543;
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} เวลา ${hours}.${minutes} น.`;
+};
 const lunarData = {
   "01/01/2568": "วันพุธ ขึ้น 3 ค่ำ เดือนยี่ (2) ปีมะโรง",
   "02/01/2568": "วันพฤหัสบดี ขึ้น 4 ค่ำ เดือนยี่ (2) ปีมะโรง",
@@ -1251,7 +1258,7 @@ const lunarData = {
             <h3 style="font-weight: bold; ${textShadow}">จัดชุด 3 ตัว ${redSpan('(แปลเพิ่ม)')}</h3>
             <p style="font-size: 19px; font-weight: bold; ${textShadow}">${additional3d.length > 0 ? additional3d.join(' - ') : noDataSpan}</p>
             <h2 style="font-weight: bold; color: red; ${textShadow}">แนวทางเท่านั้น</h2>
-            <p style="font-size: 13px; ${textShadow}">แปล: ${getThaiDate()} ${getThaiTime()}</p>
+            <p style="font-size: 13px; ${textShadow}">แปล: ${getFormattedDateTime()}</p>
             <p style="font-size: 20px; ${textShadow}">หมายเหตุ : ${noteInput.startsWith('<span') ? noteInput : redSpan(noteInput)}</p>
         </div>`;
         // ===== END: แก้ไขโครงสร้าง HTML =====
