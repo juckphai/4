@@ -22,7 +22,7 @@
     /* Base Styles */
     body { font-family: Arial, sans-serif; background-color: #fffde7; margin: 0; padding: 0; line-height: 1; }
     h1 { text-align: center; font-size: 22px; color: blue; margin-top: 10px; margin-bottom: 10px; line-height: 1; }
-    label { font-size: 18px; color: #2c3e50; display: block; text-align: center; margin-left: 5%; margin-top: 15px; }
+    label { font-size: 18px; color: #2c3e50; display: block; text-align: center; margin-left: auto; margin-right: auto; margin-top: 15px; }
     footer { text-align: center; padding: 20px; font-size: 14px; color: #95a5a6; }
     /* Form Elements */
     input, select, button { font-size: 18px; padding: 10px; width: 80%; margin: 10px auto; border-radius: 6px; border: 1.5px solid #ddd; display: block; text-align: center; box-sizing: border-box; }
@@ -41,88 +41,60 @@
     .custom-topic-row input { width: 100%; margin: 0; }
 
     /* ========== START: CSS สำหรับช่องวันที่ ========== */
-    .date-input-wrapper {
-        display: flex;
-        align-items: center;
-        width: 80%;
-        margin: 10px auto;
-        gap: 8px;
-    }
-    #dateInput {
-        flex-grow: 1;
-        margin: 0;
-        width: auto;
-    }
-    #calendarButton {
-        flex-shrink: 0;
-        width: auto;
-        margin: 0;
-        padding: 8px 12px;
-        font-size: 20px;
-        background-color: #f0f0f0;
-        border: 1.5px solid #ccc;
-        cursor: pointer;
-    }
-    #calendarButton:hover {
-        background-color: #e0e0e0;
-    }
+    .date-input-wrapper { display: flex; align-items: center; width: 80%; margin: 10px auto; gap: 8px; }
+    #dateInput { flex-grow: 1; margin: 0; width: auto; }
+    #calendarButton { flex-shrink: 0; width: auto; margin: 0; padding: 8px 12px; font-size: 20px; background-color: #f0f0f0; border: 1.5px solid #ccc; cursor: pointer; }
+    #calendarButton:hover { background-color: #e0e0e0; }
     /* ========== END: CSS ที่เพิ่มเข้ามาสำหรับช่องวันที่ ========== */
-
-    .popup-overlay {
-        display: none; position: absolute; top: 0; left: 0; width: 100%; min-height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center;
-        padding: 20px 0; align-items: center;
-    }
-    .popup-content {
-        background-color: #FFFFD1; /* เปลี่ยนสี */
-        border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        width: 100%; max-width: 600px; padding: 25px 5px; position: relative; box-sizing: border-box;
-    }
-    .result-container-popup {
-        border: 1.5px solid #4CAF50; background-color:  #FFFFD1; margin: 0; padding: 15px 5px;
-        border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
-        position: relative; min-height: 300px; box-sizing: border-box;
-        overflow: hidden;
-    }
     
-    /* ===== START: เพิ่ม CSS สำหรับ Header และ Logo แบบใหม่ ===== */
-    .result-header {
-        display: flex;
+    /* ===== NEW STYLES for Inline Management Buttons ===== */
+    .select-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; width: 80%; margin: 10px auto; }
+    .select-wrapper select { flex-grow: 1; width: auto; margin: 0; }
+    .manage-btn-inline { flex-shrink: 0; width: 44px; height: 44px; padding: 0; font-size: 24px; border-radius: 8px; background-color: #6c757d; color: white; border: none; cursor: pointer; transition: all 0.2s ease; line-height: 44px; }
+    .manage-btn-inline:hover { background-color: #5a6268; transform: rotate(45deg); }
+    .management-actions { display: none; justify-content: center; gap: 10px; margin: 5px auto 15px; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .management-actions button { width: auto; padding: 6px 12px; font-size: 14px; margin: 0; border: none; color: white; transition: background-color 0.2s ease; }
+    .add-btn { background-color: #28a745; } .add-btn:hover { background-color: #218838; }
+    .edit-btn { background-color: #ffc107; color: #212529 !important; } .edit-btn:hover { background-color: #e0a800; }
+    .delete-btn { background-color: #dc3545; } .delete-btn:hover { background-color: #c82333; }
+    .reset-btn { background-color: #17a2b8; } .reset-btn:hover { background-color: #138496; }
+
+    /* ===== Popup Styles ===== */
+    .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: flex-start; padding: 40px 15px; overflow-y: auto; box-sizing: border-box; }
+    .popup-content { background-color: #FFFFD1; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); width: 100%; max-width: 600px; padding: 25px 15px; position: relative; box-sizing: border-box; }
+    .result-container-popup { border: 1.5px solid #4CAF50; background-color:  #FFFFD1; margin: 0; padding: 15px 5px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); position: relative; min-height: 300px; box-sizing: border-box; overflow: hidden; }
+    
+    /* ===== START: UPDATED Header and Logo Styles (from file 01) ===== */
+    .result-header { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+    .header-logo { width: 40px; height: auto; }
+    .topic-box {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        margin-bottom: 5px;
-    }
-    .header-logo {
-        width: 60px;
-        height: auto;
-    }
-    .topic-box {
         background-color: #FF75FF;
-        border: 3px solid #0070C0;
+        border: 2px solid #0070C0;
         color: white;
-        border-radius: 15px;
-        padding: 8px 15px;
-        font-size: 22px;
+        border-radius: 50px;
+        padding: 2px 2px;
+        font-size: 24px;
         font-weight: bold;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        text-align: center;
+        /* Engraved effect for white text */
+        text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.5);
     }
     .topic-time {
         font-size: 18px;
         color: blue;
         font-weight: bold;
-        text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+        /* Engraved effect for dark text */
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);
         margin-top: 0;
         margin-bottom: 10px;
     }
-    /* ===== END: เพิ่ม CSS ===== */
-
-    #resultContentWrapper { 
-        position: relative; 
-        z-index: 1; 
-        color: blue;
-    }
+    /* ===== END: UPDATED Header and Logo Styles ===== */
+    
+    #resultContentWrapper { position: relative; z-index: 1; color: blue; }
     #resultContentWrapper h2, #resultContentWrapper h3, #resultContentWrapper p { margin: 6px 0; }
     .number-line { font-size: 26px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; margin: 5px 0; padding: 0; }
     
@@ -132,11 +104,14 @@
     .control-group input[type="range"] { width: 80%; max-width: 300px; margin: 0; }
     .close-popup-btn { padding: 10px 20px; background-color: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; width: 90%; max-width: 200px; text-align: center; }
     .close-popup-btn:hover { background-color: #d32f2f; }
-    
+    .modal-button-group { display: flex; justify-content: space-around; margin-top: 20px; }
+    .modal-button-group button { width: 45%; margin: 0; }
+
     /* Responsive Styles */
     @media only screen and (max-width: 600px) {
-        .form-container { margin: 20px auto !important; width: calc(100% - 40px); }
+        .form-container, .select-wrapper { margin: 20px auto !important; width: 95%; }
         input, select, button, .custom-topic-row, .date-input-wrapper { width: 90%; }
+        .popup-overlay { padding: 20px 10px; }
     }
 </style>
 </head>
@@ -156,42 +131,60 @@
         
         <div id="numberSetsContainer"></div>
 
-        <select id="topicSelect" onchange="checkCustomTopicOption(this)">
-            <option value="ลาวประตูชัย เวลา 05.45 น.">ลาวประตูชัย เวลา 05.45 น.</option>
-            <option value="ลาวสันติภาพ เวลา 06.45 น.">ลาวสันติภาพ เวลา 06.45 น.</option>
-            <option value="custom">อื่นๆ (พิมพ์เอง)</option>
-            <option value="ประชาชนลาว เวลา 07.45 น.">ประชาชนลาว เวลา 07.45 น.</option>
-            <option value="ลาว Extra เวลา 08.30 น.">ลาว Extra เวลา 08.30 น.</option>
-            <option value="ลาว TV เวลา 10.30 น.">ลาว TV เวลา 10.30 น.</option>
-            <option value="ลาว HD เวลา 13.45 น.">ลาว HD เวลา 13.45 น.</option>
-            <option value="ลาวสตาร์ เวลา 15.45 น.">ลาวสตาร์ เวลา 15.45 น.</option>
-            <option value="ลาวสามัคคี เวลา 20.30 น.">ลาวสามัคคี เวลา 20.30 น.</option>
-            <option value="ลาวพัฒนา เวลา 20.30 น.">ลาวพัฒนา เวลา 20.30 น.</option>
-            <option value="ลาว VIP เวลา 21.30 น.">ลาว VIP เวลา 21.30 น.</option>
-            <option value="ลาวอาเซียน เวลา 21.00 น.">ลาวอาเซียน เวลา 21.00 น.</option>
-            <option value="ลาวสามัคคี VIP เวลา 21.30 น.">ลาวสามัคคี VIP เวลา 21.30 น.</option>
-            <option value="ลาวสตาร์ VIP เวลา 22.00 น.">ลาวสตาร์ VIP เวลา 22.00 น.</option>
-            <option value="ลาวกาชาด เวลา 23.30 น.">ลาวกาชาด เวลา 23.30 น.</option>
-            <option value="รัฐบาล เวลา 15.45 น.">รัฐบาล เวลา 15.45 น.</option>
-            <option value="ฮานอยกาชาด เวลา 16.30 น.">ฮานอยกาชาด เวลา 16.30 น.</option>
-            <option value="อานอยพิเศษ เวลา 17.30 น.">อานอยพิเศษ เวลา 17.30 น.</option>
-            <option value="ฮานอย เวลา 18.30 น.">ฮานอย เวลา 18.30 น.</option>
-            <option value="ฮานอย VIP เวลา 19.30 น.">ฮานอย VIP เวลา 19.30 น.</option>
-        </select>
+        <div class="select-wrapper">
+            <select id="topicSelect" onchange="checkCustomTopicOption(this)">
+                <option value="ลาวประตูชัย เวลา 05.45 น." data-default="true">ลาวประตูชัย เวลา 05.45 น.</option>
+                <option value="ลาวสันติภาพ เวลา 06.45 น." data-default="true">ลาวสันติภาพ เวลา 06.45 น.</option>
+                <option value="ประชาชนลาว เวลา 07.45 น." data-default="true">ประชาชนลาว เวลา 07.45 น.</option>
+                <option value="ลาว Extra เวลา 08.30 น." data-default="true">ลาว Extra เวลา 08.30 น.</option>
+                <option value="ลาว TV เวลา 10.30 น." data-default="true">ลาว TV เวลา 10.30 น.</option>
+                <option value="ลาว HD เวลา 13.45 น." data-default="true">ลาว HD เวลา 13.45 น.</option>
+                <option value="ลาวสตาร์ เวลา 15.45 น." data-default="true">ลาวสตาร์ เวลา 15.45 น.</option>
+                <option value="ลาวสามัคคี เวลา 20.30 น." data-default="true">ลาวสามัคคี เวลา 20.30 น.</option>
+                <option value="ลาวพัฒนา เวลา 20.30 น." data-default="true">ลาวพัฒนา เวลา 20.30 น.</option>
+                <option value="ลาวอาเซียน เวลา 21.00 น." data-default="true">ลาวอาเซียน เวลา 21.00 น.</option>
+                <option value="ลาว VIP เวลา 21.30 น." data-default="true">ลาว VIP เวลา 21.30 น.</option>
+                <option value="ลาวสามัคคี VIP เวลา 21.30 น." data-default="true">ลาวสามัคคี VIP เวลา 21.30 น.</option>
+                <option value="ลาวสตาร์ VIP เวลา 22.00 น." data-default="true">ลาวสตาร์ VIP เวลา 22.00 น.</option>
+                <option value="ลาวกาชาด เวลา 23.30 น." data-default="true">ลาวกาชาด เวลา 23.30 น.</option>
+                <option value="รัฐบาล เวลา 15.45 น." data-default="true">รัฐบาล เวลา 15.45 น.</option>
+                <option value="ฮานอยกาชาด เวลา 16.30 น." data-default="true">ฮานอยกาชาด เวลา 16.30 น.</option>
+                <option value="อานอยพิเศษ เวลา 17.30 น." data-default="true">อานอยพิเศษ เวลา 17.30 น.</option>
+                <option value="ฮานอย เวลา 18.30 น." data-default="true">ฮานอย เวลา 18.30 น.</option>
+                <option value="ฮานอย VIP เวลา 19.30 น." data-default="true">ฮานอย VIP เวลา 19.30 น.</option>
+                <option value="custom">อื่นๆ (พิมพ์เอง)</option>
+            </select>
+            <button class="manage-btn-inline" id="toggleTopicControls" title="จัดการหัวข้อ">⚙️</button>
+        </div>
+        <div class="management-actions" id="topicActions">
+            <button id="addTopicBtn" class="add-btn">เพิ่ม</button>
+            <button id="editTopicBtn" class="edit-btn">แก้ไข</button>
+            <button id="deleteTopicBtn" class="delete-btn">ลบ</button>
+            <button id="resetTopicBtn" class="reset-btn">คืนค่า</button>
+        </div>
         <div id="customTopicInputs" style="display: none;">
             <div class="custom-topic-row">
                 <input type="text" id="customTopicName" placeholder="กรุณากรอกหัวข้อเอง" style="width: 60%;" />
-                <input type="text" id="customTopicTime" placeholder="เวลา (เช่น 08.30 น)" style="width: 40%;" />
+                <input type="text" id="customTopicTime" placeholder="เวลา (เช่น 08.30)" style="width: 40%;" />
             </div>
         </div>
 
-        <select id="personSelect" onchange="checkCustomOption(this)">
-            <option value="@">@</option>  
-            <option value="Team">Team</option>
-            <option value="Udon Don">Udon Don</option>
-            <option value="custom">อื่นๆ (พิมพ์เอง)</option>
-        </select>
-        <input type="text" id="customPersonInput" placeholder="กรุณากรอกชื่อผู้บอกเอง" style="display: none; width: 80%; margin: 10px auto; font-size: 18px; padding: 10px; border-radius: 6px; border: 1.5px solid #ddd; text-align: center;" />
+        <div class="select-wrapper">
+            <select id="personSelect" onchange="checkCustomOption(this)">
+                <option value="Team" data-default="true">Team</option> 
+                <option value="@" data-default="true">@</option>  
+                <option value="Udon Don" data-default="true">Udon Don</option>
+                <option value="custom">อื่นๆ (พิมพ์เอง)</option>
+            </select>
+            <button class="manage-btn-inline" id="togglePersonControls" title="จัดการผู้บอก">⚙️</button>
+        </div>
+        <div class="management-actions" id="personActions">
+            <button id="addPersonBtn" class="add-btn">เพิ่ม</button>
+            <button id="editPersonBtn" class="edit-btn">แก้ไข</button>
+            <button id="deletePersonBtn" class="delete-btn">ลบ</button>
+            <button id="resetPersonBtn" class="reset-btn">คืนค่า</button>
+        </div>
+        <input type="text" id="customPersonInput" placeholder="กรุณากรอกชื่อผู้บอกเอง" style="display: none; width: 80%; margin: 10px auto;" />
 
         <div class="date-input-wrapper">
             <input type="text" id="dateInput" placeholder="วว/ดด/ปปปป (พ.ศ.)" />
@@ -206,28 +199,51 @@
     
     <button id="homeButton" class="homeButton" onclick="window.location.href='https://juckphai.github.io/4/index.html'">กลับสู่หน้าหลัก</button>
 
-    <!-- ---------- Popup Container ---------- -->
+    <!-- Result Popup -->
     <div id="resultPopupOverlay" class="popup-overlay">
         <div class="popup-content">
             <div id="resultContainerDiv" class="result-container-popup">
-                <!-- <img src="logo.png" class="result-bg-logo" alt=""> --> <!-- ลบโลโก้พื้นหลัง -->
-                <div id="resultContentWrapper">
-                    <!-- เนื้อหาผลลัพธ์จะถูกใส่ที่นี่โดย JavaScript -->
-                </div>
+                <div id="resultContentWrapper"></div>
             </div>
             <div class="controls">
                 <button id="saveResultAsImageBtn" class="close-popup-btn" style="background-color: #007bff; margin-bottom: 15px;">บันทึกเป็นรูปภาพ</button>
-                <div class="control-group">
-                    <label for="popupFontSizeSlider">ปรับขนาดตัวอักษร:</label>
-                    <input type="range" id="popupFontSizeSlider" min="0.7" max="1.5" step="0.05" value="1.0">
-                    <span id="popupFontSizeValue">ขนาด: 100%</span>
-                </div>
+<div class="control-group">
+    <label for="popupFontSizeSlider">ปรับขนาดตัวอักษร:</label>
+    <input type="range" id="popupFontSizeSlider" min="0.7" max="2.0" step="0.05" value="1.0">
+    <span id="popupFontSizeValue">ขนาด: 100%</span>
+</div>
                 <div class="control-group">
                     <label for="popupLineHeightSlider">ปรับขนาดบรรทัด:</label>
                     <input type="range" id="popupLineHeightSlider" min="1.0" max="2.5" step="0.1" value="1.5">
                     <span id="popupLineHeightValue">ความสูง: 1.5</span>
                 </div>
                 <button class="close-popup-btn" onclick="closeResultPopup()">ปิดหน้าต่างนี้</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Management Modals -->
+    <div id="topicModal" class="popup-overlay">
+        <div class="popup-content" style="max-width: 400px; background-color: #f0f8ff;">
+            <h2 id="topicModalTitle" style="color: #0056b3; text-align: center;"></h2>
+            <input type="hidden" id="topicEditIndex">
+            <input type="text" id="modalTopicName" placeholder="ชื่อหัวข้อ (เช่น ลาวมิตรภาพ)">
+            <input type="text" id="modalTopicTime" placeholder="เวลา (เช่น 20.30)">
+            <div class="modal-button-group">
+                <button id="saveTopicBtn" style="background-color: #28a745;">บันทึก</button>
+                <button id="cancelTopicBtn" class="close-popup-btn">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="personModal" class="popup-overlay">
+        <div class="popup-content" style="max-width: 400px; background-color: #f0f8ff;">
+            <h2 id="personModalTitle" style="color: #0056b3; text-align: center;"></h2>
+            <input type="hidden" id="personEditValue">
+            <input type="text" id="modalPersonName" placeholder="ชื่อผู้บอก">
+            <div class="modal-button-group">
+                <button id="savePersonBtn" style="background-color: #28a745;">บันทึก</button>
+                <button id="cancelPersonBtn" class="close-popup-btn">ยกเลิก</button>
             </div>
         </div>
     </div>
@@ -971,16 +987,35 @@ const lunarData = {
   "30/12/2569": "วันพุธ แรม 6 ค่ำ เดือนอ้าย (1) ปีมะเมีย",
   "31/12/2569": "วันพฤหัสบดี แรม 7 ค่ำ เดือนอ้าย (1) ปีมะเมีย"
 };
-    // --- POPUP FUNCTIONS ---
+    
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    
     function showResultPopup() { document.getElementById("resultPopupOverlay").style.display = "flex"; }
     function closeResultPopup() { document.getElementById("resultPopupOverlay").style.display = "none"; }
     
-    // --- UTILITY FUNCTIONS ---
-    document.addEventListener('contextmenu', e => e.preventDefault());
     function checkCustomTopicOption(select) { document.getElementById('customTopicInputs').style.display = select.value === 'custom' ? 'flex' : 'none'; }
     function checkCustomOption(select) { document.getElementById('customPersonInput').style.display = select.value === 'custom' ? 'block' : 'none'; }
-    function getSelectedPerson() { const select = document.getElementById('personSelect'); return select.value === 'custom' ? document.getElementById('customPersonInput').value.trim() || '@' : select.value; }
-    function getThaiDate(date = new Date()) { const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]; const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"]; return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`; }
+    
+    function getSelectedPerson() { const select = document.getElementById('personSelect'); return select.value === 'custom' ? (document.getElementById('customPersonInput').value.trim() || '@') : select.value; }
+    function getTopicName() { const select = document.getElementById('topicSelect'); if (select.value === 'custom') { return document.getElementById('customTopicName').value.trim() || 'ไม่ระบุหัวข้อ'; } return select.options[select.selectedIndex].text.split(' เวลา ')[0]; }
+    function getTopicTime() { const select = document.getElementById('topicSelect'); if (select.value === 'custom') { const time = document.getElementById('customTopicTime').value.trim(); return time ? `เวลา ${time} น.` : ''; } const parts = select.options[select.selectedIndex].text.split(' เวลา '); return parts.length > 1 ? `เวลา ${parts[1]}` : ''; }
+
+    function getThaiDate(date = new Date()) { const months = [
+    "มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+    "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"
+  ];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear() + 543;
+
+  return ` วันที่ ${day} ${month} พ.ศ. ${year}`;
+}
+function getShortThaiDate(date = new Date()) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear() + 543;
+    return `${day}/${month}/${year}`;
+}
     function getLunarDate(date) { const d = String(date.getDate()).padStart(2, '0'); const m = String(date.getMonth() + 1).padStart(2, '0'); const y = date.getFullYear() + 543; return lunarData[`${d}/${m}/${y}`] || ""; }
     function getThaiTime() { const now = new Date(); return `เวลา ${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} น.`; }
 
@@ -1030,23 +1065,8 @@ const lunarData = {
             numberLines.push(`<p class="number-line">${enteredNumbers.slice(i, i + chunkSize).join(' - ')}</p>`);
         }
         
-        // ===== START: ปรับปรุงการดึงข้อมูล Topic ให้แยกชื่อและเวลา =====
-        const topicSelect = document.getElementById('topicSelect');
-        let topicName = '';
-        let topicTime = '';
-
-        if (topicSelect.value === 'custom') {
-            topicName = document.getElementById('customTopicName').value.trim() || 'All laos ไม่ระบุ';
-            const timeInput = document.getElementById('customTopicTime').value.trim();
-            topicTime = timeInput ? `เวลา ${timeInput}` : '';
-        } else {
-            const selectedText = topicSelect.options[topicSelect.selectedIndex].text;
-            const parts = selectedText.split(' เวลา ');
-            topicName = parts[0];
-            topicTime = parts.length > 1 ? `เวลา ${parts[1]}` : '';
-        }
-        const topicTimeHtml = topicTime ? `<p class="topic-time">${topicTime}</p>` : '';
-        // ===== END: ปรับปรุงการดึงข้อมูล Topic =====
+        const topicName = getTopicName();
+        const topicTimeHtml = getTopicTime() ? `<p class="topic-time">${getTopicTime()}</p>` : '';
         
         const dateInputStr = document.getElementById("dateInput").value;
         const selectedDate = parseThaiDate(dateInputStr);
@@ -1056,35 +1076,38 @@ const lunarData = {
         }
 
         const lunarDate = getLunarDate(selectedDate);
-        const lunarHtml = lunarDate ? `<p style="font-size:14px;color:${lunarDate.includes('(วันพระ)')?'red':'#002060'};text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDate} )</p>` : '';
+        const engravedShadowStyle = "text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);";
+        const lunarHtml = lunarDate ? `<p style="font-size:14px;color:${lunarDate.includes('(วันพระ)')?'red':'#002060'}; font-weight: bold; ${engravedShadowStyle}">( ${lunarDate} )</p>` : '';
         let noteInput = document.getElementById("noteInput").value.trim();
         noteInput = noteInput ? `<span style="color: red;">${noteInput}</span>` : '<span style="color: red;">No remarks</span>';
         
-        // ===== START: แก้ไขโครงสร้าง HTML ที่ return ให้มี Header แบบใหม่ =====
+        // ===== START: UPDATED HTML structure for header =====
         return `
             <div style="position: relative; text-align: center; font-size: 20px; color: blue;">
                 <div class="result-header">
-                    <img src="logo.png" class="header-logo" alt="logo">
-                    <div class="topic-box">${topicName}</div>
-                    <img src="logo.png" class="header-logo" alt="logo">
+                    <div class="topic-box">
+                        <img src="logo.png" class="header-logo" alt="logo">
+                        <span>${topicName}</span>
+                        <img src="logo.png" class="header-logo" alt="logo">
+                    </div>
                 </div>
                 ${topicTimeHtml}
-                <p style="font-size: 18px; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">${getThaiDate(selectedDate)}</p>
+                <p style="font-size: 18px; ${engravedShadowStyle}">${getThaiDate(selectedDate)}</p>
                 ${lunarHtml}
-                <h2 style="font-size: 22px; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">By : <span style="color: green;">${getSelectedPerson()}</span> ${numberSetTitle} มีดังนี้</h2>
+                <h2 style="font-size: 22px; font-weight: bold; ${engravedShadowStyle}">By : <span style="color: green;">${getSelectedPerson()}</span> ${numberSetTitle} มีดังนี้</h2>
                 ${numberLines.join('')}
-                <h2 style="font-size: 24px; font-weight: bold; color: red; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; margin-top: 15px;">แนวทางเท่านั้น</h2>
-                <p style="font-size: 13px;">สร้างเมื่อ: ${getThaiDate()} ${getThaiTime()}</p>
-                <p style="font-size: 20px;">หมายเหตุ : ${noteInput}</p>
+                <h2 style="font-size: 22px; font-weight: bold; color: red; ${engravedShadowStyle} margin-top: 15px;">แนวทางเท่านั้น</h2>
+                <p style="font-size: 16px;">Disclose : ${getShortThaiDate(new Date())} ${getThaiTime()}</p>
+                <p style="font-size: 20px; ${engravedShadowStyle}">หมายเหตุ : ${noteInput}</p>
             </div>
         `;
-        // ===== END: แก้ไขโครงสร้าง HTML =====
+        // ===== END: UPDATED HTML structure for header =====
     }
 
     function setupPopupControls() {
         const resultContent = document.getElementById("resultContentWrapper");
         if (!resultContent) return;
-        const textElements = resultContent.querySelectorAll("p,h2,h3,.number-line,.topic-box"); // เพิ่ม .topic-box
+        const textElements = resultContent.querySelectorAll("p,h2,h3,.number-line,.topic-box, .topic-box span");
         const fsSlider = document.getElementById("popupFontSizeSlider");
         const fsValueSpan = document.getElementById("popupFontSizeValue");
         const lhSlider = document.getElementById("popupLineHeightSlider");
@@ -1116,17 +1139,9 @@ const lunarData = {
         newSaveBtn.addEventListener("click", function() {
             const captureElement = document.querySelector(".popup-content");
             const controlsElement = captureElement.querySelector('.controls');
-
             controlsElement.style.display = 'none';
             
-            const originalPadding = captureElement.style.padding;
-            captureElement.style.padding = '7px'; 
-
-            html2canvas(captureElement, {
-                useCORS: true,
-                scale: 2,
-                backgroundColor: '#FFFFD1' // เปลี่ยนสี
-            }).then(canvas => {
+            html2canvas(captureElement, { useCORS: true, scale: 2, backgroundColor: '#FFFFD1' }).then(canvas => {
                 const link = document.createElement('a');
                 const firstNum = document.querySelector('.number-set-input')?.value || "Set";
                 link.download = `ResultSet-${firstNum}-${Date.now()}.png`;
@@ -1136,11 +1151,9 @@ const lunarData = {
                 console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
                 alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
             }).finally(() => {
-                controlsElement.style.display = '';
-                captureElement.style.padding = originalPadding;
+                controlsElement.style.display = 'flex';
             });
         });
-
         updateFontSize();
         updateLineHeight();
     }
@@ -1155,6 +1168,172 @@ const lunarData = {
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+        const TOPIC_STORAGE_KEY = 'customTopics_set'; // Changed key
+        const PERSON_STORAGE_KEY = 'customPersons_set'; // Changed key
+        const HIDDEN_TOPICS_KEY = 'hiddenDefaultTopics_set'; // Changed key
+        const HIDDEN_PERSONS_KEY = 'hiddenDefaultPersons_set'; // Changed key
+
+        const getStored = (key) => JSON.parse(localStorage.getItem(key)) || [];
+        const setStored = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+        
+        function applyHiddenDefaults(selectId, storageKey) {
+            const hiddenValues = getStored(storageKey);
+            if (hiddenValues.length > 0) {
+                document.querySelectorAll(`#${selectId} option[data-default="true"]`).forEach(opt => {
+                    if (hiddenValues.includes(opt.value)) { opt.hidden = true; }
+                });
+            }
+        }
+
+        function loadOptions(selectId, storageKey) {
+            const select = document.getElementById(selectId);
+            const stored = getStored(storageKey);
+            select.querySelectorAll('option:not([data-default])').forEach(opt => opt.value !== 'custom' && opt.remove());
+            const otherOption = select.querySelector('option[value="custom"]');
+            stored.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.value;
+                opt.textContent = item.text;
+                select.insertBefore(opt, otherOption);
+            });
+        }
+        
+        applyHiddenDefaults('topicSelect', HIDDEN_TOPICS_KEY);
+        applyHiddenDefaults('personSelect', HIDDEN_PERSONS_KEY);
+        loadOptions('topicSelect', TOPIC_STORAGE_KEY);
+        loadOptions('personSelect', PERSON_STORAGE_KEY);
+
+        document.getElementById('toggleTopicControls').addEventListener('click', () => {
+            const actions = document.getElementById('topicActions');
+            actions.style.display = actions.style.display === 'flex' ? 'none' : 'flex';
+        });
+        document.getElementById('togglePersonControls').addEventListener('click', () => {
+            const actions = document.getElementById('personActions');
+            actions.style.display = actions.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        const setupManagement = (type) => {
+            const SELECT_ID = `${type}Select`;
+            const STORAGE_KEY = `custom${type.charAt(0).toUpperCase() + type.slice(1)}s_set`;
+            const HIDDEN_STORAGE_KEY = `hiddenDefault${type.charAt(0).toUpperCase() + type.slice(1)}s_set`;
+            const MODAL_ID = `${type}Modal`;
+            
+            document.getElementById(`add${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                document.getElementById(`${type}ModalTitle`).textContent = `เพิ่ม${type === 'topic' ? 'หัวข้อ' : 'ผู้บอก'}ใหม่`;
+                if(type === 'topic') {
+                    document.getElementById('modalTopicName').value = '';
+                    document.getElementById('modalTopicTime').value = '';
+                    document.getElementById('topicEditIndex').value = '';
+                } else {
+                    document.getElementById('modalPersonName').value = '';
+                    document.getElementById('personEditValue').value = '';
+                }
+                document.getElementById(MODAL_ID).style.display = 'flex';
+            });
+
+            document.getElementById(`edit${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                const select = document.getElementById(SELECT_ID);
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption.value === 'custom' || selectedOption.hidden) return alert('ไม่สามารถแก้ไขรายการนี้ได้');
+                
+                document.getElementById(`${type}ModalTitle`).textContent = `แก้ไข${type === 'topic' ? 'หัวข้อ' : 'ผู้บอก'}`;
+                if (type === 'topic') {
+                    const [name, timePart] = selectedOption.value.split(' เวลา ');
+                    document.getElementById('modalTopicName').value = name;
+                    document.getElementById('modalTopicTime').value = timePart ? timePart.replace(' น.', '') : '';
+                    document.getElementById('topicEditIndex').value = selectedOption.value;
+                } else {
+                    document.getElementById('modalPersonName').value = selectedOption.value;
+                    document.getElementById('personEditValue').value = selectedOption.value;
+                }
+                document.getElementById(MODAL_ID).style.display = 'flex';
+            });
+            
+            document.getElementById(`delete${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                const select = document.getElementById(SELECT_ID);
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption.value === 'custom' || selectedOption.hidden) return alert('ไม่สามารถลบรายการนี้ได้');
+                if (confirm(`คุณต้องการลบ "${selectedOption.textContent}" ใช่หรือไม่?`)) {
+                    if (selectedOption.hasAttribute('data-default')) {
+                        let hidden = getStored(HIDDEN_STORAGE_KEY);
+                        if (!hidden.includes(selectedOption.value)) {
+                            hidden.push(selectedOption.value);
+                            setStored(HIDDEN_STORAGE_KEY, hidden);
+                        }
+                        selectedOption.hidden = true;
+                        select.selectedIndex = [...select.options].findIndex(o => !o.hidden);
+                    } else {
+                        let options = getStored(STORAGE_KEY);
+                        options = options.filter(opt => opt.value !== selectedOption.value);
+                        setStored(STORAGE_KEY, options);
+                        loadOptions(SELECT_ID, STORAGE_KEY);
+                    }
+                }
+            });
+
+            document.getElementById(`save${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                let name, time, oldValue, newValue;
+                if (type === 'topic') {
+                    name = document.getElementById('modalTopicName').value.trim();
+                    time = document.getElementById('modalTopicTime').value.trim();
+                    oldValue = document.getElementById('topicEditIndex').value;
+                    if (!name) return alert('กรุณากรอกชื่อหัวข้อ');
+                    newValue = time ? `${name} เวลา ${time} น.` : name;
+                } else {
+                    name = document.getElementById('modalPersonName').value.trim();
+                    oldValue = document.getElementById('personEditValue').value;
+                    if (!name) return alert('กรุณากรอกชื่อผู้บอก');
+                    newValue = name;
+                }
+
+                let options = getStored(STORAGE_KEY);
+                const select = document.getElementById(SELECT_ID);
+                
+                if (oldValue) { // Edit Mode
+                    const oldOptionEl = select.querySelector(`option[value="${oldValue}"]`);
+                    if (oldOptionEl && oldOptionEl.hasAttribute('data-default')) {
+                        let hidden = getStored(HIDDEN_STORAGE_KEY);
+                        if (!hidden.includes(oldValue)) {
+                            hidden.push(oldValue);
+                            setStored(HIDDEN_STORAGE_KEY, hidden);
+                        }
+                        oldOptionEl.hidden = true;
+                        if (!options.some(opt => opt.value === newValue)) {
+                            options.push({ value: newValue, text: newValue });
+                        }
+                    } else {
+                        const index = options.findIndex(opt => opt.value === oldValue);
+                        if (index > -1) options[index] = { value: newValue, text: newValue };
+                        else options.push({ value: newValue, text: newValue });
+                    }
+                } else { // Add Mode
+                    if (options.some(opt => opt.value === newValue) || [...select.options].some(o => o.value === newValue && !o.hidden)) {
+                        return alert('มีรายการนี้อยู่แล้ว');
+                    }
+                    options.push({ value: newValue, text: newValue });
+                }
+                setStored(STORAGE_KEY, options);
+                loadOptions(SELECT_ID, STORAGE_KEY);
+                select.value = newValue;
+                document.getElementById(MODAL_ID).style.display = 'none';
+            });
+            
+            document.getElementById(`reset${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                 if (confirm(`คุณต้องการคืนค่ารายการ${type === 'topic' ? 'หัวข้อ' : 'ผู้บอก'}ทั้งหมดใช่หรือไม่?\n(รายการที่สร้างเองและซ่อนไว้จะถูกลบทั้งหมด)`)) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(HIDDEN_STORAGE_KEY);
+                    location.reload();
+                }
+            });
+
+            document.getElementById(`cancel${type.charAt(0).toUpperCase() + type.slice(1)}Btn`).addEventListener('click', () => {
+                document.getElementById(MODAL_ID).style.display = 'none';
+            });
+        };
+        
+        setupManagement('topic');
+        setupManagement('person');
+        
         document.getElementById("convertButton").addEventListener("click", displayResultInPopup);
         document.getElementById('setCountSelect').addEventListener('change', createNumberInputs);
         
@@ -1169,11 +1348,7 @@ const lunarData = {
         dateInput.value = `${day}/${month}/${year}`;
 
         calendarButton.addEventListener('click', () => {
-            try {
-                hiddenDateInput.showPicker();
-            } catch (error) {
-                hiddenDateInput.click();
-            }
+            try { hiddenDateInput.showPicker(); } catch (error) { hiddenDateInput.click(); }
         });
 
 hiddenDateInput.addEventListener('change', (e) => {
