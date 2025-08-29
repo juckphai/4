@@ -1139,19 +1139,23 @@ alert("รูปแบบวันที่ไม่ถูกต้อง กร
 return null;
 }
 
-const lunarDate = getLunarDate(date);
-let noteValue = document.getElementById("noteInput").value.trim();
-const engravedShadowStyle = "text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);";
+  const lunarDate = getLunarDate(date);
+  let noteValue = document.getElementById("noteInput").value.trim();
+  const engravedShadowStyle = "text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);";
 
-const commonData = {
-date: date,
-topicName: getTopicName(),
-topicTimeHtml: (() => { const t = getTopicTime(); return t ? `<p class="topic-time">${t}</p>` : ''; })(),
-selectedPerson: getSelectedPerson(),
-lunarHtml: lunarDate ? `<p style="font-size: 14px; color: ${lunarDate.includes('วันพระ') ? 'red' : '#002060'}; font-weight: bold; ${engravedShadowStyle}">( ${lunarDate} )</p>` : '',
-noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
-textShadow: engravedShadowStyle
-};
+  // เปลี่ยนสีข้อความ lunarDate เป็นสีเขียวที่มีขอบสีขาว
+  const lunarStyle = "color: green; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;";
+  const color = lunarDate.includes('วันพระ') ? 'red' : 'green';
+  const commonData = {
+    date: date,
+    topicName: getTopicName(),
+    topicTimeHtml: (() => { const t = getTopicTime(); return t ? `<p class="topic-time">${t}</p>` : ''; })(),
+    selectedPerson: getSelectedPerson(),
+    // ใช้ lunarStyle แทน engravedShadowStyle สำหรับ lunarHtml
+    lunarHtml: lunarDate ? `<p style="font-size: 14px; color: ${color}; font-weight: bold; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDate} )</p>` : '',
+    noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
+    textShadow: engravedShadowStyle
+  };
 
 if (num.length === 2) { return generate2DigitHTML(num, commonData); }
 else if (num.length === 3) { return generate3DigitHTML(num, commonData); }
