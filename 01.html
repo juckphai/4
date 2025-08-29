@@ -1238,7 +1238,7 @@ controlsElement.style.display = 'none';
 const originalPadding = captureElement.style.padding;
 captureElement.style.padding = '7px';
 
-html2canvas(captureElement, { useCORS: true, scale: 2, backgroundColor: '#FFFFD1' }).then(canvas => {
+html2canvas(captureElement, { useCORS: true, scale: 4, backgroundColor: '#FFFFD1' }).then(canvas => {
 const link = document.createElement('a');
 const num = document.getElementById("numberInput").value || "XXXX";
 link.download = `Result-Gen-${num}-${Date.now()}.png`;
