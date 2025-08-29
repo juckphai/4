@@ -180,13 +180,29 @@
             .container { gap: 20px; }
             .header-title { font-size: 1.2rem; }
             .btn { font-size: 0.95rem; }
-            .button-grid { grid-template-columns: 1fr 1fr; } /* 2 columns on mobile */
+            
+            /* ปรับให้ปุ่มแสดงใน 2 คอลัมน์ */
+            .button-grid { 
+                grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
+                gap: 12px;
+            }
             
             /* 新增：在移动设备上单个按钮时居中 */
             .button-grid.single-button {
                 display: flex;
                 grid-template-columns: 1fr;
                 justify-content: center;
+            }
+            
+            /* ปรับให้ปุ่มที่สามในกริดที่มีสามปุ่มอยู่กึ่งกลาง */
+            .button-grid.three-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .button-grid.three-buttons .btn:nth-child(3) {
+                grid-column: span 2; /* ขยายเต็ม 2 คอลัมน์ */
+                justify-self: center;
+                max-width: 200px; /* กำหนดความกว้างสูงสุด */
             }
         }
     </style>
@@ -229,8 +245,16 @@
                 // 如果只有一个按钮，添加single-button类
                 if (buttonCount === 1) {
                     grid.classList.add('single-button');
-                } else {
+                    grid.classList.remove('three-buttons');
+                } 
+                // ถ้ามีสามปุ่ม ให้เพิ่ม class 'three-buttons'
+                else if (buttonCount === 3) {
+                    grid.classList.add('three-buttons');
                     grid.classList.remove('single-button');
+                }
+                else {
+                    grid.classList.remove('single-button');
+                    grid.classList.remove('three-buttons');
                 }
             });
         }
