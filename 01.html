@@ -1023,12 +1023,17 @@ function getThaiDate(date) {
   const month = months[date.getMonth()];
   const year = date.getFullYear() + 543;
 
-  return `${day} ${month} พ.ศ. ${year}`;
+  return `วันที่ ${day} ${month} พ.ศ. ${year}`;
 }
 function getLunarDate(date = new Date()) { const key = `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()+543}`; return lunarData[key] || ""; }
 function getThaiTime() { const now = new Date(); return `เวลา ${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')} น.`; }
 function parseThaiDate(dateStr) { if (!dateStr || dateStr.trim() === '') return new Date(); const parts = dateStr.match(/(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})/); if (parts) { const day = parseInt(parts[1], 10); const month = parseInt(parts[2], 10); let year = parseInt(parts[3], 10); if (year > 2500) year -= 543; const d = new Date(year, month - 1, day); if (d && d.getMonth() === month - 1) return d; } return null; }
-
+function getFormattedDate(date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear() + 543;
+  return `${day}/${month}/${year}`;
+}
 // === LOGIC FOR 4-DIGIT NUMBERS ===
 function generate4DigitHTML(num, commonData) {
 const twoDigitPairs = ((n) => { const p = new Set(); for (let i = 0; i < n.length; i++) { for (let j = i + 1; j < n.length; j++) { p.add([n[i], n[j]].sort().join('')); } } return Array.from(p).sort(); })(num);
@@ -1044,7 +1049,7 @@ ${commonData.lunarHtml}
 <h3 style="font-size: 24px; font-weight: bold; ${commonData.textShadow}">จัดชุด 2 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.625rem) * var(--font-scale)); ${commonData.textShadow}">${twoDigitPairs.join(' - ')}</p>
 <h3 style="font-size: 24px; font-weight: bold; ${commonData.textShadow}">จัดชุด 3 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.625rem) * var(--font-scale)); ${commonData.textShadow}">${threeDigitCombinations.join(' - ')}</p>
 <h2 style="font-size: 24px; font-weight: bold; color: red; ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 13px; ${commonData.textShadow}">แปล: ${getThaiDate(new Date())} ${getThaiTime()}</p>
+<p style="font-size: 16px; ${commonData.textShadow}">แปล: ${getFormattedDate(new Date())} ${getThaiTime()}</p>
 <p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml}</p>
 </div>`;
 }
@@ -1087,7 +1092,7 @@ ${commonData.lunarHtml}
 <h3 style="font-weight: bold; font-size: calc(clamp(0.9rem, 4.5vw, 1.2rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 3 ตัว (ปกติ)</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.85rem, 4.8vw, 1.35rem) * var(--font-scale)); ${commonData.textShadow}">${thirdSet.join(' - ')}</p>
 <h3 style="font-weight: bold; font-size: calc(clamp(0.9rem, 4.5vw, 1.2rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 3 ตัว ${redSpan('(แปลเพิ่ม)')}</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.85rem, 4.8vw, 1.35rem) * var(--font-scale)); ${commonData.textShadow}">${additional3d.length > 0 ? additional3d.join(' - ') : noDataSpan}</p>
 <h2 style="font-weight: bold; color: red; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 13px; ${commonData.textShadow}">แปล: ${getThaiDate(new Date())} ${getThaiTime()}</p>
+<p style="font-size: 16px; ${commonData.textShadow}">แปล: ${getFormattedDate(new Date())} ${getThaiTime()}</p>
 <p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml.replace('No remarks', '<span style="color: red;">No remarks</span>')}</p>
 </div>`;
 }
@@ -1113,7 +1118,7 @@ ${commonData.lunarHtml}
 <h3 style="font-weight: bold; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 2 ตัว</h3>
 <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1.1rem, 7vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">${sortedPairs.join(' - ')}</p>
 <h2 style="font-weight: bold; color: red; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 13px; ${commonData.textShadow}">แปล: ${getThaiDate(new Date())} ${getThaiTime()}</p>
+<p style="font-size: 16px; ${commonData.textShadow}">แปล: ${getFormattedDate(new Date())} ${getThaiTime()}</p>
 <p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml}</p>
 </div>
 `;
