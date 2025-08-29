@@ -894,16 +894,21 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     }
                 });
 
-                thaiHiddenDateInput.addEventListener('change', (e) => {
-                    const selectedDate = e.target.value;
-                    if (selectedDate) {
-                        const parts = selectedDate.split('-');
-                        const thaiYear = parseInt(parts[0], 10) + 543;
-                        thaiDrawDateInput.value = `${parts[2]}/${parts[1]}/${thaiYear}`;
-                    }
+ thaiHiddenDateInput.addEventListener('change', (e) => {
+    const selectedDate = e.target.value;
+    if (selectedDate) {
+        const parts = selectedDate.split('-');
+        // แปลงจาก YYYY-MM-DD (ค.ศ.) เป็น DD/MM/YYYY (พ.ศ.)
+        thaiDrawDateInput.value = `${parts[2]}/${parts[1]}/${parseInt(parts[0], 10) + 543}`;
+    } else {
+        // เมื่อผู้ใช้ล้างค่า ให้ตั้งเป็นวันปัจจุบัน
+        const today = new Date();
+        thaiDrawDateInput.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear() + 543}`;
+    }
                 });
             }
         });
+
 
         // --- PWA Service Worker Registration ---
         if ('serviceWorker' in navigator) {
