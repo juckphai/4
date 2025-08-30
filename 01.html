@@ -1041,18 +1041,59 @@ const threeDigitCombinations = ((n) => { const c = new Set(); if (n.length < 3) 
 
 return `
 <div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-<div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
-${commonData.topicTimeHtml}
-<p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
-${commonData.lunarHtml}
-<h2 style="font-size: 24px; font-weight: bold; ${commonData.textShadow}">4 ตัว <span style="color: red;">${num}</span> By : <span style="color: green;">${commonData.selectedPerson}</span></h2>
-<h3 style="font-size: 24px; font-weight: bold; ${commonData.textShadow}">จัดชุด 2 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.625rem) * var(--font-scale)); ${commonData.textShadow}">${twoDigitPairs.join(' - ')}</p>
-<h3 style="font-size: 24px; font-weight: bold; ${commonData.textShadow}">จัดชุด 3 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.625rem) * var(--font-scale)); ${commonData.textShadow}">${threeDigitCombinations.join(' - ')}</p>
-<h2 style="font-size: 24px; font-weight: bold; color: red; ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 16px; ${commonData.textShadow}">Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}</p>
-<p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml}</p>
+  <div class="result-header">
+    <div class="topic-box">
+      <img src="logo.png" class="header-logo" alt="logo">
+      <span>${commonData.topicName}</span>
+      <img src="logo.png" class="header-logo" alt="logo">
+    </div>
+  </div>
+  
+  ${commonData.topicTimeHtml}
+
+  <!-- วันที่ -->
+  <p style="font-size: clamp(0.875rem, 2vw, 1.25rem); ${commonData.textShadow}">
+    ${getThaiDate(commonData.date)}
+  </p>
+
+  ${commonData.lunarHtml}
+
+  <!-- หัวข้อหลัก -->
+  <h2 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+    4 ตัว <span style="color: red;">${num}</span> By : <span style="color: green;">${commonData.selectedPerson}</span>
+  </h2>
+
+  <!-- 2 ตัว -->
+  <h3 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+    จัดชุด 2 ตัว
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${twoDigitPairs.join(' - ')}
+  </p>
+
+  <!-- 3 ตัว -->
+  <h3 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+    จัดชุด 3 ตัว
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${threeDigitCombinations.join(' - ')}
+  </p>
+
+  <!-- หมายเหตุ -->
+  <h2 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; color: red; ${commonData.textShadow}">
+    แนวทางเท่านั้น
+  </h2>
+
+  <p style="font-size: clamp(0.875rem, 2vw, 1.125rem); ${commonData.textShadow}">
+    Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}
+  </p>
+
+  <p style="font-size: clamp(1rem, 3vw, 1.5rem); ${commonData.textShadow}">
+    ${commonData.noteHtml}
+  </p>
 </div>`;
 }
+
 
 // === LOGIC FOR 3-DIGIT NUMBERS (REVISED) ===
 function generate3DigitHTML(num, commonData) {
@@ -1080,22 +1121,84 @@ const redSpan = (text) => `<span style="color: red;">${text}</span>`;
 const greenSpan = (text) => `<span style="color: green;">${text}</span>`;
 const noDataSpan = '<span style="color: green; font-size: 18px;">ไม่มีชุดตัวเลขเพิ่ม</span>';
 
-return `<div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-<div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
-${commonData.topicTimeHtml}
-<p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
-${commonData.lunarHtml}
-<h2 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">3 ตัว ${redSpan(num)} By : ${greenSpan(commonData.selectedPerson)}</h2>
-<h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุดเด่น 2 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">${firstSet.join(' - ')}</p>
-<h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุดรอง 2 ตัว</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">${secondSet.length > 0 ? secondSet.join(' - ') : noDataSpan}</p>
-<h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 2 ตัว ${redSpan('(แปลเพิ่ม)')}</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">${transformedPairs.length > 0 ? transformedPairs.join(' - ') : noDataSpan}</p>
-<h3 style="font-weight: bold; font-size: calc(clamp(0.9rem, 4.5vw, 1.2rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 3 ตัว (ปกติ)</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.85rem, 4.8vw, 1.35rem) * var(--font-scale)); ${commonData.textShadow}">${thirdSet.join(' - ')}</p>
-<h3 style="font-weight: bold; font-size: calc(clamp(0.9rem, 4.5vw, 1.2rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 3 ตัว ${redSpan('(แปลเพิ่ม)')}</h3> <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.85rem, 4.8vw, 1.35rem) * var(--font-scale)); ${commonData.textShadow}">${additional3d.length > 0 ? additional3d.join(' - ') : noDataSpan}</p>
-<h2 style="font-weight: bold; color: red; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 16px; ${commonData.textShadow}">Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}</p>
-<p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml.replace('No remarks', '<span style="color: red;">No remarks</span>')}</p>
+return `
+<div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
+  <div class="result-header">
+    <div class="topic-box">
+      <img src="logo.png" class="header-logo" alt="logo">
+      <span>${commonData.topicName}</span>
+      <img src="logo.png" class="header-logo" alt="logo">
+    </div>
+  </div>
+  ${commonData.topicTimeHtml}
+  
+  <!-- วันที่ -->
+  <p style="font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${getThaiDate(commonData.date)}
+  </p>
+  
+  ${commonData.lunarHtml}
+  
+  <!-- 3 ตัว -->
+  <h2 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">
+    3 ตัว ${redSpan(num)} By : ${greenSpan(commonData.selectedPerson)}
+  </h2>
+  
+  <!-- 2 ตัว เด่น -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.4rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุดเด่น 2 ตัว
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${firstSet.join(' - ')}
+  </p>
+  
+  <!-- 2 ตัว รอง -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.4rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุดรอง 2 ตัว
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${secondSet.length > 0 ? secondSet.join(' - ') : noDataSpan}
+  </p>
+  
+  <!-- 2 ตัว แปลเพิ่ม -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.4rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุด 2 ตัว ${redSpan('(แปลเพิ่ม)')}
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${transformedPairs.length > 0 ? transformedPairs.join(' - ') : noDataSpan}
+  </p>
+  
+  <!-- 3 ตัว ปกติ -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.4rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุด 3 ตัว (ปกติ)
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${thirdSet.join(' - ')}
+  </p>
+  
+  <!-- 3 ตัว แปลเพิ่ม -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1rem, 5vw, 1.4rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุด 3 ตัว ${redSpan('(แปลเพิ่ม)')}
+  </h3>
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${additional3d.length > 0 ? additional3d.join(' - ') : noDataSpan}
+  </p>
+  
+  <!-- ข้อความสรุป -->
+  <h2 style="font-weight: bold; color: red; font-size: calc(clamp(1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">
+    แนวทางเท่านั้น
+  </h2>
+  
+  <p style="font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}
+  </p>
+  
+  <p style="font-size: calc(clamp(0.9rem, 4.8vw, 1.3rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${commonData.noteHtml.replace('No remarks', '<span style="color: red;">No remarks</span>')}
+  </p>
 </div>`;
 }
+
 
 // === LOGIC FOR 2-DIGIT NUMBERS ===
 function generate2DigitHTML(num, commonData) {
@@ -1110,19 +1213,53 @@ const sortedPairs = [...new Set(uniquePairs)].sort();
 
 return `
 <div style="position: relative; text-align: center; color: blue; --font-scale: 1;">
-<div class="result-header"><div class="topic-box"><img src="logo.png" class="header-logo" alt="logo"><span>${commonData.topicName}</span><img src="logo.png" class="header-logo" alt="logo"></div></div>
-${commonData.topicTimeHtml}
-<p style="font-size: 18px; ${commonData.textShadow}">${getThaiDate(commonData.date)}</p>
-${commonData.lunarHtml}
-<h2 style="font-weight: bold; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">2 ตัว <span style="color: red;">${num}</span> By : <span style="color: green;">${commonData.selectedPerson}</span></h2>
-<h3 style="font-weight: bold; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">จัดชุด 2 ตัว</h3>
-<p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1.1rem, 7vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">${sortedPairs.join(' - ')}</p>
-<h2 style="font-weight: bold; color: red; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">แนวทางเท่านั้น</h2>
-<p style="font-size: 16px; ${commonData.textShadow}">Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}</p>
-<p style="font-size: 20px; ${commonData.textShadow}">${commonData.noteHtml}</p>
+  <div class="result-header">
+    <div class="topic-box">
+      <img src="logo.png" class="header-logo" alt="logo">
+      <span>${commonData.topicName}</span>
+      <img src="logo.png" class="header-logo" alt="logo">
+    </div>
+  </div>
+  ${commonData.topicTimeHtml}
+  
+  <!-- วันที่ -->
+  <p style="font-size: clamp(0.9rem, 2vw, 1.2rem); ${commonData.textShadow}">
+    ${getThaiDate(commonData.date)}
+  </p>
+  
+  ${commonData.lunarHtml}
+  
+  <!-- หัวข้อหลัก -->
+  <h2 style="font-weight: bold; font-size: calc(clamp(1.2rem, 6vw, 1.6rem) * var(--font-scale)); ${commonData.textShadow}">
+    2 ตัว <span style="color: red;">${num}</span> By : <span style="color: green;">${commonData.selectedPerson}</span>
+  </h2>
+  
+  <!-- หัวข้อย่อย -->
+  <h3 style="font-weight: bold; font-size: calc(clamp(1.1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">
+    จัดชุด 2 ตัว
+  </h3>
+  
+  <!-- เลขชุด -->
+  <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1.1rem, 7vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">
+    ${sortedPairs.join(' - ')}
+  </p>
+  
+  <!-- หมายเหตุ -->
+  <h2 style="font-weight: bold; color: red; font-size: calc(clamp(1.1rem, 5vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">
+    แนวทางเท่านั้น
+  </h2>
+  
+  <p style="font-size: clamp(0.9rem, 2vw, 1.1rem); ${commonData.textShadow}">
+    Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}
+  </p>
+  
+  <p style="font-size: clamp(1rem, 3vw, 1.25rem); ${commonData.textShadow}">
+    ${commonData.noteHtml}
+  </p>
 </div>
 `;
 }
+
 
 // === MAIN DISPATCHER FUNCTION ===
 function generateResultHTML() {
@@ -1437,4 +1574,5 @@ navigator.serviceWorker.register('./sw-unified.js')
 </script>
 </body>
 </html>
+
 
