@@ -217,16 +217,26 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 /* --- เริ่มการแก้ไขสำหรับ input date ของรัฐบาลไทย --- */
 .thai-lottery-form .date-input-wrapper {
-    display: flex; /* ตรวจสอบให้แน่ใจว่าเป็น flex container */
-    flex-direction: row; /* เปลี่ยนเป็นจัดเรียงแนวนอน */
-    justify-content: center; /* จัดให้อยู่กึ่งกลาง */
-    align-items: center; /* จัดให้ไอเท็มอยู่ตรงกลางในแนวตั้ง */
-    gap: 10px; /* เพิ่มช่องว่างระหว่าง input และ button */
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%; /* ✅ เต็มกรอบสีเขียว */
     box-sizing: border-box;
-    flex-wrap: nowrap; /* เพิ่มเพื่อให้แน่ใจว่าไม่อยู่ในบรรทัดเดียวกัน */
+    flex-wrap: nowrap; 
 }
-/* --- สิ้นสุดการแก้ไข --- */
+
+.thai-lottery-form .date-input-wrapper input[type="date"] {
+    flex: 1; /* ✅ ให้ input ยืดเต็มที่ */
+    min-width: 0; /* ป้องกันไม่ให้ล้น */
+}
+
+.thai-lottery-form .date-input-wrapper button {
+    flex-shrink: 0; /* ✅ ปุ่มไม่ถูกบีบ */
+    max-width: 120px; /* จำกัดความกว้างปุ่ม */
+    width: auto;
+}
 
 .thai-lottery-form .button-container button {
     font-size: 20px;
@@ -241,28 +251,22 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     box-sizing: border-box;
 }
 
-/* ✅ Responsive ปรับขนาดเมื่อจอเล็ก */
+/* ✅ Responsive ปรับสำหรับจอเล็ก */
 @media (max-width: 480px) {
-    .thai-lottery-form {
-        padding: 10px 5px;
-    }
-
-    .thai-lottery-form input,
-    .thai-lottery-form .button-container button {
-        font-size: 16px;
-    }
-
-    /* ลบส่วนนี้ออก เพราะเราจะไม่มีปุ่มปฏิทินแยกแล้ว */
-    /*
     .thai-lottery-form .date-input-wrapper {
-        flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
 
-    .thai-lottery-form .date-input-wrapper button#calendarButton {
-        width: 100%;
+    .thai-lottery-form .date-input-wrapper button {
+        max-width: 100px;
+        padding: 8px 10px;
+        font-size: 14px;
     }
-    */
+
+    .thai-lottery-form .date-input-wrapper input[type="date"] {
+        font-size: 14px;
+        padding: 6px;
+    }
 }
 
 /* Popup สำหรับรัฐบาลไทย */
@@ -894,7 +898,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     }
                 });
 
- thaiHiddenDateInput.addEventListener('change', (e) => {
+thaiHiddenDateInput.addEventListener('change', (e) => {
     const selectedDate = e.target.value;
     if (selectedDate) {
         const parts = selectedDate.split('-');
@@ -908,7 +912,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                 });
             }
         });
-
 
         // --- PWA Service Worker Registration ---
         if ('serviceWorker' in navigator) {
