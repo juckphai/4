@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ฟอร์มแปลตัวเลข 2, 3 และ 4 ตัว</title>
 <!-- PWA-related additions -->
+<link rel="manifest" href="manifest-unified.json"><!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ฟอร์มแปลตัวเลข 2, 3 และ 4 ตัว</title>
+<!-- PWA-related additions -->
 <link rel="manifest" href="manifest-unified.json">
 <meta name="theme-color" content="#f97316"/>
 <link rel="apple-touch-icon" href="192.png">
@@ -15,7 +22,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 /* Base Styles */
-body { font-family: Arial, sans-serif; background-color: #fffde7; margin: 0; padding: 0; line-height: 1.2; }
+body { font-family: Arial, sans-serif; background-color: #fffde7; margin: 0; padding: 0; line-height: 0.6; }
 h1 { text-align: center; font-size: 22px; color: blue; margin-top: 10px; margin-bottom: 10px; }
 label { font-size: 18px; color: #2c3e50; display: block; text-align: center; margin-bottom: -5px; }
 footer { text-align: center; padding: 20px; font-size: 14px; color: #95a5a6; }
@@ -91,7 +98,7 @@ position: relative;
 box-sizing: border-box;
 }
 
-.result-container-popup { border: 1.5px solid #4CAF50; background-color: #FFFFD1; margin: 0; padding: 15px 5px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); position: relative; min-height: 300px; box-sizing: border-box; overflow: hidden; }
+.result-container-popup { border: 1.5px solid #4CAF50; background-color: #FFFFD1; margin: 0; padding: 15px 3px; border-radius: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2); position: relative; min-height: 300px; box-sizing: border-box; overflow: hidden; }
 
 /* Result Header & Logo */
 .result-header { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
@@ -127,14 +134,18 @@ margin-bottom: 10px;
   position: relative;
   z-index: 1;
   color: blue;
-  line-height: 1.3;
-
-  /* เพิ่มเติม */
-  white-space: nowrap;       /* บังคับไม่ให้ตัดบรรทัด */
-  overflow-x: auto;          /* เลื่อนซ้ายขวาได้ถ้าข้อความยาวเกิน */
+  /* line-height: 1.3; -- ถูกย้ายไปจัดการด้วย JS และ Custom Property */
   text-align: center;        /* จัดกึ่งกลาง */
 }
-#resultContentWrapper p, #resultContentWrapper h2, #resultContentWrapper h3 { margin: 0 0 10px 0; line-height: inherit; }
+/* Modified: Apply font-scale to all relevant text elements */
+#resultContentWrapper p, #resultContentWrapper h2, #resultContentWrapper h3 {
+    margin: 0 0 10px 0;
+    line-height: inherit;
+    /* Use calc for font-size on all relevant elements */
+    font-size: calc(var(--base-font-size, 1em) * var(--font-scale, 1));
+}
+
+
 .controls { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 20px; }
 .control-group { display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: 15px; }
 .control-group label, .control-group span { font-size: 16px; color: blue; margin-bottom: 5px; }
@@ -144,16 +155,39 @@ margin-bottom: 10px;
 .modal-button-group { display: flex; justify-content: space-around; margin-top: 20px; }
 .modal-button-group button { width: 45%; margin: 0; }
 
-/* Responsive Styles */
+/* ✅ Responsive Styles */
 @media only screen and (max-width: 600px) {
-.form-container {
-margin: 20px;
-width: calc(100% - 40px);
+  .form-container {
+    margin: 2px;
+    width: calc(100% - 6px);
+  }
+
+  input,
+  select,
+  button,
+  .select-wrapper,
+  .date-input-wrapper {
+    width: 90%;
+  }
 }
-input, select, button, .select-wrapper, .date-input-wrapper {
-width: 90%;
+
+/* ✅ Extra small screens (<= 480px) */
+@media only screen and (max-width: 480px) {
+  .form-container {
+    margin: 1px;
+    width: calc(100% - 4px);
+  }
+
+  input,
+  select,
+  button,
+  .select-wrapper,
+  .date-input-wrapper {
+    width: 100%;
+    font-size: 16px; /* ปรับขนาดฟอนต์ให้อ่านง่าย */
+  }
 }
-}
+
 </style>
 </head>
 <body>
@@ -203,8 +237,8 @@ width: 90%;
     <!-- Unified Person Section -->
     <div class="select-wrapper">
         <select id="personSelect" onchange="checkCustomOption(this)">
-           <option value="@" data-default="true">@</option>    
-         <option value="Team" data-default="true">Team</option>          
+           <option value="Team" data-default="true">Team</option>      
+           <option value="@" data-default="true">@</option>      
             <option value="Udon Don" data-default="true">Udon Don</option>
             <option value="custom">อื่นๆ (พิมพ์เอง)</option>
         </select>
@@ -244,7 +278,7 @@ width: 90%;
 </div>
 <div class="control-group">
 <label for="popupLineHeightSlider">ปรับขนาดของบรรทัด:</label>
-<input type="range" id="popupLineHeightSlider" step="0.1">
+<input type="range" id="popupLineHeightSlider" min="0.5" max="2.5" step="0.1" value="1.3">
 <span id="popupLineHeightValue">ความสูงบรรทัด: 1.3</span>
 </div>
 <button class="close-popup-btn" onclick="closeResultPopup()">ปิดหน้าต่างนี้</button>
@@ -1044,7 +1078,7 @@ function getFormattedDate(date) {
   const year = date.getFullYear() + 543;
   return `${day}/${month}/${year}`;
 }
-// === LOGIC FOR 4-DIGIT NUMBERS ===
+// === LOGIC FOR 4-DIGIT NUMBERS (UPDATED) ===
 function generate4DigitHTML(num, commonData) {
 const twoDigitPairs = ((n) => { const p = new Set(); for (let i = 0; i < n.length; i++) { for (let j = i + 1; j < n.length; j++) { p.add([n[i], n[j]].sort().join('')); } } return Array.from(p).sort(); })(num);
 const threeDigitCombinations = ((n) => { const c = new Set(); if (n.length < 3) return []; for (let i = 0; i < n.length; i++) { for (let j = i + 1; j < n.length; j++) { for (let k = j + 1; k < n.length; k++) { c.add([n[i], n[j], n[k]].sort().join('')); } } } return Array.from(c).sort(); })(num);
@@ -1062,19 +1096,19 @@ return `
   ${commonData.topicTimeHtml}
 
   <!-- วันที่ -->
-  <p style="font-size: clamp(0.875rem, 2vw, 1.25rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(0.875rem, 2vw, 1.25rem) * var(--font-scale)); ${commonData.textShadow}">
     ${getThaiDate(commonData.date)}
   </p>
 
   ${commonData.lunarHtml}
 
   <!-- หัวข้อหลัก -->
-  <h2 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+  <h2 style="font-size: calc(clamp(1.125rem, 4vw, 1.75rem) * var(--font-scale)); font-weight: bold; ${commonData.textShadow}">
     4 ตัว <span style="color: red;">${num}</span> By : <span style="color: green;">${commonData.selectedPerson}</span>
   </h2>
 
   <!-- 2 ตัว -->
-  <h3 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+  <h3 style="font-size: calc(clamp(1.125rem, 4vw, 1.75rem) * var(--font-scale)); font-weight: bold; ${commonData.textShadow}">
     จัดชุด 2 ตัว
   </h3>
   <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">
@@ -1082,7 +1116,7 @@ return `
   </p>
 
   <!-- 3 ตัว -->
-  <h3 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; ${commonData.textShadow}">
+  <h3 style="font-size: calc(clamp(1.125rem, 4vw, 1.75rem) * var(--font-scale)); font-weight: bold; ${commonData.textShadow}">
     จัดชุด 3 ตัว
   </h3>
   <p style="font-weight: bold; white-space: nowrap; font-size: calc(clamp(1rem, 6vw, 1.75rem) * var(--font-scale)); ${commonData.textShadow}">
@@ -1090,15 +1124,15 @@ return `
   </p>
 
   <!-- หมายเหตุ -->
-  <h2 style="font-size: clamp(1.125rem, 4vw, 1.75rem); font-weight: bold; color: red; ${commonData.textShadow}">
+  <h2 style="font-size: calc(clamp(1.125rem, 4vw, 1.75rem) * var(--font-scale)); font-weight: bold; color: red; ${commonData.textShadow}">
     แนวทางเท่านั้น
   </h2>
 
-  <p style="font-size: clamp(0.875rem, 2vw, 1.125rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(0.875rem, 2vw, 1.125rem) * var(--font-scale)); ${commonData.textShadow}">
     Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}
   </p>
 
-  <p style="font-size: clamp(1rem, 3vw, 1.5rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(1rem, 3vw, 1.5rem) * var(--font-scale)); ${commonData.textShadow}">
     ${commonData.noteHtml}
   </p>
 </div>`;
@@ -1210,7 +1244,7 @@ return `
 }
 
 
-// === LOGIC FOR 2-DIGIT NUMBERS ===
+// === LOGIC FOR 2-DIGIT NUMBERS (UPDATED) ===
 function generate2DigitHTML(num, commonData) {
 const transformRules = { '0': '1', '1': '7', '2': '5', '3': '8', '4': '9', '5': '2', '6': '9', '7': '1', '8': '3', '9': '6' };
 const transformed = num.split('').map(d => transformRules[d]).join('');
@@ -1233,7 +1267,7 @@ return `
   ${commonData.topicTimeHtml}
   
   <!-- วันที่ -->
-  <p style="font-size: clamp(0.9rem, 2vw, 1.2rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(0.9rem, 2vw, 1.2rem) * var(--font-scale)); ${commonData.textShadow}">
     ${getThaiDate(commonData.date)}
   </p>
   
@@ -1259,11 +1293,11 @@ return `
     แนวทางเท่านั้น
   </h2>
   
-  <p style="font-size: clamp(0.9rem, 2vw, 1.1rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(0.9rem, 2vw, 1.1rem) * var(--font-scale)); ${commonData.textShadow}">
     Disclose : ${getFormattedDate(new Date())} ${getThaiTime()}
   </p>
   
-  <p style="font-size: clamp(1rem, 3vw, 1.25rem); ${commonData.textShadow}">
+  <p style="font-size: calc(clamp(1rem, 3vw, 1.25rem) * var(--font-scale)); ${commonData.textShadow}">
     ${commonData.noteHtml}
   </p>
 </div>
@@ -1330,20 +1364,34 @@ showResultPopup();
 
 // Called when the popup is generated to set initial states
 function initializePopupControls() {
-const lhSlider = document.getElementById("popupLineHeightSlider");
-const numLength = document.getElementById("numberInput").value.length;
+  const lhSlider = document.getElementById("popupLineHeightSlider");
+  const fsSlider = document.getElementById("popupFontSizeSlider");
+  const fsValueSpan = document.getElementById("popupFontSizeValue");
+  const numLength = document.getElementById("numberInput").value.length;
+  const resultDiv = document.querySelector("#resultContentWrapper > div");
 
-// Set line-height slider properties based on content
-if (numLength === 2) {
-lhSlider.min = "0.8"; lhSlider.max = "2.5"; lhSlider.value = "1.3";
-} else if (numLength === 3) {
-lhSlider.min = "0.5"; lhSlider.max = "2.5"; lhSlider.value = "0.7";
-} else { // 4 digits
-lhSlider.min = "0.5"; lhSlider.max = "2.5"; lhSlider.value = "1.1";
-}
+  // ตั้งค่าเริ่มต้นของ font scale ตามจำนวนตัวเลข
+  let defaultFontScale;
+  if (numLength === 2) {
+    defaultFontScale = 1.5;    // 150% สำหรับ 2 ตัว
+    lhSlider.min = "0.8"; lhSlider.max = "2.5"; lhSlider.value = "1.3";
+  } else if (numLength === 3) {
+    defaultFontScale = 1.0;   // 100% สำหรับ 3 ตัว
+    lhSlider.min = "0.5"; lhSlider.max = "2.5"; lhSlider.value = "0.7";
+  } else { // 4 digits
+    defaultFontScale = 1.4;    // 140% สำหรับ 4 ตัว
+    lhSlider.min = "0.5"; lhSlider.max = "2.5"; lhSlider.value = "1.0";
+  }
 
-updateFontSize();
-updateLineHeight();
+  // ตั้งค่า slider และค่าเริ่มต้น
+  fsSlider.value = defaultFontScale;
+  if (resultDiv) {
+    resultDiv.style.setProperty('--font-scale', defaultFontScale);
+  }
+  fsValueSpan.textContent = `ขนาด: ${Math.round(defaultFontScale * 100)}%`;
+
+  // ตั้งค่า line height
+  updateLineHeight();
 }
 
 // Global scope functions for slider controls
@@ -1584,5 +1632,3 @@ navigator.serviceWorker.register('./sw-unified.js')
 </script>
 </body>
 </html>
-
-
