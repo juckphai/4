@@ -411,17 +411,15 @@ margin-bottom: 10px;
     // ===== Utility Functions =====
     const sortPair = pair => (pair[0] > pair[1] ? pair[1] + pair[0] : pair);
     
-    const getThaiDate = (date = new Date()) => {
+function getThaiDate(date = new Date()) {
   const months = [
     "มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
     "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"
   ];
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear() + 543;
 
-  return ` วันที่ ${day} ${month} พ.ศ. ${year}`;
+  return `วันที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`;
 }
+
     
     const getThaiTime = () => `เวลา ${String(new Date().getHours()).padStart(2, '0')}.${String(new Date().getMinutes()).padStart(2, '0')} น.`;
 const getFormattedDateTime = (date = new Date()) => {
