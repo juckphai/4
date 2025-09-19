@@ -44,7 +44,7 @@ h1 { text-align: center; color: #e65100; margin: 10px 0 15px; font-size: 24px; }
 /* ปุ่มแปลง */
 .convert-button { background-color: #FF9800; padding: 12px 24px; font-size: 18px; border-radius: 8px; margin-top: 10px; }
 .convert-button:hover { background-color: #F57C00; }
-/* ---------- ฟอร์มหลัก ---------- */
+/* ---------- ฟอร์мหลัก ---------- */
 .form-container { background-color: #f9f9f9; border-radius: 15px; padding: 20px; margin: 10px 0 15px; border: 1.5px solid orange; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
 .form-group { margin-bottom: 12px; text-align: center; }
 .form-group label { display: block; margin-bottom: 6px; font-size: 18px; color: #333; font-weight: bold; }
@@ -390,24 +390,20 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 #thaiLotteryPopupContent .close-popup { display: block; margin: 0 auto; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #f44336; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .close-popup:hover { background-color: #d32f2f; }
 #thaiLotteryPopupContent #first-prize-display { margin-top: 15px; }
+
+/* เอฟเฟกต์เงาสำหรับลูกบอล (แทนที่ SVG filter) */
+.ball-shadow {
+    filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4));
+}
+.ball-text-shadow {
+    filter: drop-shadow(-0.8px -0.8px 0.8px rgba(0,0,0,0.7)) 
+            drop-shadow(0.8px 0.8px 0.8px rgba(255,255,255,0.5));
+}
+
 </style>
 </head>
 <body>
-    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) และเงาลอย (Float) -->
-    <svg style="position:absolute; width:0; height:0; overflow:hidden;">
-      <defs>
-        <!-- เงาสำหรับตัวเลขภายในลูกบอล (inset effect) -->
-        <filter id="inset-effect">
-          <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
-          <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
-        </filter>
-        <!-- เงาสำหรับลูกบอลให้ดูเหมือนลอย (drop shadow) -->
-        <filter id="float-shadow">
-          <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
-        </filter>
-      </defs>
-    </svg>
-    <!-- END: SVG Filter -->
+    <!-- เราได้ลบ SVG Filter ออกและใช้ CSS filter แทน -->
 
     <h1>ผลรางวัลกลุ่มลาวและรัฐบาล</h1>
 
@@ -427,7 +423,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             </div>
             <div class="form-group">
                 <label for="numberInput">3. กรอกตัวเลข</label>
-                <input type="text" id="numberInput" placeholder="กรุณาเลือกชนิดผลรางวัลก่อน" pattern="\d*" inputmode="numeric" />
+                <input type="text" id="numberInput" placeholder="กรุณาเลือก種類ผลรางวัลก่อน" pattern="\d*" inputmode="numeric" />
             </div>
             <div class="form-footer">
                 <button id="convertButton" class="convert-button">แจงรายละเอียด</button>
@@ -577,16 +573,16 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                         <stop offset="100%" stop-color="${shadowColor}" />
                     </radialGradient>
                 </defs>
-                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1" filter="url(#float-shadow)"/>
+                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1" class="ball-shadow"/>
             `;
             
-            // Apply the SVG filter for the engraved effect on the number
+            // Apply the CSS filter for the engraved effect on the number
             return `
                 <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0px;">
                     ${svgContent}
                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
                           font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
-                          fill="white" filter="url(#inset-effect)">
+                          fill="white" class="ball-text-shadow">
                         ${number}
                     </text>
                 </svg>
@@ -613,7 +609,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
         function getThaiDate(date = new Date()) {
             const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายन", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`;
         }
         
@@ -799,25 +795,36 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
                 if (controlsElement) controlsElement.style.display = 'none';
 
-                html2canvas(captureElement, {
-                    useCORS: true,
-                    scale: 4,
-                    backgroundColor: '#fffde7'
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    const num = document.getElementById("numberInput").value || "result";
-                    const selectedKey = document.getElementById("topicSelect").value;
-                    const topicName = lotteryTypes[selectedKey].name.replace(/\s+/g, '');
-                    
-                    link.download = `Result-${topicName}-${num}-${Date.now()}.png`;
-                    link.href = canvas.toDataURL("image/png");
-                    link.click();
-                }).catch(err => {
-                    console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
-                    alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
-                }).finally(() => {
-                    if (controlsElement) controlsElement.style.display = 'flex';
-                });
+                // ใช้ timeout เพื่อให้แน่ใจว่า DOM อัพเดทก่อนการจับภาพ
+                setTimeout(() => {
+                    html2canvas(captureElement, {
+                        useCORS: true,
+                        scale: 4,
+                        backgroundColor: '#fffde7',
+                        allowTaint: true,
+                        onclone: function(clonedDoc) {
+                            // ตรวจสอบให้แน่ใจว่าเอฟเฟกต์เงายังคงแสดงใน cloned document
+                            const balls = clonedDoc.querySelectorAll('.ball-shadow, .ball-text-shadow');
+                            balls.forEach(ball => {
+                                ball.style.filter = getComputedStyle(ball).filter;
+                            });
+                        }
+                    }).then(canvas => {
+                        const link = document.createElement('a');
+                        const num = document.getElementById("numberInput").value || "result";
+                        const selectedKey = document.getElementById("topicSelect").value;
+                        const topicName = lotteryTypes[selectedKey].name.replace(/\s+/g, '');
+                        
+                        link.download = `Result-${topicName}-${num}-${Date.now()}.png`;
+                        link.href = canvas.toDataURL("image/png");
+                        link.click();
+                    }).catch(err => {
+                        console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
+                        alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
+                    }).finally(() => {
+                        if (controlsElement) controlsElement.style.display = 'flex';
+                    });
+                }, 100);
             });
         }
 
@@ -880,28 +887,38 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
                 if (controlsElement) { controlsElement.style.display = 'none'; }
 
-                html2canvas(captureElement, {
-                    useCORS: true,
-                    scale: 4,
-                    backgroundColor: '#FFFFD1',
-                    logging: false,
-                    onclone: (document) => {
-                        const clonedElement = document.querySelector("#thaiLotteryPopupContent");
-                        if (clonedElement) {
-                            clonedElement.style.boxShadow = 'none';
+                // ใช้ timeout เพื่อให้แน่ใจว่า DOM อัพเดทก่อนการจับภาพ
+                setTimeout(() => {
+                    html2canvas(captureElement, {
+                        useCORS: true,
+                        scale: 4,
+                        backgroundColor: '#FFFFD1',
+                        logging: false,
+                        allowTaint: true,
+                        onclone: (clonedDoc) => {
+                            const clonedElement = clonedDoc.querySelector("#thaiLotteryPopupContent");
+                            if (clonedElement) {
+                                clonedElement.style.boxShadow = 'none';
+                            }
+                            
+                            // ตรวจสอบให้แน่ใจว่าเอฟเฟกต์เงายังคงแสดงใน cloned document
+                            const balls = clonedDoc.querySelectorAll('.ball-shadow, .ball-text-shadow');
+                            balls.forEach(ball => {
+                                ball.style.filter = getComputedStyle(ball).filter;
+                            });
                         }
-                    }
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `ผลสลากรัฐบาล-${firstPrize}-${dateText}.png`;
-                    link.href = canvas.toDataURL("image/png", 1.0);
-                    link.click();
-                }).catch(err => {
-                    console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
-                    alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
-                }).finally(() => {
-                    if (controlsElement) { controlsElement.style.display = 'flex'; }
-                });
+                    }).then(canvas => {
+                        const link = document.createElement('a');
+                        link.download = `ผลสลากรัฐบาล-${firstPrize}-${dateText}.png`;
+                        link.href = canvas.toDataURL("image/png", 1.0);
+                        link.click();
+                    }).catch(err => {
+                        console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
+                        alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
+                    }).finally(() => {
+                        if (controlsElement) { controlsElement.style.display = 'flex'; }
+                    });
+                }, 100);
             });
         }
 
