@@ -352,14 +352,17 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 </style>
 </head>
 <body>
-    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) -->
+    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) และเงาลอย (Float) -->
     <svg style="position:absolute; width:0; height:0; overflow:hidden;">
       <defs>
+        <!-- เงาสำหรับตัวเลขภายในลูกบอล (inset effect) -->
         <filter id="inset-effect">
-          <!-- เงาสีเข้มสำหรับขอบบนซ้ายของร่อง -->
           <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
-          <!-- ไฮไลท์สีสว่างสำหรับขอบล่างขวาของร่อง -->
           <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
+        </filter>
+        <!-- เงาสำหรับลูกบอลให้ดูเหมือนลอย (drop shadow) -->
+        <filter id="float-shadow">
+          <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
         </filter>
       </defs>
     </svg>
@@ -497,20 +500,20 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             'thai-government': { name: 'รัฐบาลไทย', type: 'thai' } // เพิ่มตัวเลือกสำหรับรัฐบาลไทย
         };
 
-        // --- Core Functions ---
+       // --- Core Functions ---
         // Function to create a single ping-pong ball (Lao lottery style)
         function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
             let highlightColor, midColor, shadowColor;
 
             if (type === 'blue') { // สำหรับ 3 ตัวบน (ลาว)
-                highlightColor = '#47D359'; midColor = '#0066cc'; shadowColor = '#004C99';
+                highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3'; // ปรับ gradient ให้สว่างขึ้น
             } else if (type === 'red') { // สำหรับเลขหลัก (ลาว)
-                highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1';
+                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ปรับ gradient ให้สว่างขึ้น
             } else if (type === 'orange') { // สำหรับ 2 ตัวล่าง (ลาว)
                 highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
             } else if (type === 'thai-red') { // รางวัลที่ 1 (รัฐบาลไทย)
-                highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1';
+                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ใช้สีแดงอมชมพู
             } else if (type === 'thai-blue') { // เลขหน้า 3 ตัว (รัฐบาลไทย)
                 highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3';
             } else if (type === 'thai-green') { // เลขท้าย 3 ตัว (รัฐบาลไทย)
@@ -533,7 +536,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                         <stop offset="100%" stop-color="${shadowColor}" />
                     </radialGradient>
                 </defs>
-                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1" filter="url(#float-shadow)"/>
             `;
             
             // Apply the SVG filter for the engraved effect on the number
