@@ -393,19 +393,21 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 </style>
 </head>
 <body>
-    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) -->
+    <!-- START: SVG Filter สำหรับเอฟเฟกต์ร่องลึก (Inset) และเงาลอย (Float) -->
     <svg style="position:absolute; width:0; height:0; overflow:hidden;">
       <defs>
+        <!-- เงาสำหรับตัวเลขภายในลูกบอล (inset effect) -->
         <filter id="inset-effect">
-          <!-- เงาสีเข้มสำหรับขอบบนซ้ายของร่อง -->
           <feDropShadow dx="-0.8" dy="-0.8" stdDeviation="0.8" flood-color="#000" flood-opacity="0.7"/>
-          <!-- ไฮไลท์สีสว่างสำหรับขอบล่างขวาของร่อง -->
           <feDropShadow dx="0.8" dy="0.8" stdDeviation="0.8" flood-color="#fff" flood-opacity="0.5"/>
+        </filter>
+        <!-- เงาสำหรับลูกบอลให้ดูเหมือนลอย (drop shadow) -->
+        <filter id="float-shadow">
+          <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
         </filter>
       </defs>
     </svg>
     <!-- END: SVG Filter -->
-
 
     <h1>ผลรางวัลกลุ่มลาวและรัฐบาล</h1>
 
@@ -539,26 +541,27 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             'thai-government': { name: 'รัฐบาลไทย', type: 'thai' }
         };
 
-        // --- Core Functions ---
+      // --- Core Functions ---
+        // Function to create a single ping-pong ball (Lao lottery style)
         function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
             const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
             let highlightColor, midColor, shadowColor;
 
-            if (type === 'blue') {
-                highlightColor = '#47D359'; midColor = '#0066cc'; shadowColor = '#004C99';
-            } else if (type === 'red') {
-                highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1';
-            } else if (type === 'orange') {
+            if (type === 'blue') { // สำหรับ 3 ตัวบน (ลาว)
+                highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3'; // ปรับ gradient ให้สว่างขึ้น
+            } else if (type === 'red') { // สำหรับเลขหลัก (ลาว)
+                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ปรับ gradient ให้สว่างขึ้น
+            } else if (type === 'orange') { // สำหรับ 2 ตัวล่าง (ลาว)
                 highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
-            } else if (type === 'thai-red') {
-                highlightColor = '#FFD6FF'; midColor = '#E800E8'; shadowColor = '#A100A1';
-            } else if (type === 'thai-blue') {
+            } else if (type === 'thai-red') { // รางวัลที่ 1 (รัฐบาลไทย)
+                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ใช้สีแดงอมชมพู
+            } else if (type === 'thai-blue') { // เลขหน้า 3 ตัว (รัฐบาลไทย)
                 highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3';
-            } else if (type === 'thai-green') {
+            } else if (type === 'thai-green') { // เลขท้าย 3 ตัว (รัฐบาลไทย)
                 highlightColor = '#90EE90'; midColor = '#008000'; shadowColor = '#006400';
-            } else if (type === 'thai-orange') {
+            } else if (type === 'thai-orange') { // เลขท้าย 2 ตัว (รัฐบาลไทย)
                 highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
-            } else {
+            } else { // Fallback for any other 'type'
                 highlightColor = '#F0F0F0'; midColor = '#A0A0A0'; shadowColor = '#707070';
             }
             
@@ -574,9 +577,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                         <stop offset="100%" stop-color="${shadowColor}" />
                     </radialGradient>
                 </defs>
-                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1" filter="url(#float-shadow)"/>
             `;
             
+            // Apply the SVG filter for the engraved effect on the number
             return `
                 <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0px;">
                     ${svgContent}
