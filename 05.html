@@ -135,8 +135,20 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .close-popup { padding: 8px 15px; background-color: #f44336; width: 100%; max-width: 200px; }
 .close-popup:hover { background-color: #d32f2f; }
 /* --- CSS สำหรับ SVG และส่วนอื่นๆ --- */
-.ball-group { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 3px 0; vertical-align: middle; }
-.ball-group svg { margin: 0 0px; }
+.ball-group {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin: 0.5px 0;
+    margin-top: 5px;
+    vertical-align: middle;
+}
+
+.ball-group svg {
+    margin: 0 0.5px;
+}
+
 
 /* สไตล์ร่วมของป้าย (เอฟเฟกต์ร่องลึก ตัวอักษรสีขาว) */
 .prize-label-blue, .prize-label-orange {
@@ -144,6 +156,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     font-weight: bold;
     font-size: 22px;
     margin: 0;
+    margin-bottom: 5px;
     padding: 3px 20px;
     color: white; /* ตัวอักษรสีขาว */
     text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.6);
@@ -161,18 +174,48 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     background: linear-gradient(to bottom, #FFB74D, #FF8C00);
     border: 2px solid #C66900;
 }
+
+/* แก้ไข CSS สำหรับ container ต่างๆ */
+.circle-container, .square-container, .square-two-container { 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.5px;
+    padding: 0.5px;
+    background: transparent;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4);
+    min-height: 50px;
+    white-space: nowrap;
+}
+.circle-container { 
+    min-width: 100px; 
+    border: 3px solid #FF00FF; 
+    border-radius: 2%; 
+}
+.square-container { 
+    min-width: 150px; 
+    border: 3px solid red; 
+}
+.square-two-container { 
+    min-width: 100px; 
+    border: 3px solid blue; 
+}
+
+/* เพิ่มการจัดวางลูกปิงปองใน container */
+.circle-container svg,
+.square-container svg,
+.square-two-container svg {
+    flex-shrink: 0;
+    margin: 0 0.5px;
+}
+
 /* Number Containers */
-.circle-container, .square-container, .square-two-container { display: inline-flex; justify-content: center; align-items: center; height: 50px; margin: 0 0.5px; padding: 2px; background: transparent; box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4); }
-.circle-container { width: 100px; border: 3px solid #FF00FF; border-radius: 2%; }
-.square-container { width: 150px; border: 3px solid red; }
-.square-two-container { width: 100px; border: 3px solid blue; }
-/* Numbers Display */
-.numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+.numbers-display { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5px; margin: 8px 0; }
 .number-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 0.5px;
     min-width: 150px;
 }
 /* Responsive */
@@ -319,17 +362,76 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
 }
-#thaiLotteryPopupContent .draw-date { display: inline-block; color: #fff; padding: 10px 15px; font-size: 15px; font-weight: bold; border: 2px solid #E65100; background: linear-gradient(to bottom, #FFB74D, #FB8C00); border-radius: 50px; margin-top: 5px; margin-bottom: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
-#thaiLotteryPopupContent .prize-title { font-size: 22px; font-weight: bold; border: 2px solid #D32F2F; border-radius: 50px; padding: 15px 20px; margin: 4px 0 7px; background: linear-gradient(to bottom, #EF9A9A, #E53935); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); display: inline-block; }
-#thaiLotteryPopupContent .prize-label-blue, #thaiLotteryPopupContent .prize-label-green, #thaiLotteryPopupContent .prize-label-orange { display: inline-block; font-weight: bold; font-size: 20px; margin: 0; padding: 8px 15px; color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-shadow: -1px -1px 1px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.5); }
-#thaiLotteryPopupContent .prize-label-blue { background: linear-gradient(to bottom, #89CFF0, #007FFF); border: 2px solid #0059B3; border-radius: 20px; }
-#thaiLotteryPopupContent .prize-label-green { background: linear-gradient(to bottom, #90EE90, #008000); border: 2px solid #006400; border-radius: 20px; }
-#thaiLotteryPopupContent .prize-label-orange { font-size: 22px; background: linear-gradient(to bottom, #FFE3A0, #FF8C00); border: 2px solid #D97200; border-radius: 50px; }
+#thaiLotteryPopupContent .draw-date {
+    display: inline-block;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #E65100;
+    background: linear-gradient(to bottom, #FFB74D, #FB8C00);
+    border-radius: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#thaiLotteryPopupContent .prize-title {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #D32F2F;
+    border-radius: 50px;
+    padding: 15px 20px;
+    margin: 4px 0 7px;
+    background: linear-gradient(to bottom, #EF9A9A, #E53935);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#thaiLotteryPopupContent .prize-label-blue,
+#thaiLotteryPopupContent .prize-label-green,
+#thaiLotteryPopupContent .prize-label-orange {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 8px 15px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
+                 1px 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+#thaiLotteryPopupContent .prize-label-blue {
+    font-size: 20px;
+    background: linear-gradient(to bottom, #89CFF0, #007FFF);
+    border: 2px solid #0059B3;
+    border-radius: 20px;
+}
+
+#thaiLotteryPopupContent .prize-label-green {
+    font-size: 20px;
+    background: linear-gradient(to bottom, #90EE90, #008000);
+    border: 2px solid #006400;
+    border-radius: 20px;
+}
+
+#thaiLotteryPopupContent .prize-label-orange {
+    font-size: 22px;
+    background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
+    border: 2px solid #D97200;
+    margin-top: 8px;
+    border-radius: 50px;
+}
+
 #thaiLotteryPopupContent .prize-group-vertical {
     display: flex;
     flex-direction: column; /* รักษาไว้เพื่อให้ป้ายรางวัลอยู่ด้านบน */
     align-items: center;
-    gap: 3px;
+    gap: 0.5px;
     margin-top: 10px;
 }
 #thaiLotteryPopupContent .number-group {
@@ -337,11 +439,12 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: row; /* จัดเรียงเป็นแนวนอน */
     justify-content: center; /* จัดให้อยู่กึ่งกลาง */
     align-items: center;
-    gap: 1px; /* เพิ่มช่องว่างระหว่างลูกบอลเล็กน้อย */
+    margin-top: 5px;
+    gap: 0.5px; /* เพิ่มช่องว่างระหว่างลูกบอลเล็กน้อย */
     margin: 0;
     min-height: 42px;
 }
-#thaiLotteryPopupContent .flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 5px 20px; }
+#thaiLotteryPopupContent .flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 0.5px 20px; }
 #thaiLotteryPopupContent .popup-controls { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 15px; }
 #thaiLotteryPopupContent .popup-button { border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #007bff; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .popup-button:hover { background-color: #0056b3; }
@@ -496,60 +599,76 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
         };
 
        // --- Core Functions ---
-        // Function to create a single ping-pong ball (Lao lottery style)
-        function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
-            const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
-            let highlightColor, midColor, shadowColor;
+// Function to create a single ping-pong ball (Lao lottery style)
+function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
+    const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
+    const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
+    let highlightColor, midColor, shadowColor;
 
-            if (type === 'blue') { // สำหรับ 3 ตัวบน (ลาว)
-                highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3'; // ปรับ gradient ให้สว่างขึ้น
-            } else if (type === 'red') { // สำหรับเลขหลัก (ลาว)
-                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ปรับ gradient ให้สว่างขึ้น
-            } else if (type === 'orange') { // สำหรับ 2 ตัวล่าง (ลาว)
-                highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
-            } else if (type === 'thai-red') { // รางวัลที่ 1 (รัฐบาลไทย)
-                highlightColor = '#FFB6C1'; midColor = '#E800E8'; shadowColor = '#A100A1'; // ใช้สีแดงอมชมพู
-            } else if (type === 'thai-blue') { // เลขหน้า 3 ตัว (รัฐบาลไทย)
-                highlightColor = '#89CFF0'; midColor = '#007FFF'; shadowColor = '#0059B3';
-            } else if (type === 'thai-green') { // เลขท้าย 3 ตัว (รัฐบาลไทย)
-                highlightColor = '#90EE90'; midColor = '#008000'; shadowColor = '#006400';
-            } else if (type === 'thai-orange') { // เลขท้าย 2 ตัว (รัฐบาลไทย)
-                highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#D97200';
-            } else { // Fallback for any other 'type'
-                highlightColor = '#F0F0F0'; midColor = '#A0A0A0'; shadowColor = '#707070';
-            }
+    if (type === 'blue') { 
+        highlightColor = '#B3E5FF'; midColor = '#007FFF'; shadowColor = '#004080';
+    } else if (type === 'red') { 
+        highlightColor = '#FFC0CB'; midColor = '#E800E8'; shadowColor = '#800080';
+    } else if (type === 'orange') { 
+        highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#B35A00';
+    } else if (type === 'thai-red') { 
+        highlightColor = '#FFC0CB'; midColor = '#E800E8'; shadowColor = '#800080';
+    } else if (type === 'thai-blue') { 
+        highlightColor = '#B3E5FF'; midColor = '#007FFF'; shadowColor = '#004080';
+    } else if (type === 'thai-green') { 
+        highlightColor = '#B2FFB2'; midColor = '#008000'; shadowColor = '#004d00';
+    } else if (type === 'thai-orange') { 
+        highlightColor = '#FFE3A0'; midColor = '#FF8C00'; shadowColor = '#B35A00';
+    } else { 
+        highlightColor = '#F0F0F0'; midColor = '#A0A0A0'; shadowColor = '#707070';
+    }
+
+    const r = (size / 2) - 1;
+    const cx = size / 2;
+    const cy = size / 2;
+
+    const svgContent = `
+        <defs>
+            <!-- Gradient พื้นผิวบอล -->
+            <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="${highlightColor}" />
+                <stop offset="50%" stop-color="${midColor}" />
+                <stop offset="100%" stop-color="${shadowColor}" />
+            </radialGradient>
             
-            const r = (size / 2) - 1;
-            const cx = size / 2;
-            const cy = size / 2;
+            <!-- Gradient สำหรับ highlight เงาสะท้อน -->
+            <radialGradient id="${highlightId}" cx="30%" cy="30%" r="30%">
+                <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="white" stop-opacity="0"/>
+            </radialGradient>
+        </defs>
+        
+        <!-- เงาด้านล่าง -->
+        <ellipse cx="${cx}" cy="${cy + r * 0.8}" rx="${r * 0.6}" ry="${r * 0.25}" fill="black" opacity="0.25" />
 
-            const svgContent = `
-                <defs>
-                    <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
-                        <stop offset="0%" stop-color="${highlightColor}" />
-                        <stop offset="50%" stop-color="${midColor}" />
-                        <stop offset="100%" stop-color="${shadowColor}" />
-                    </radialGradient>
-                </defs>
-                <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.5)" stroke-width="1" class="ball-shadow"/>
-            `;
-            
-            // Apply the CSS filter for the engraved effect on the number
-            return `
-                <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0px;">
-                    ${svgContent}
-                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-                          font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
-                          fill="white" class="ball-text-shadow">
-                        ${number}
-                    </text>
-                </svg>
-            `;
-        }
+        <!-- ตัวลูกปิงปอง -->
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
 
-        function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) {
-            return numbers.split('').map(digit => createPingPongBall(digit, type, size, fontSize)).join('');
-        }
+        <!-- เงาสะท้อน -->
+        <circle cx="${cx - r * 0.3}" cy="${cy - r * 0.3}" r="${r * 0.35}" fill="url(#${highlightId})"/>
+    `;
+
+    return `
+        <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0.5px;">
+            ${svgContent}
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                  font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
+                  fill="white" stroke="black" stroke-width="0.8" paint-order="stroke">
+                ${number}
+            </text>
+        </svg>
+    `;
+}
+
+function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) {
+    return numbers.split('').map(digit => createPingPongBall(digit, type, size, fontSize)).join('');
+}
+
         
         function setDefaultDate() {
             const dateInput = document.getElementById("dateInput");
