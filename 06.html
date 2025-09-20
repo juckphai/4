@@ -629,11 +629,13 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             'thai-government': { name: 'รัฐบาลไทย', type: 'thai' } // เพิ่มตัวเลือกสำหรับรัฐบาลไทย
         };
 
-       // --- Core Functions ---
+// --- Core Functions ---
 // Function to create a single ping-pong ball (Lao lottery style)
 function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
     const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
     const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
+    const textFilterId = `emboss-${Math.random().toString(36).substring(2, 9)}`;
+
     let highlightColor, midColor, shadowColor;
 
     if (type === 'blue') { 
@@ -672,10 +674,14 @@ function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
                 <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
                 <stop offset="100%" stop-color="white" stop-opacity="0"/>
             </radialGradient>
+
+            <!-- Filter ทำให้ตัวเลขลอยนูนหนาแบบกระดาษ -->
+            <filter id="${textFilterId}" x="-50%" y="-50%" width="200%" height="200%">
+                <!-- เงาหลายชั้น -->
+                <feDropShadow dx="1.2" dy="1.2" stdDeviation="0.8" flood-color="black" flood-opacity="0.5"/>
+                <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.4" flood-color="black" flood-opacity="0.3"/>
+            </filter>
         </defs>
-        
-        <!-- เงาด้านล่าง -->
-        <ellipse cx="${cx}" cy="${cy + r * 0.8}" rx="${r * 0.6}" ry="${r * 0.25}" fill="black" opacity="0.25" />
 
         <!-- ตัวลูกปิงปอง -->
         <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
@@ -688,8 +694,9 @@ function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
         <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0.5px;">
             ${svgContent}
             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-                  font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold"
-                  fill="white" stroke="black" stroke-width="0.8" paint-order="stroke">
+                  font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="700"
+                  fill="white" stroke="black" stroke-width="1.0" 
+                  filter="url(#${textFilterId})">
                 ${number}
             </text>
         </svg>
