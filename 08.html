@@ -71,8 +71,8 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .popup-main-content {
     position: relative;
     background-color: #FFFFD1;
-    margin: 0px 2px;   /* บน–ล่าง 10px, ซ้าย–ขวา 3px ภายนอก */
-    padding: 3px 3px;  /* บน–ล่าง 15px, ซ้าย–ขวา 5px ภายใน */
+    margin: 0 2px;
+    padding: 3px 3px;
     border-radius: 10px;
     border: 1.5px solid green;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -391,17 +391,17 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 3px 3px;  /* บน–ล่าง 15px, ซ้าย–ขวา 5px ภายในกล่อง */
+    padding: 20px 10px;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 0 5px;
     border-radius: 10px;
-    margin: 0px 2px;   /* บน–ล่าง 10px, ซ้าย–ขวา 3px ภายนอกกล่อง */
     border: 1.5px solid #4CAF50;
     text-align: center;
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
 }
-
-
-
 
 /* เพิ่มโลโก้พื้นหลังให้กับ Popup ไทย */
 #thaiLotteryPopupContent .result-display::before {
@@ -421,7 +421,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 }
 #thaiLotteryPopupOverlay .topic-box {
     padding: 12px 25px;
-    font-size: 24px; /* เพิ่มจาก 24px เป็น 26px */
+    font-size: 26px; /* เพิ่มจาก 24px เป็น 26px */
 }
 #thaiLotteryPopupContent .draw-date {
     display: inline-block;
@@ -884,13 +884,18 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             return { twoDigits, threeDigits, threeDigits_first, threeDigits_lastTwo };
         }
 
-        function toggleCirclePopup() {
+       function toggleCirclePopup() {
             const display = document.getElementById("popupTwoDigitsDisplay");
             const button = document.getElementById("popupCircleButton");
             const { twoDigits } = getNumbersForToggle();
             
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange', 50, 26)}</div>`;
+                display.innerHTML = `
+                    <div class="circle-container">
+                        ${createPingPongNumbers(twoDigits, 'orange', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 50, 26);
             }
@@ -902,7 +907,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             const { threeDigits } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue', 50, 26)}</div>`;
+                display.innerHTML = `
+                    <div class="square-container">
+                        ${createPingPongNumbers(threeDigits, 'blue', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
@@ -914,11 +924,18 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             const { threeDigits, threeDigits_first, threeDigits_lastTwo } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue', 50, 26)}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}</div>`;
+                display.innerHTML = `
+                    ${createPingPongBall(threeDigits_first, 'blue', 50, 26)}
+                    <div class="square-two-container">
+                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
         }
+
         
         function setupSaveLaoImageButton() {
             const saveBtn = document.getElementById("saveLaoAsImageButton");
