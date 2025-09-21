@@ -125,7 +125,9 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     margin-top: 0;
     margin-bottom: 10px;
 }
-
+#thaiLotteryPopupOverlay .result-header {
+    margin-top: 5px;
+}
 /* Popup Buttons */
 .popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 15px; }
 .popup-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 5px; }
@@ -865,7 +867,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             const { twoDigits } = getNumbersForToggle();
             
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange', 50, 26)}</div>`;
+                display.innerHTML = `
+                    <div class="circle-container">
+                        ${createPingPongNumbers(twoDigits, 'orange', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 50, 26);
             }
@@ -877,7 +884,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             const { threeDigits } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue', 50, 26)}</div>`;
+                display.innerHTML = `
+                    <div class="square-container">
+                        ${createPingPongNumbers(threeDigits, 'blue', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
@@ -889,7 +901,13 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             const { threeDigits, threeDigits_first, threeDigits_lastTwo } = getNumbersForToggle();
 
             if (button.classList.toggle("active")) {
-                display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue', 50, 26)}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}</div>`;
+                display.innerHTML = `
+                    ${createPingPongBall(threeDigits_first, 'blue', 50, 26)}
+                    <div class="square-two-container">
+                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}
+                        <div class="checkmark">✓</div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
             }
@@ -953,7 +971,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
                 return `งวดวันที่ ${dateString}`;
             }
             const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายन", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             const dayOfWeek = days[date.getDay()];
             const monthName = months[date.getMonth()];
             return `งวดวัน${dayOfWeek}ที่ ${day} ${monthName} พ.ศ. ${thaiYear}`;
