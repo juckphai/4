@@ -55,7 +55,26 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .form-footer { display: flex; justify-content: center; margin-top: 15px; }
 
 /* ---------- Popup Overlay ---------- */
-.popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px 0; box-sizing: border-box; overflow-y: auto; }
+.popup-overlay {
+    display: none;                 /* ซ่อน popup ตอนเริ่มต้น */
+    position: fixed;               /* ยึดตำแหน่งกับหน้าจอ ไม่เลื่อนตาม scroll */
+    top: 0;                        /* ชิดขอบบนของหน้าจอ */
+    left: 0;                       /* ชิดขอบซ้ายของหน้าจอ */
+    width: 100%;                   /* กว้างเต็มหน้าจอ */
+    height: 100%;                  /* สูงเต็มหน้าจอ */
+    
+    background-color: rgba(0, 0, 0, 0.7); /* สีพื้นหลังดำโปร่งใส 70% */
+    z-index: 1000;                 /* ให้อยู่เหนือ element อื่น */
+    
+    display: flex;                 /* ใช้ Flexbox จัดวาง */
+    justify-content: center;       /* จัดเนื้อหาให้อยู่กึ่งกลางแนวนอน */
+    align-items: center;           /* จัดเนื้อหาให้อยู่กึ่งกลางแนวตั้ง */
+    
+    padding: 10px 0;               /* เว้นระยะด้านบน–ล่าง 20px, ซ้าย–ขวา 0px */
+    box-sizing: border-box;        /* รวม padding และ border เข้าไปในการคำนวณขนาด */
+    overflow-y: auto;              /* ถ้าเนื้อหาสูงเกิน ให้ scroll ในแนวตั้งได้ */
+}
+
 
 .popup-content {
     background-color: #fffde7;
@@ -79,9 +98,6 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     text-align: center;
 }
 
-#thaiLotteryPopupOverlay .result-header {
-    margin-top: 10px;
-}
 /* Popup Header and Date */
 #popupDateDisplay {
     margin: 3px 0;
@@ -240,7 +256,9 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     text-align: center;
     box-sizing: border-box;
 }
-
+#thaiLotteryPopupOverlay .result-header {
+    margin-top: 5px;
+}
 .thai-lottery-form .form-group {
     margin-bottom: 10px;
 }
