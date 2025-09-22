@@ -80,23 +80,25 @@ box-sizing: border-box;
 }
 
 .popup-content {
-background-color: #FFFFD1;
-border-radius: 10px;
-box-shadow: 0 0 20px rgba(0,0,0,0.3);
-width: 100%;
-max-width: 600px;
-padding: 25px 5px;
-position: relative;
-box-sizing: border-box;
+    background-color: #FFFFD1;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 600px;
+    padding: 25px 5px;             /* ตรงกับด้านบน */
+    position: relative;
+    box-sizing: border-box;
+    margin-left: auto;             /* จัดกึ่งกลาง */
+    margin-right: auto;
 }
 
 .result-container-popup {
     box-sizing: border-box;
     min-height: 300px;
-    max-width: calc(100% - 2px);
-    margin: 5px 1.5px;
-    padding: 10px 2px;
-    border: 1.5px solid #4CAF50;
+    max-width: calc(100% - 2px);   /* ตรงกับด้านบน */
+    margin: 5px auto;              /* กึ่งกลาง พร้อมค่าบน-ล่าง 5px */
+    padding: 10px 2px;             /* ตรงกับด้านบน */
+    border: 1.5px solid #4CAF50;   /* ตรงกับด้านบน */
     border-radius: 10px;
     position: relative;
     text-align: center;
@@ -104,6 +106,7 @@ box-sizing: border-box;
     background-color: #FAFAD2;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
 }
+
 
 /* เปลี่ยนจากการใช้ pseudo-element มาใช้ element จริง */
 .background-logo-real {
