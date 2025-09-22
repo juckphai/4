@@ -55,22 +55,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 .form-footer { display: flex; justify-content: center; margin-top: 15px; }
 
 /* ---------- Popup Overlay ---------- */
-.popup-overlay {
-    display: none;                 /* ซ่อน popup ตอนเริ่มต้น */
-    position: fixed;               /* ยึดตำแหน่งกับหน้าจอ ไม่เลื่อนตาม scroll */
-    top: 0;                        /* ชิดขอบบนของหน้าจอ */
-    left: 0;                       /* ชิดขอบซ้ายของหน้าจอ */
-    width: 100%;                   /* กว้างเต็มหน้าจอ */
-    height: 100%;                  /* สูงเต็มหน้าจอ */
-    background-color: rgba(0, 0, 0, 0.7); /* สีพื้นหลังดำโปร่งใส 70% */
-    z-index: 1000;                 /* ให้อยู่เหนือ element อื่น */
-    justify-content: center;       /* จัดเนื้อหาให้อยู่กึ่งกลางแนวนอน */
-    align-items: center;           /* จัดเนื้อหาให้อยู่กึ่งกลางแนวตั้ง */
-    padding: 10px 0;               /* เว้นระยะด้านบน–ล่าง 20px, ซ้าย–ขวา 0px */
-    box-sizing: border-box;        /* รวม padding และ border เข้าไปในการคำนวณขนาด */
-    overflow-y: auto;              /* ถ้าเนื้อหาสูงเกิน ให้ scroll ในแนวตั้งได้ */
-}
-
+.popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px 0; box-sizing: border-box; overflow-y: auto; }
 
 .popup-content {
     background-color: #fffde7;
@@ -145,7 +130,9 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
+#thaiLotteryPopupOverlay .result-header {
+    margin-top: 5px;
+}
 /* Popup Buttons */
 .popup-buttons-container { display: flex; flex-direction: column; align-items: center; gap: 5px; padding-top: 15px; }
 .popup-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 5px; }
@@ -167,6 +154,17 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 
 .ball-group svg {
     margin: 0 0.5px;
+}
+
+.checkmark {
+  position: absolute;
+  top: 30%;
+  right: -43px; /* ขยับออกมาด้านนอก */
+  transform: translateY(-50%);
+  color: #FF0000; /* สีแดง */
+  font-size: 45px; /* ขนาดใหญ่ */
+  font-weight: normal; /* ไม่เป็นตัวหนา */
+  z-index: 1;
 }
 
 
@@ -197,6 +195,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 
 /* แก้ไข CSS สำหรับ container ต่างๆ */
 .circle-container, .square-container, .square-two-container { 
+    position: relative; /* เพิ่มเพื่อให้สามารถวางเครื่องหมายถูกได้ */
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -257,9 +256,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     text-align: center;
     box-sizing: border-box;
 }
-#thaiLotteryPopupOverlay .result-header {
-    margin-top: 5px;
-}
+
 .thai-lottery-form .form-group {
     margin-bottom: 10px;
 }
@@ -347,7 +344,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     }
 }
 
-/* Popup สำหรับรัฐบาลไทย */
 #thaiLotteryPopupOverlay {
     display: none;
     position: fixed;
@@ -369,7 +365,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
     width: 100%;
-    max-width: 600px;
+    max-width: 620px;
     padding: 10px;
     position: relative;
     box-sizing: border-box;
@@ -377,12 +373,20 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 10px;
+    padding: 20px 10px;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 0 5px;
     border-radius: 10px;
     border: 1.5px solid #4CAF50;
     text-align: center;
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+}
+#thaiLotteryPopupOverlay .topic-box {
+    padding: 1px 1px;
+    font-size: 22px; /* เพิ่มจาก 24px เป็น 26px */
 }
 #thaiLotteryPopupContent .draw-date {
     color: #fff;
@@ -421,7 +425,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-weight: bold;
     margin: 0;
     margin-bottom: 5px;
-    padding: 8px 15px;
+    padding: 10px 15px;
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
@@ -432,6 +436,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 20px;
     background: linear-gradient(to bottom, #89CFF0, #007FFF);
     border: 2px solid #0059B3;
+    padding: 10px 15px;
     border-radius: 20px;
 }
 
@@ -439,6 +444,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 20px;
     background: linear-gradient(to bottom, #90EE90, #008000);
     border: 2px solid #006400;
+    padding: 10px 15px;
     border-radius: 20px;
 }
 
@@ -447,6 +453,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
     border: 2px solid #D97200;
     margin-top: 8px;
+    padding: 10px 15px;
     border-radius: 50px;
 }
 
