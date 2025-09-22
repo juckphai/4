@@ -121,7 +121,7 @@ box-sizing: border-box;
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 1.0; /* ใช้ opacity แทน filter เพื่อความเข้ากันได้กับ html2canvas */
+  opacity: 0.7; /* ใช้ opacity แทน filter เพื่อความเข้ากันได้กับ html2canvas */
   pointer-events: none; /* เพื่อไม่ให้รบกวนการคลิก */
 }
 
@@ -130,7 +130,7 @@ box-sizing: border-box;
     position: relative;
     z-index: 1; /* Ensure text is above pseudo-element background */
     color: blue;
-    line-height: 0.7; /* Default line height from 03.html */
+    line-height: 1.0; /* Default line height from 03.html */
     font-size: 20px; /* Default font size from 03.html */
     white-space: nowrap;       /* บังคับไม่ให้ตัดบรรทัด */
     overflow-x: auto;          /* เลื่อนซ้ายขวาได้ถ้าข้อความยาวเกิน */
@@ -2566,7 +2566,7 @@ document.getElementById("saveResultAsImageBtn").addEventListener("click", functi
     onclone: function(clonedDoc) {
       const clonedBackground = clonedDoc.querySelector('.background-logo-real');
       if (clonedBackground) {
-        clonedBackground.style.opacity = '1.0';
+        clonedBackground.style.opacity = '0.7';
       }
     }
   }).then(canvas => {
