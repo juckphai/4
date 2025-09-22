@@ -88,32 +88,29 @@ overflow-y: auto;
 /* ===== END: POPUP Styles Final Correction ===== */
 
 .popup-content {
-    background-color: #FFFFD1;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    width: calc(100% - 4px);   /* มีระยะเว้นซ้าย-ขวา */
-    max-width: 600px;           /* จำกัดความกว้างไม่ให้เกิน */
-    padding: 8px 4px;          /* ระยะห่างกำลังดี */
-    position: relative;
-    box-sizing: border-box;
-    margin: 0 auto;             /* จัดกึ่งกลางอัตโนมัติ */
+background-color: #FFFFD1;
+border-radius: 10px;
+box-shadow: 0 0 20px rgba(0,0,0,0.3);
+width: 100%;
+max-width: 600px;
+padding: 25px 5px;
+position: relative;
+box-sizing: border-box;
 }
 
 .result-container-popup {
     box-sizing: border-box;
     min-height: 300px;
-    margin: 10px 0;             /* เว้นระยะด้านบน-ล่างเล็กน้อย */
-    padding: 15px;              /* ข้างในไม่แน่นเกินไป */
-    border: 2px solid #4CAF50;  /* กรอบชัดเจน */
+    max-width: calc(100% - 2px);
+    margin: 5px 1.5px;
+    padding: 10px 2px;
+    border: 1.5px solid #4CAF50;
     border-radius: 10px;
     position: relative;
     text-align: center;
     overflow: hidden;
     background-color: #FAFAD2;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
-    max-width: calc(100% - 4px); /* ป้องกันชิดขอบ */
-    margin-left: auto;
-    margin-right: auto;         /* กึ่งกลางเหมือน popup-content */
 }
 
 /* Result Header & Logo */
