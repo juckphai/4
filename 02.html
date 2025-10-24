@@ -273,6 +273,28 @@ box-sizing: border-box;
         font-size: calc(1.8vw + 10px);
     }
 }
+    #resultContentWrapper .lunar-date {
+  font-size: clamp(0.65rem, 2.5vw, 0.8rem);
+  font-weight: bold;
+  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+  line-height: 1.2;
+  margin: 2px 0;
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* สำหรับหน้าจอขนาดเล็กมาก */
+@media only screen and (max-width: 360px) {
+  #resultContentWrapper .lunar-date {
+    font-size: clamp(0.6rem, 2.2vw, 0.75rem);
+    padding: 0 3px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1941,7 +1963,7 @@ return `
     ${getThaiDate(commonData.date)}
   </p>
   
-  ${commonData.lunarHtml}
+  ${commonData.lunarHtml ? `<div style="margin: 2px 0;">${commonData.lunarHtml}</div>` : ''}
   
   <!-- หัวข้อหลัก 4 ตัว -->
   <h2 style="font-size: calc(clamp(1.5rem, 5.5vw, 2rem) * var(--font-scale)); font-weight: normal;">
@@ -2070,7 +2092,7 @@ return `
     ${getThaiDate(commonData.date)}
   </p>
 
-  ${commonData.lunarHtml}
+  ${commonData.lunarHtml ? `<div style="margin: 2px 0;">${commonData.lunarHtml}</div>` : ''}
 
   <!-- หัวข้อหลัก 3 ตัว -->
   <h2 style="
@@ -2356,7 +2378,7 @@ return `
     ${getThaiDate(commonData.date)}
   </p>
 
-  ${commonData.lunarHtml}
+  ${commonData.lunarHtml ? `<div style="margin: 2px 0;">${commonData.lunarHtml}</div>` : ''}
 
   <!-- หัวข้อหลัก 2 ตัว -->
   <h2 style="
@@ -2447,47 +2469,44 @@ return `
 
 // === MAIN DISPATCHER FUNCTION ===
 function generateResultHTML() {
-const num = document.getElementById("numberInput").value;
-if (isNaN(num) || (num.length < 2 || num.length > 4)) {
-alert("กรุณากรอกตัวเลข 2, 3 หรือ 4 หลักให้ถูกต้อง");
-return null;
-}
+  const num = document.getElementById("numberInput").value;
+  if (isNaN(num) || (num.length < 2 || num.length > 4)) {
+    alert("กรุณากรอกตัวเลข 2, 3 หรือ 4 หลักให้ถูกต้อง");
+    return null;
+  }
 
-const dateInputStr = document.getElementById("dateInput").value;
-const date = parseThaiDate(dateInputStr);
-if (!date) {
-alert("รูปแบบวันที่ไม่ถูกต้อง กรุณาใช้รูปแบบ: วว/ดด/ปปปป (เช่น 15/07/2568)");
-return null;
-}
+  const dateInputStr = document.getElementById("dateInput").value;
+  const date = parseThaiDate(dateInputStr);
+  if (!date) {
+    alert("รูปแบบวันที่ไม่ถูกต้อง กรุณาใช้รูปแบบ: วว/ดด/ปปปป (เช่น 15/07/2568)");
+    return null;
+  }
 
   const lunarDate = getLunarDate(date);
   let noteValue = document.getElementById("noteInput").value.trim();
   const engravedShadowStyle = "text-shadow: 1px 1px 1px rgba(0,0,0,0.3), -1px -1px 1px rgba(255,255,255,0.9);";
 
-  // เปลี่ยนสีข้อความ lunarDate เป็นสีเขียวที่มีขอบสีขาว
-  const lunarStyle = "color: green; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;";
-  const color = lunarDate.includes('วันพระ') ? 'red' : 'green';
-const commonData = {
+  // ปรับปรุงส่วน lunarHtml ให้ใช้คลาสใหม่และปรับขนาดฟอนต์
+  const lunarHtml = lunarDate ? 
+    `<p class="lunar-date" style="color: ${lunarDate.includes('วันพระ') ? 'red' : 'green'};">( ${lunarDate} )</p>` : '';
+
+  const commonData = {
     date: date,
     topicName: getTopicName(),
-topicNameHtml: (() => { // New property for just the topic name
-      const name = getTopicName();
-      return name === 'ไม่ระบุหัวข้อ' ? '' : `<h2 class="topic-main" style="${engravedShadowStyle}">${name}</h2>`;
-    })(),
-    topicTimeHtml: (() => { // New property for just the time
-      const time = getTopicTime();
-      return time ? `<h3 class="date-text" style="${engravedShadowStyle}">เวลา ${time} น.</h3>` : '';
+    topicTimeHtml: (() => { 
+      const t = getTopicTime(); 
+      return t ? `<p class="topic-time">${t}</p>` : ''; 
     })(),
     selectedPerson: getSelectedPerson(),
-    lunarHtml: lunarDate ? `<p style="font-size: 14px; color: ${color}; font-weight: normal; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">( ${lunarDate} )</p>` : '',
+    lunarHtml: lunarHtml, // ใช้ lunarHtml ที่ปรับปรุงแล้ว
     noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
     textShadow: engravedShadowStyle
   };
 
-if (num.length === 2) { return generate2DigitHTML(num, commonData); }
-else if (num.length === 3) { return generate3DigitHTML(num, commonData); }
-else if (num.length === 4) { return generate4DigitHTML(num, commonData); }
-return null;
+  if (num.length === 2) { return generate2DigitHTML(num, commonData); }
+  else if (num.length === 3) { return generate3DigitHTML(num, commonData); }
+  else if (num.length === 4) { return generate4DigitHTML(num, commonData); }
+  return null;
 }
 
 function displayResultInPopup() {
