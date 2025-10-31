@@ -51,7 +51,8 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 15px;
+            padding: 15px;
         }
 
         /* --- Card Style for Sections --- */
@@ -64,95 +65,183 @@
             transition: transform 0.3s ease;
         }
         
-        /* --- Collapsible Section Styles --- */
-        .section-header {
+        /* --- Main Section Styles --- */
+        .main-section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 10px 15px;
+            margin: 0;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
         }
-        
-        .section-header.active {
-             border-bottom-left-radius: 0;
-             border-bottom-right-radius: 0;
+
+        .main-section-header:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
-        
-        .section-header .arrow { 
-            transition: transform 0.3s; 
-            font-size: 1.4rem;
-            font-weight: bold;
+
+        .main-section-header.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
-        
-        .section-header.active .arrow { 
-            transform: rotate(90deg); 
+
+        .main-section-header.active .arrow {
+            transform: rotate(90deg);
         }
-        
-        .section-content {
+
+        .main-section-content {
             display: none;
-            padding: 20px;
-            background-color: #f8fafc; /* Lighter content background */
-            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 0;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            width: 100%;
         }
-        
-        .section-content.active { 
-            display: block; 
+
+        .main-section-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
-        
-        .header-title {
-            font-size: 1.4rem;
-            font-weight: 600;
+
+        /* --- Sub-Section Styles --- */
+        .sub-section-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 3px solid #667eea;
+            width: 100%;
+            font-size: 14px;
         }
-        
-        /* --- สีที่แตกต่างกันสำหรับแต่ละ Header --- */
-        .container .card:nth-of-type(1) .section-header { background-color: #2563eb; } /* Blue */
-        .container .card:nth-of-type(2) .section-header { background-color: #16a34a; } /* Green */
-        .container .card:nth-of-type(3) .section-header { background-color: #9333ea; } /* Purple */
+
+        .sub-section-header:hover {
+            background: linear-gradient(135deg, #fed6e3 0%, #a8edea 100%);
+            transform: translateX(3px);
+        }
+
+        .sub-section-header.active {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .sub-section-header.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .sub-section-content { 
+            display: none;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            margin: 3px 0 10px 0;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .sub-section-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        /* --- Section Header Variants --- */
+        .header-translate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .header-translate:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .header-translate.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .header-fill-form {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .header-fill-form:hover {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        }
+
+        .header-fill-form.active {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
 
         .section-subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #4b5563; /* Gray text */
-            margin-bottom: 25px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         /* --- Button Grid Layout --- */
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: 1fr 1fr; /* 2 columns always */
+            gap: 10px;
+            width: 100%;
         }
 
-        /* 新增：当只有一个按钮时居中显示 */
-        .button-grid.single-button {
-            display: flex;
-            justify-content: center;
+        /* สำหรับแถวที่มีปุ่มจำนวนคี่ - ปุ่มสุดท้ายจะอยู่กึ่งกลาง */
+        .button-grid.odd-items .btn:last-child {
+            grid-column: 1 / span 2;
+            justify-self: center;
+            max-width: 50%; /* จำกัดความกว้างสูงสุด */
         }
 
         /* --- Base Button Styling --- */
         .btn {
-            display: block;
-            padding: 14px 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px; 
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             color: #ffffff;
-            font-size: 1rem; 
+            font-size: 0.85rem; 
             font-weight: 500;
             font-family: 'Kanit', sans-serif;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* 新增：限制按钮最大宽度 */
-            max-width: 250px;
-            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-height: 44px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         /* --- สีปุ่มเมนูย่อยให้แตกต่างกันในแต่ละปุ่ม --- */
@@ -168,41 +257,66 @@
         
         /* --- Footer --- */
         footer {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #64748b;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-5px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- Responsive Styles for Mobile --- */
         @media (max-width: 600px) {
-            body { padding: 15px 10px; }
-            .container { gap: 20px; }
-            .header-title { font-size: 1.2rem; }
-            .btn { font-size: 0.95rem; }
+            body { 
+                padding: 10px 5px; 
+            }
             
-            /* ปรับให้ปุ่มแสดงใน 2 คอลัมน์ */
+            .container { 
+                gap: 10px; 
+                padding: 10px;
+            }
+            
+            .main-section-header { 
+                font-size: 15px; 
+                padding: 8px 12px;
+            }
+            
+            .btn { 
+                font-size: 0.8rem; 
+                padding: 8px 6px;
+                min-height: 40px;
+            }
+            
+            /* ปรับให้ปุ่มแสดงใน 2 คอลัมน์เหมือนเดิม */
             .button-grid { 
-                grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
-                gap: 12px;
+                grid-template-columns: 1fr 1fr; /* 2 columns on mobile too */
+                gap: 8px;
             }
             
-            /* 新增：在移动设备上单个按钮时居中 */
-            .button-grid.single-button {
-                display: flex;
-                grid-template-columns: 1fr;
-                justify-content: center;
-            }
-            
-            /* ปรับให้ปุ่มที่สามในกริดที่มีสามปุ่มอยู่กึ่งกลาง */
-            .button-grid.three-buttons {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .button-grid.three-buttons .btn:nth-child(3) {
-                grid-column: span 2; /* ขยายเต็ม 2 คอลัมน์ */
-                justify-self: center;
-                max-width: 200px; /* กำหนดความกว้างสูงสุด */
+            .section-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 12px;
             }
         }
     </style>
@@ -215,74 +329,57 @@
             window.location.href = url;
         }
 
-        function toggleSection(headerElement) {
-            const content = headerElement.nextElementSibling;
-            const isActive = headerElement.classList.contains('active');
+        function toggleMainSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const header = content.previousElementSibling;
+            const isActive = header.classList.contains('active');
 
             // ปิด section อื่นๆ ทั้งหมดก่อน
-            document.querySelectorAll('.section-header.active').forEach(activeHeader => {
-                if (activeHeader !== headerElement) {
+            document.querySelectorAll('.main-section-header.active').forEach(activeHeader => {
+                if (activeHeader !== header) {
                     activeHeader.classList.remove('active');
-                    activeHeader.nextElementSibling.style.maxHeight = null;
+                    activeHeader.nextElementSibling.classList.remove('active');
                 }
             });
 
             // เปิด/ปิด section ที่เลือก
-            headerElement.classList.toggle('active', !isActive);
-            if (!isActive) {
-                content.style.maxHeight = content.scrollHeight + "px";
-            } else {
-                content.style.maxHeight = null;
-            }
+            header.classList.toggle('active', !isActive);
+            content.classList.toggle('active', !isActive);
         }
 
-        // 新增：检测每个button-grid中的按钮数量
-        function checkButtonCount() {
+        function toggleSubSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const header = content.previousElementSibling;
+            
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        // ฟังก์ชันตรวจสอบจำนวนปุ่มและจัดกึ่งกลางเมื่อเป็นเลขคี่
+        function centerOddButtons() {
             document.querySelectorAll('.button-grid').forEach(grid => {
-                // 计算按钮数量
-                const buttonCount = grid.querySelectorAll('.btn').length;
+                const buttons = grid.querySelectorAll('.btn');
+                const buttonCount = buttons.length;
                 
-                // 如果只有一个按钮，添加single-button类
-                if (buttonCount === 1) {
-                    grid.classList.add('single-button');
-                    grid.classList.remove('three-buttons');
-                } 
-                // ถ้ามีสามปุ่ม ให้เพิ่ม class 'three-buttons'
-                else if (buttonCount === 3) {
-                    grid.classList.add('three-buttons');
-                    grid.classList.remove('single-button');
-                }
-                else {
-                    grid.classList.remove('single-button');
-                    grid.classList.remove('three-buttons');
+                // ถ้าจำนวนปุ่มเป็นเลขคี่ ให้เพิ่มคลาส odd-items
+                if (buttonCount % 2 !== 0) {
+                    grid.classList.add('odd-items');
+                } else {
+                    grid.classList.remove('odd-items');
                 }
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // ตรวจสอบจำนวนปุ่มและเพิ่มคลาสเมื่อมีปุ่มเดียว
-            checkButtonCount();
-            
             // ทำให้ส่วนของ Section แรกเปิดอยู่เสมอเมื่อโหลดหน้า
-            const firstHeader = document.querySelector('.section-header');
+            const firstHeader = document.querySelector('.main-section-header');
             if (firstHeader) {
                 firstHeader.classList.add('active');
-                firstHeader.nextElementSibling.style.display = 'block'; // Set display to block
+                firstHeader.nextElementSibling.classList.add('active');
             }
-
-            // เพิ่ม Event Listener ให้กับทุก Header
-            document.querySelectorAll('.section-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    const content = this.nextElementSibling;
-                    const isActive = this.classList.toggle('active');
-                    
-                    if (isActive) {
-                        content.style.display = 'block';
-                    } else {
-                        content.style.display = 'none';
-                    }
-                });
-            });
+            
+            // ตรวจสอบและจัดกึ่งกลางปุ่มเมื่อเป็นเลขคี่
+            centerOddButtons();
         });
         
     </script>
@@ -292,15 +389,15 @@
     <div class="container">
         <!-- Section: แปลตัวเลข -->
         <div class="card">
-            <div class="section-header active">
-                <span class="header-title">เมนูฟอร์มแปลตัวเลข</span>
+            <div class="main-section-header header-translate active" onclick="toggleMainSection('translate-section')">
+                <span>เมนูฟอร์มแปลตัวเลข</span>
                 <span class="arrow">▶</span>
             </div>
-            <div id="translate-section" class="section-content active">
+            <div id="translate-section" class="main-section-content active">
                 <p class="section-subtitle">เลือกรายการแปลตัวเลขที่ต้องการใช้งาน</p>
                 <div class="button-grid">
                     <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/4/01.html')">แปล 2 ถึง 4 ตัว</button>
-                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/02.html')">แปล 2 ถึง 4 ตัว V2 </button>
+                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/02.html')">แปล 2 ถึง 4 ตัว V2</button>
                     <button class="btn color-5" onclick="navigateTo('https://juckphai.github.io/4/09.html')">แปลแค่ 3 ตัว</button>
                     <button class="btn color-4" onclick="navigateTo('https://juckphai.github.io/4/04.html')">ไม่แปล 2 และ 3 ตัว</button>
                     <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/R/')">บันทึกกิจกรรม</button>
@@ -310,11 +407,11 @@
 
         <!-- Section: กรอกผลตัวเลข -->
         <div class="card">
-            <div class="section-header">
-                <span class="header-title">เมนูฟอร์มกรอกผลตัวเลข</span>
+            <div class="main-section-header header-fill-form" onclick="toggleMainSection('fill-form-section')">
+                <span>เมนูฟอร์มกรอกผลตัวเลข</span>
                 <span class="arrow">▶</span>
             </div>
-            <div id="fill-form-section" class="section-content">
+            <div id="fill-form-section" class="main-section-content">
                 <p class="section-subtitle">เลือกกลุ่มเพื่อกรอกผล</p>
                 <div class="button-grid">
                     <button class="btn color-6" onclick="navigateTo('https://juckphai.github.io/4/05.html')">กลุ่มลาว+รัฐบาล</button>
