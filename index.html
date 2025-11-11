@@ -19,6 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* --- CSS Reset & Base Styles --- */
         * {
@@ -237,6 +240,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            gap: 8px;
         }
 
         .btn:hover {
@@ -306,6 +310,7 @@
                 font-size: 0.8rem; 
                 padding: 8px 6px;
                 min-height: 40px;
+                gap: 6px;
             }
             
             /* ปรับให้ปุ่มแสดงใน 2 คอลัมน์เหมือนเดิม */
@@ -390,17 +395,27 @@
         <!-- Section: แปลตัวเลข -->
         <div class="card">
             <div class="main-section-header header-translate active" onclick="toggleMainSection('translate-section')">
-                <span>เมนูฟอร์มแปลตัวเลข</span>
+                <span><i class="fas fa-language"></i> เมนูฟอร์มแปลตัวเลข</span>
                 <span class="arrow">▶</span>
             </div>
             <div id="translate-section" class="main-section-content active">
                 <p class="section-subtitle">เลือกรายการแปลตัวเลขที่ต้องการใช้งาน</p>
                 <div class="button-grid">
-                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/4/01.html')">แปล 2 ถึง 4 ตัว</button>
-                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/02.html')">แปล 2 ถึง 4 ตัว V2</button>
-                    <button class="btn color-5" onclick="navigateTo('https://juckphai.github.io/4/09.html')">แปลแค่ 3 ตัว</button>
-                    <button class="btn color-4" onclick="navigateTo('https://juckphai.github.io/4/04.html')">ไม่แปล 2 และ 3 ตัว</button>
-                    <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/R/')">บันทึกกิจกรรม</button>
+                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/4/01.html')">
+                        <i class="fas fa-exchange-alt"></i> แปล 2 ถึง 4 ตัว
+                    </button>
+                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/02.html')">
+                        <i class="fas fa-sync-alt"></i> แปล 2 ถึง 4 ตัว V2
+                    </button>
+                    <button class="btn color-5" onclick="navigateTo('https://juckphai.github.io/4/09.html')">
+                        <i class="fas fa-cube"></i> แปลแค่ 3 ตัว
+                    </button>
+                    <button class="btn color-4" onclick="navigateTo('https://juckphai.github.io/4/04.html')">
+                        <i class="fas fa-ban"></i> ไม่แปล 2 และ 3 ตัว
+                    </button>
+                    <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/R/')">
+                        <i class="fas fa-clipboard-list"></i> บันทึกกิจกรรม
+                    </button>
                 </div>
             </div>
         </div>
@@ -408,16 +423,24 @@
         <!-- Section: กรอกผลตัวเลข -->
         <div class="card">
             <div class="main-section-header header-fill-form" onclick="toggleMainSection('fill-form-section')">
-                <span>เมนูฟอร์มกรอกผลตัวเลข</span>
+                <span><i class="fas fa-edit"></i> เมนูฟอร์มกรอกผลตัวเลข</span>
                 <span class="arrow">▶</span>
             </div>
             <div id="fill-form-section" class="main-section-content">
                 <p class="section-subtitle">เลือกกลุ่มเพื่อกรอกผล</p>
                 <div class="button-grid">
-                    <button class="btn color-6" onclick="navigateTo('https://juckphai.github.io/4/05.html')">กลุ่มลาว+รัฐบาล</button>
-                    <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/4/06.html')">กลุ่มลาว+รัฐบาลV2</button>
-                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/07.html')">กลุ่มลาว+รัฐบาล1.1</button>
-                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/4/08.html')">กลุ่มลาว+รัฐบาลV2.1</button>
+                    <button class="btn color-6" onclick="navigateTo('https://juckphai.github.io/4/05.html')">
+                        <i class="fas fa-users"></i> กลุ่มลาว+รัฐบาล
+                    </button>
+                    <button class="btn color-3" onclick="navigateTo('https://juckphai.github.io/4/06.html')">
+                        <i class="fas fa-user-friends"></i> กลุ่มลาว+รัฐบาลV2
+                    </button>
+                    <button class="btn color-2" onclick="navigateTo('https://juckphai.github.io/4/07.html')">
+                        <i class="fas fa-user-check"></i> กลุ่มลาว+รัฐบาล1.1
+                    </button>
+                    <button class="btn color-1" onclick="navigateTo('https://juckphai.github.io/4/08.html')">
+                        <i class="fas fa-user-tie"></i> กลุ่มลาว+รัฐบาลV2.1
+                    </button>
                 </div>
             </div>
         </div>
