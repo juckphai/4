@@ -98,7 +98,7 @@ box-sizing: border-box;
     max-width: calc(100% - 2px);   /* ตรงกับด้านบน */
     margin: 5px auto;              /* กึ่งกลาง พร้อมค่าบน-ล่าง 5px */
     padding: 10px 2px;             /* ตรงกับด้านบน */
-    border: 1.5px solid #FF33CC;    /* ตรงกับด้านบน */
+     border: 1.5px solid #FF33CC;    /* ตรงกับด้านบน */
     border-radius: 10px;
     position: relative;
     text-align: center;
@@ -273,7 +273,7 @@ box-sizing: border-box;
         font-size: calc(1.8vw + 10px);
     }
 }
-    #resultContentWrapper .lunar-date {
+#resultContentWrapper .lunar-date {
   font-size: clamp(0.65rem, 2.5vw, 0.8rem);
   font-weight: bold;
   text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
@@ -344,8 +344,8 @@ box-sizing: border-box;
     <!-- Unified Person Section -->
     <div class="select-wrapper">
         <select id="personSelect" onchange="checkCustomOption(this)">
-           <option value="@" data-default="true">@</option> 
-          <option value="Team" data-default="true">Team</option>
+           <option value="@" data-default="true">@</option>
+           <option value="Team" data-default="true">Team</option>
             <option value="Udon Don" data-default="true">Udon Don</option>
             <option value="custom">อื่นๆ (พิมพ์เอง)</option>
         </select>
@@ -2467,7 +2467,6 @@ return `
 `;
 }
 
-// === MAIN DISPATCHER FUNCTION ===
 function generateResultHTML() {
   const num = document.getElementById("numberInput").value;
   if (isNaN(num) || (num.length < 2 || num.length > 4)) {
@@ -2490,18 +2489,25 @@ function generateResultHTML() {
   const lunarHtml = lunarDate ? 
     `<p class="lunar-date" style="color: ${lunarDate.includes('วันพระ') ? 'red' : 'green'};">( ${lunarDate} )</p>` : '';
 
-  const commonData = {
-    date: date,
-    topicName: getTopicName(),
-    topicTimeHtml: (() => { 
-      const t = getTopicTime(); 
-      return t ? `<p class="topic-time">${t}</p>` : ''; 
-    })(),
-    selectedPerson: getSelectedPerson(),
-    lunarHtml: lunarHtml, // ใช้ lunarHtml ที่ปรับปรุงแล้ว
-    noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
-    textShadow: engravedShadowStyle
-  };
+const commonData = {
+  date: date,
+  topicName: getTopicName(),
+  topicNameHtml: (() => { 
+    const name = getTopicName();
+    const time = getTopicTime();
+    // แก้ไขส่วนนี้ - แยกเป็นสองบรรทัด
+    return `<p class="topic-main">${name}</p>`; 
+  })(),
+  topicTimeHtml: (() => { 
+    const t = getTopicTime(); 
+    // แก้ไขส่วนนี้ - แสดงเวลาต่างหาก
+    return t ? `<p class="topic-time">เวลา ${t} น.</p>` : ''; 
+  })(),
+  selectedPerson: getSelectedPerson(),
+  lunarHtml: lunarHtml,
+  noteHtml: `หมายเหตุ : ${noteValue ? `<span style="color: red;">${noteValue}</span>` : '<span style="color: red;">No remarks</span>'}`,
+  textShadow: engravedShadowStyle
+};
 
   if (num.length === 2) { return generate2DigitHTML(num, commonData); }
   else if (num.length === 3) { return generate3DigitHTML(num, commonData); }
