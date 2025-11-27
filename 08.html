@@ -664,7 +664,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 // --- Core Functions ---
 // Function to create a single ping-pong ball (Lao lottery style)
-function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
+function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
     const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
     const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
     let highlightColor, midColor, shadowColor;
@@ -726,7 +726,7 @@ function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
     `;
 }
 
-function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) {
+function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) {
     return numbers.split('').map(digit => createPingPongBall(digit, type, size, fontSize)).join('');
 }
 
