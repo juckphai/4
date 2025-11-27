@@ -370,23 +370,23 @@ select {
     padding: 0.5px;
     background: transparent;
     box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.4);
-    min-height: 50px;
+    min-height: 45px;
     white-space: nowrap;
 }
 
 .circle-container { 
-    min-width: 100px; 
+    min-width: 85px; 
     border: 3px solid #FF00FF; 
     border-radius: 2%; 
 }
 
 .square-container { 
-    min-width: 150px; 
+    min-width: 85px; 
     border: 3px solid red; 
 }
 
 .square-two-container { 
-    min-width: 100px; 
+    min-width: 85px; 
     border: 3px solid blue; 
 }
 
@@ -400,7 +400,7 @@ select {
 .checkmark {
     position: absolute;
     top: 30%;
-    right: -36px;
+    right: -35px;
     transform: translateY(-50%);
     color: #FF0000;
     font-size: 45px;
@@ -413,7 +413,7 @@ select {
 .thai-lottery-form {
     display: none;
     background-color: lightyellow;
-    margin: 10px auto;
+    margin: 5px auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: 2px solid green;
@@ -504,7 +504,7 @@ select {
     z-index: 1000;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px 0 20px 0;
+    padding: 20px 0 10px 0;
     box-sizing: border-box;
     overflow-y: auto;
 }
@@ -522,10 +522,10 @@ select {
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 20px 10px;
+    padding: 10px 5px; /*⬅️ ลด padding จาก 20px 10px */
     border-radius: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px; /* ⬅️ ลด margin */
+    margin-bottom: 5px; /* ⬅️ ลด margin */
     margin: 0 5px;
     border-radius: 10px;
     border: 1.5px solid #4CAF50;
@@ -536,32 +536,32 @@ select {
 
 #thaiLotteryPopupOverlay .topic-box {
     padding: 1px 1px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 #thaiLotteryPopupContent .draw-date {
     display: inline-block;
     color: #fff;
-    padding: 10px 10px;
-    font-size: 15px;
+    padding: 10px 15px; /*⬅️ ลด padding จาก 10px */
+    font-size: 14px; /* ⬅️ ลดขนาดฟอนต์เล็กน้อย */
     font-weight: bold;
     border: 2px solid #E65100;
     background: linear-gradient(to bottom, #FFB74D, #FB8C00);
     border-radius: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px; /* ⬅️ ลด margin */
+    margin-bottom: 5px; /* ⬅️ ลด margin */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 #thaiLotteryPopupContent .prize-title {
     display: inline-block;
-    font-size: 22px;
+    font-size: 20px; /*⬅️ ลดขนาดจาก 22px */
     font-weight: bold;
     border: 2px solid #D32F2F;
     border-radius: 50px;
-    padding: 10px 20px;
-    margin: 4px 0 7px;
+    padding: 10px 15px; /* ⬅️ ลด padding จาก 10px 20px */
+    margin: 2px 0 4px; /* ⬅️ ลด margin จาก 4px 0 7px */
     background: linear-gradient(to bottom, #EF9A9A, #E53935);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
@@ -574,8 +574,8 @@ select {
     display: inline-block;
     font-weight: bold;
     margin: 0;
-    margin-bottom: 5px;
-    padding: 10px 15px;
+    margin-bottom: 3px; /*⬅️ ลด margin */
+    padding: 10px 15px; /* ⬅️ ลด padding จาก 10px 15px */
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
@@ -599,20 +599,42 @@ select {
 }
 
 #thaiLotteryPopupContent .prize-label-orange {
-    font-size: 22px;
+    font-size: 20px;
     background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
     border: 2px solid #D97200;
-    margin-top: 8px;
+    margin-top: 3px;
     padding: 10px 15px;
     border-radius: 50px;
 }
 
-#thaiLotteryPopupContent .prize-group-vertical {
+/* ========== NEW HORIZONTAL LAYOUT STYLES ========== */
+/* ---------- การจัดวางแนวนอนสำหรับเลขหน้า 3 ตัวและเลขท้าย 3 ตัว ---------- */
+#thaiLotteryPopupContent .horizontal-prize-groups {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px; /* ลด gap จาก 10px */
+    margin-top: 8px; /* ลด margin */
+    width: 100%;
+}
+
+#thaiLotteryPopupContent .three-digit-prize-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5px;
-    margin-top: 10px;
+    gap: 2px;
+    width: 100%;
+}
+
+#thaiLotteryPopupContent .horizontal-numbers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2px; /* ชิดกันมาก */
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 #thaiLotteryPopupContent .number-group {
@@ -634,55 +656,15 @@ select {
     gap: 0.5px 20px;
 }
 
-#thaiLotteryPopupContent .popup-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-top: 15px;
-}
-
-#thaiLotteryPopupContent .popup-button {
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: background-color: 0.3s;
-    padding: 10px 20px;
-    background-color: #007bff;
-    width: 90%;
-    max-width: 200px;
-    font-size: 16px;
-}
-
-#thaiLotteryPopupContent .popup-button:hover {
-    background-color: #0056b3;
-}
-
-#thaiLotteryPopupContent .close-popup {
-    display: block;
-    margin: 0 auto;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: background-color: 0.3s;
-    padding: 10px 20px;
-    background-color: #f44336;
-    width: 90%;
-    max-width: 200px;
-    font-size: 16px;
-}
-
-#thaiLotteryPopupContent .close-popup:hover {
-    background-color: #d32f2f;
-}
-
-#thaiLotteryPopupContent #first-prize-display {
-    margin-top: 15px;
-    margin-bottom: 15px;
+/* ปรับปรุงสำหรับหน้าจอขนาดเล็ก */
+@media (max-width: 480px) {
+    #thaiLotteryPopupContent .horizontal-numbers {
+        gap: 5px;
+    }
+    
+    #thaiLotteryPopupContent .three-digit-prize-group {
+        width: 100%;
+    }
 }
 
 /* ===== EFFECTS & SHADOWS ===== */
@@ -705,7 +687,7 @@ select {
     }
     
     .thai-lottery-form .date-input-wrapper {
-        gap: 6px;
+        gap: 5px;
     }
 
     .thai-lottery-form .date-input-wrapper button {
@@ -717,6 +699,83 @@ select {
     .thai-lottery-form .date-input-wrapper input[type="date"] {
         font-size: 14px;
         padding: 6px;
+    }
+    
+    /* ปรับการจัดวางแนวนอนสำหรับหน้าจอเล็ก */
+    #thaiLotteryPopupContent .horizontal-prize-groups {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    #thaiLotteryPopupContent .three-digit-prize-group {
+        min-width: 100%;
+    }
+    
+    #thaiLotteryPopupContent .horizontal-numbers {
+        gap: 5px;
+    }
+}
+/* ===== FOOTER STYLES ===== */
+/* การตั้งค่าสำหรับส่วนท้ายของหน้า */
+footer {
+    text-align: center;
+    margin: 15px 0;
+    color: #666;
+    padding: 10px 0;
+}
+.popup-controls {
+  display: flex;
+  justify-content: center; /* จัดกึ่งกลางแนวนอน */
+  align-items: center;     /* จัดกึ่งกลางแนวตั้ง (ถ้าจำเป็น) */
+  gap: 5px;               /* ระยะห่างระหว่างปุ่ม */
+  margin: 20px auto;       /* จัดให้อยู่ตรงกลางพร้อมระยะห่างด้านบน-ล่าง */
+  text-align: center;
+}
+.popup-button,
+.close-popup {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* เพิ่มสไตล์สำหรับเครื่องหมายขีดขั้นแนวตั้ง */
+.vertical-dash-separator {
+    width: 5px;
+    height: 38px;
+    background: linear-gradient(to bottom, #FF69B4, #FF1493);
+    margin: 0 2px; /* ชิดกันมาก */
+    border-radius: 1px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* เพิ่มเอฟเฟกต์เงาให้ขีดแนวตั้งดูมีมิติ */
+.vertical-dash-separator::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 1px;
+}
+
+/* สำหรับหน้าจอเล็ก */
+@media (max-width: 480px) {
+    #thaiLotteryPopupContent .horizontal-numbers {
+        gap: 1.5px;
+    }
+    
+    .vertical-dash-separator {
+        height: 32px;
+        margin: 0 4px;
+        width: 3px;
+    }
+}
+    
+    #thaiLotteryPopupContent .horizontal-prize-groups {
+        gap: 3px;
     }
 }
 /* ===== FOOTER STYLES ===== */
@@ -866,7 +925,7 @@ footer {
 
 // --- Core Functions ---
 // Function to create a single ping-pong ball (Lao lottery style)
-function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
+function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
     const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
     const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
     let highlightColor, midColor, shadowColor;
@@ -928,12 +987,10 @@ function createPingPongBall(number, type = 'red', size = 50, fontSize = 26) {
     `;
 }
 
-function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) {
+function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) {
     return numbers.split('').map(digit => createPingPongBall(digit, type, size, fontSize)).join('');
 }
-
-
-        
+       
         function setDefaultDate() {
             const dateInput = document.getElementById("dateInput");
             if (dateInput) {
@@ -1063,9 +1120,9 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
                     break;
             }
 
-            document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red', 50, 26);
-            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
-            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 50, 26);
+            document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red', 40, 22);
+            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
+            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
 
             // Reset toggle buttons
             ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active"));
@@ -1111,12 +1168,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
                     <div class="circle-container">
-                        ${createPingPongNumbers(twoDigits, 'orange', 50, 26)}
+                        ${createPingPongNumbers(twoDigits, 'orange', 40, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 50, 26);
+                display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
             }
         }
 
@@ -1128,12 +1185,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
                     <div class="square-container">
-                        ${createPingPongNumbers(threeDigits, 'blue', 50, 26)}
+                        ${createPingPongNumbers(threeDigits, 'blue', 40, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
             }
         }
 
@@ -1144,14 +1201,14 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
-                    ${createPingPongBall(threeDigits_first, 'blue', 50, 26)}
+                    ${createPingPongBall(threeDigits_first, 'blue', 40, 22)}
                     <div class="square-two-container">
-                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 50, 26)}
+                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 40, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 50, 26);
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
             }
         }
         
@@ -1237,7 +1294,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 50, fontSize = 26) 
                 return;
             }
             document.getElementById("display-draw-date").innerText = formatThaiDate(rawDate);
-            displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 50, 26);
+            displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 40, 22);
             displayNumberGroup("display-front-three-1", document.getElementById("front-three-1").value, "thai-blue", 40, 20);
             displayNumberGroup("display-front-three-2", document.getElementById("front-three-2").value, "thai-blue", 40, 20);
             displayNumberGroup("display-back-three-1", document.getElementById("back-three-1").value, "thai-green", 40, 20);
