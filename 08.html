@@ -390,7 +390,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 20px 10px;
+    /* ลด padding-top/bottom เพื่อให้กระชับขึ้น */
+    padding: 10px 10px; 
     border-radius: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -418,36 +419,42 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     pointer-events: none;
     z-index: 0;
 }
-/* *** โค้ดที่ถูกปรับปรุง *** */
-#thaiLotteryPopupOverlay .topic-box {
-    padding: 12px 25px;
-    font-size: 22px; /* ปรับลดจาก 26px เป็น 22px เพื่อให้อยู่ในแถวเดียว */
-}
-/* *********************** */
 
+/* ปรับลดพื้นที่ว่างด้านบนสุด */
+#thaiLotteryPopupOverlay .topic-box {
+    padding: 8px 25px; /* ลด padding-top/bottom */
+    font-size: 22px; 
+    margin-top: 5px; /* ลด margin-top */
+    margin-bottom: 5px; /* ลด margin-bottom */
+}
+
+/* ปรับลดพื้นที่ว่างรอบวันที่ */
 #thaiLotteryPopupContent .draw-date {
     display: inline-block;
     color: #fff;
-    padding: 10px 10px;
+    /* ลด padding-top/bottom */
+    padding: 5px 10px; 
     font-size: 15px;
     font-weight: bold;
     border: 2px solid #E65100;
     background: linear-gradient(to bottom, #FFB74D, #FB8C00);
     border-radius: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px; /* ลด margin-top */
+    margin-bottom: 5px; /* ลด margin-bottom */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
+/* ปรับลดพื้นที่ว่างรอบรางวัลที่ 1 */
 #thaiLotteryPopupContent .prize-title {
     display: inline-block;
     font-size: 22px;
     font-weight: bold;
     border: 2px solid #D32F2F;
     border-radius: 50px;
-    padding: 10px 20px;
-    margin: 4px 0 7px;
+    /* ลด padding-top/bottom */
+    padding: 5px 20px; 
+    margin: 4px 0 4px; /* ลด margin-top/bottom */
     background: linear-gradient(to bottom, #EF9A9A, #E53935);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
@@ -460,8 +467,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     display: inline-block;
     font-weight: bold;
     margin: 0;
-    margin-bottom: 5px;
-    padding: 10px 15px;
+    /* ลด margin-bottom */
+    margin-bottom: 3px; 
+    /* ลด padding-top/bottom */
+    padding: 5px 15px; 
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
@@ -472,7 +481,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 20px;
     background: linear-gradient(to bottom, #89CFF0, #007FFF);
     border: 2px solid #0059B3;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 20px;
 }
 
@@ -480,7 +489,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 20px;
     background: linear-gradient(to bottom, #90EE90, #008000);
     border: 2px solid #006400;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-radius: 20px;
 }
 
@@ -488,7 +497,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 22px;
     background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
     border: 2px solid #D97200;
-    margin-top: 8px;
+    /* ลด margin-top */
+    margin-top: 5px; 
     padding: 10px 15px;
     border-radius: 50px;
 }
@@ -499,7 +509,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: column; 
     align-items: center;
     gap: 0.5px;
-    margin-top: 10px;
+    /* ลด margin-top */
+    margin-top: 5px; 
 }
 
 /* ตัวแบ่ง ( | ) */
@@ -517,8 +528,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5px; /* ลดระยะห่าง */
-    margin-bottom: 10px; /* เพิ่มระยะห่างด้านล่าง */
+    margin-top: 3px; /* ลด margin-top */
+    margin-bottom: 5px; /* ลด margin-bottom */
 }
 
 /* ลูกบอลใน popup ไทย */
@@ -527,7 +538,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: row; 
     justify-content: center; 
     align-items: center;
-    margin-top: 5px;
+    margin-top: 3px; /* ลด margin-top */
     gap: 0.5px; 
     margin: 0;
     min-height: 42px;
@@ -539,8 +550,9 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: column-reverse; /* สลับให้ป้ายอยู่ด้านล่าง */
     align-items: center;
     gap: 0.5px;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    /* ลด margin-top/bottom */
+    margin-top: 5px; 
+    margin-bottom: 0px;
 }
 
 
@@ -550,7 +562,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 #thaiLotteryPopupContent .popup-button:hover { background-color: #0056b3; }
 #thaiLotteryPopupContent .close-popup { display: block; margin: 0 auto; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #f44336; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .close-popup:hover { background-color: #d32f2f; }
-#thaiLotteryPopupContent #first-prize-display { margin-top: 15px; }
+#thaiLotteryPopupContent #first-prize-display { margin-top: 5px; } /* ลด margin-top */
 
 /* เอฟเฟกต์เงาสำหรับลูกบอล (แทนที่ SVG filter) */
 .ball-shadow {
@@ -648,7 +660,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
                     <div class="draw-date"><span id="display-draw-date"></span></div>
                     
-                    <div class="result-section" style="margin-top: 10px;">
+                    <div class="result-section" style="margin-top: 0px;">
                         <div class="prize-title">รางวัลที่ 1</div>
                     </div>
 
