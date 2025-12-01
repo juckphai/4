@@ -248,7 +248,7 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 
-/* --- สไตล์สำหรับผลรัฐบาลไทย --- */
+/* --- สไตล์สำหรับผลรัฐบาลไทย (จาก 08.html) --- */
 .thai-lottery-form {
     display: none; /* ซ่อนไว้ก่อน */
     background-color: lightyellow;
@@ -400,7 +400,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     text-align: center;
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
-    line-height: 1.0; /* ปรับ line-height ให้เหมาะสม */
 }
 
 /* เพิ่มโลโก้พื้นหลังให้กับ Popup ไทย */
@@ -453,17 +452,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 }
 
 #thaiLotteryPopupContent .prize-label-blue,
-#thaiLotteryPopupContent .prize-label-green {
-    display: inline-block;
-    font-weight: bold;
-    margin: 0;
-    margin-bottom: 5px;
-    padding: 10px 15px;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
-                 1px 1px 1px rgba(255, 255, 255, 0.5);
-}
+#thaiLotteryPopupContent .prize-label-green,
 #thaiLotteryPopupContent .prize-label-orange {
     display: inline-block;
     font-weight: bold;
@@ -474,12 +463,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
                  1px 1px 1px rgba(255, 255, 255, 0.5);
-    font-size: 26px; /* ใหญ่กว่าเดิม */
-    background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
-    border: 2px solid #D97200;
-    margin-top: 8px;
-    padding: 10px 15px;
-    border-radius: 50px;
 }
 
 #thaiLotteryPopupContent .prize-label-blue {
@@ -498,69 +481,73 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     border-radius: 20px;
 }
 
+#thaiLotteryPopupContent .prize-label-orange {
+    font-size: 22px;
+    background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
+    border: 2px solid #D97200;
+    margin-top: 8px;
+    padding: 10px 15px;
+    border-radius: 50px;
+}
 
+/* ปรับปรุงโครงสร้างผลรางวัลให้แสดงตามรูป 2 */
 #thaiLotteryPopupContent .prize-group-vertical {
     display: flex;
-    flex-direction: column; /* รักษาไว้เพื่อให้ป้ายรางวัลอยู่ด้านบน */
+    flex-direction: column; 
     align-items: center;
-    gap: 5px; /* เพิ่มช่องว่าง */
+    gap: 0.5px;
     margin-top: 10px;
 }
+
+/* ตัวแบ่ง ( | ) */
+#thaiLotteryPopupContent .prize-divider {
+    font-size: 40px; 
+    font-weight: bold; 
+    color: gray; 
+    margin: 0 5px;
+    padding: 0;
+    line-height: 1; /* ปรับ line-height ให้ชิดขึ้น */
+}
+
+/* จัดกลุ่มสำหรับ เลขหน้า 3 ตัว และ เลขท้าย 3 ตัว */
+#thaiLotteryPopupContent .three-digit-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px; /* ลดระยะห่าง */
+    margin-bottom: 10px; /* เพิ่มระยะห่างด้านล่าง */
+}
+
+/* ลูกบอลใน popup ไทย */
 #thaiLotteryPopupContent .number-group {
-    display: flex; /* ทำให้เป็น flex container */
-    flex-direction: row; /* จัดเรียงเป็นแนวนอน */
-    justify-content: center; /* จัดให้อยู่กึ่งกลาง */
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
     align-items: center;
     margin-top: 5px;
-    margin-bottom: 5px; /* เพิ่ม margin */
-    gap: 0.5px; /* เพิ่มช่องว่างระหว่างลูกบอลเล็กน้อย */
-    min-height: 48px; /* ปรับเพิ่มความสูง */
+    gap: 0.5px; 
+    margin: 0;
+    min-height: 42px;
 }
-#thaiLotteryPopupContent .flex-row { 
-    display: flex; 
-    justify-content: center; 
-    align-items: flex-start; 
-    flex-wrap: wrap; 
-    gap: 0.5px 20px; 
+
+/* แก้ไขให้ เลขท้าย 2 ตัว อยู่ด้านบนลูกบอล */
+#thaiLotteryPopupContent .back-two-container {
+    display: flex;
+    flex-direction: column-reverse; /* สลับให้ป้ายอยู่ด้านล่าง */
+    align-items: center;
+    gap: 0.5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
-#thaiLotteryPopupContent .popup-controls { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 5px; 
-    margin-top: 15px; 
-}
-#thaiLotteryPopupContent .popup-button { 
-    border: none; 
-    border-radius: 5px; 
-    font-weight: bold; 
-    color: white; 
-    cursor: pointer; 
-    transition: background-color: 0.3s; 
-    padding: 10px 20px; 
-    background-color: #007bff; 
-    width: 90%; 
-    max-width: 200px; 
-    font-size: 16px; 
-}
+
+
+#thaiLotteryPopupContent .flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 0.5px 20px; }
+#thaiLotteryPopupContent .popup-controls { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 15px; }
+#thaiLotteryPopupContent .popup-button { border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #007bff; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .popup-button:hover { background-color: #0056b3; }
-#thaiLotteryPopupContent .close-popup { 
-    display: block; 
-    margin: 0 auto; 
-    border: none; 
-    border-radius: 5px; 
-    font-weight: bold; 
-    color: white; 
-    cursor: pointer; 
-    transition: background-color: 0.3s; 
-    padding: 10px 20px; 
-    background-color: #f44336; 
-    width: 90%; 
-    max-width: 200px; 
-    font-size: 16px; 
-}
+#thaiLotteryPopupContent .close-popup { display: block; margin: 0 auto; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #f44336; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .close-popup:hover { background-color: #d32f2f; }
-#thaiLotteryPopupContent #first-prize-display { margin-top: 5px; margin-bottom: 20px; }
+#thaiLotteryPopupContent #first-prize-display { margin-top: 15px; }
 
 /* เอฟเฟกต์เงาสำหรับลูกบอล (แทนที่ SVG filter) */
 .ball-shadow {
@@ -649,7 +636,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     <div id="thaiLotteryPopupOverlay" class="popup-overlay">
         <div id="thaiLotteryPopupContent" class="popup-content">
             <div class="result-display">
-                <div style="position: relative; text-align: center; font-size: 18px; line-height: 1.0;">
+                <div style="position: relative; text-align: center; font-size: 18px; line-height: 0.5;">
                     <div class="result-header">
                         <div class="topic-box">
                             <span>ผลฉลากกินแบ่งรัฐบาล</span>
@@ -661,25 +648,26 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
                     <div class="result-section" style="margin-top: 10px;">
                         <div class="prize-title">รางวัลที่ 1</div>
                     </div>
-                    <div id="first-prize-display" class="number-group" style="margin-top: 5px; margin-bottom: 20px;"></div>
 
-                    <div class="result-section flex-row" style="margin-bottom: 20px;">
-                        <div class="prize-group-vertical">
-                            <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
-                            <div id="display-front-three-1" class="number-group"></div>
-                            <div id="display-front-three-2" class="number-group"></div>
-                        </div>
-                        <div class="prize-group-vertical">
-                            <p class="prize-label-green">เลขท้าย 3 ตัว</p>
-                            <div id="display-back-three-1" class="number-group"></div>
-                            <div id="display-back-three-2" class="number-group"></div>
-                        </div>
+                    <div id="first-prize-display" class="number-group" style="margin-top: 5px;"></div>
+                    
+                    <div class="prize-group-vertical">
+                        <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
+                        <div id="front-three-group-display" class="three-digit-group">
+                            </div>
                     </div>
-
-                    <div class="result-section prize-group-vertical" style="margin-bottom: 20px;">
-                        <div id="display-back-two" class="number-group"></div>
-                        <p class="prize-label-orange">เลขท้าย 2 ตัว</p>
+                    
+                    <div class="prize-group-vertical">
+                        <p class="prize-label-green">เลขท้าย 3 ตัว</p>
+                        <div id="back-three-group-display" class="three-digit-group">
+                             </div>
                     </div>
+                    
+                    <div class="result-section back-two-container">
+                         <p class="prize-label-orange">เลขท้าย 2 ตัว</p>
+                         <div id="display-back-two" class="number-group"></div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="popup-controls">
@@ -792,7 +780,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
 
         function getThaiDate(date = new Date()) {
             const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายन", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`;
         }
         
@@ -1040,7 +1028,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
                 return `งวดวันที่ ${dateString}`;
             }
             const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
-            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคм", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
             const dayOfWeek = days[date.getDay()];
             const monthName = months[date.getMonth()];
             return `งวดวัน${dayOfWeek}ที่ ${day} ${monthName} พ.ศ. ${thaiYear}`;
@@ -1064,15 +1052,39 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
                 return;
             }
             document.getElementById("display-draw-date").innerText = formatThaiDate(rawDate);
+            
+            // รางวัลที่ 1
             displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 40, 22);
-            displayNumberGroup("display-front-three-1", document.getElementById("front-three-1").value, "thai-blue", 40, 20);
-            displayNumberGroup("display-front-three-2", document.getElementById("front-three-2").value, "thai-blue", 40, 20);
-            displayNumberGroup("display-back-three-1", document.getElementById("back-three-1").value, "thai-green", 40, 20);
-            displayNumberGroup("display-back-three-2", document.getElementById("back-three-2").value, "thai-green", 40, 20);
+
+            // --- แก้ไขส่วนแสดงผลเลขหน้า 3 ตัว ---
+            const frontThree1 = document.getElementById("front-three-1").value;
+            const frontThree2 = document.getElementById("front-three-2").value;
+            const frontThreeGroupDisplay = document.getElementById("front-three-group-display");
             
-            // ปรับขนาดลูกบอลให้ใหญ่ขึ้นตามรูปภาพ (56, 34)
+            if (frontThreeGroupDisplay) {
+                frontThreeGroupDisplay.innerHTML = `
+                    ${createPingPongNumbers(frontThree1, "thai-blue", 40, 20)}
+                    <span class="prize-divider">|</span>
+                    ${createPingPongNumbers(frontThree2, "thai-blue", 40, 20)}
+                `;
+            }
+
+            // --- แก้ไขส่วนแสดงผลเลขท้าย 3 ตัว ---
+            const backThree1 = document.getElementById("back-three-1").value;
+            const backThree2 = document.getElementById("back-three-2").value;
+            const backThreeGroupDisplay = document.getElementById("back-three-group-display");
+            
+            if (backThreeGroupDisplay) {
+                backThreeGroupDisplay.innerHTML = `
+                    ${createPingPongNumbers(backThree1, "thai-green", 40, 20)}
+                    <span class="prize-divider">|</span>
+                    ${createPingPongNumbers(backThree2, "thai-green", 40, 20)}
+                `;
+            }
+            
+            // เลขท้าย 2 ตัว (ลูกบอลใหญ่)
             displayNumberGroup("display-back-two", document.getElementById("back-two").value, "thai-orange", 56, 34);
-            
+
             showThaiPopup();
             setupSaveThaiImageButton();
         }
