@@ -371,10 +371,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1000;
     justify-content: center;
-    align-items: flex-start; /* เปลี่ยนเป็น flex-start */
-    padding: 40px 0 20px 0; /* เพิ่ม padding ด้านบน */
+    align-items: flex-start;
+    padding: 10px 0 5px 0;
     box-sizing: border-box;
-    overflow-y: auto; /* เพิ่ม scroll */
+    overflow-y: auto;
 }
 
 #thaiLotteryPopupContent {
@@ -382,20 +382,19 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
     width: 100%;
-    max-width: 620px;
-    padding: 10px;
+    max-width: 600px;
+    padding: 5px;
     position: relative;
     box-sizing: border-box;
 }
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    /* ลด padding-top/bottom เพื่อให้กระชับขึ้น */
-    padding: 10px 10px; 
+    padding: 20px 10px; /*⬅️ ลด padding จาก 20px 10px */
     border-radius: 50px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin: 0 5px;
+    margin-top: 3px; /* ⬅️ ลด margin */
+    margin-bottom: 3px; /* ⬅️ ลด margin */
+    margin: 0 2px;
     border-radius: 10px;
     border: 1.5px solid #4CAF50;
     text-align: center;
@@ -424,8 +423,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 #thaiLotteryPopupOverlay .topic-box {
     padding: 8px 25px; /* ลด padding-top/bottom */
     font-size: 22px; 
-    margin-top: 5px; /* ลด margin-top */
-    margin-bottom: 5px; /* ลด margin-bottom */
+    margin-top: 3px; /* ลด margin-top */
+    margin-bottom: 3px; /* ลด margin-bottom */
 }
 
 /* ปรับลดพื้นที่ว่างรอบวันที่ */
@@ -433,14 +432,14 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     display: inline-block;
     color: #fff;
     /* ลด padding-top/bottom */
-    padding: 5px 10px; 
+    padding: 8px 15px; 
     font-size: 15px;
     font-weight: bold;
     border: 2px solid #E65100;
     background: linear-gradient(to bottom, #FFB74D, #FB8C00);
     border-radius: 50px;
-    margin-top: 5px; /* ลด margin-top */
-    margin-bottom: 5px; /* ลด margin-bottom */
+    margin-top: 3px; /* ลด margin-top */
+    margin-bottom: 3px; /* ลด margin-bottom */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
@@ -453,7 +452,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     border: 2px solid #D32F2F;
     border-radius: 50px;
     /* ลด padding-top/bottom */
-    padding: 5px 20px; 
+    padding: 8px 25px; 
     margin: 4px 0 4px; /* ลด margin-top/bottom */
     background: linear-gradient(to bottom, #EF9A9A, #E53935);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
