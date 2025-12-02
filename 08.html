@@ -969,7 +969,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) 
 
             document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red', 42, 22);
             document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 42, 22);
-            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 52, 32);
+            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 42, 22);
 
             ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active"));
             
@@ -1169,7 +1169,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) 
             }
             
             // เลขท้าย 2 ตัว (ลูกบอลใหญ่)
-            displayNumberGroup("display-back-two", document.getElementById("back-two").value, "thai-orange", 56, 34);
+            displayNumberGroup("display-back-two", document.getElementById("back-two").value, "thai-orange", 52, 32);
 
             showThaiPopup();
             setupSaveThaiImageButton();
