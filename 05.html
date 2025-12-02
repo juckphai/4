@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -18,12 +19,11 @@
 
 <style>
 /* ========== RESET & GLOBAL STYLES ========== */
-/* ---------- พื้นหลังและฟอนต์ของหน้า ---------- */
 body {
     font-family: Arial, sans-serif;
     background-color: #fffde7;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 10px; /* ลด Padding หน้าจอหลักเล็กน้อย */
     max-width: 600px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -37,8 +37,6 @@ footer {
     padding: 10px 0;
 }
 
-/* ========== TYPOGRAPHY ========== */
-/* ---------- หัวเรื่อง ---------- */
 h1 {
     text-align: center;
     color: #e65100;
@@ -46,16 +44,10 @@ h1 {
     font-size: 24px;
 }
 
-.blue {
-    color: blue;
-}
-
-.red {
-    color: red;
-}
+.blue { color: blue; }
+.red { color: red; }
 
 /* ========== BUTTONS ========== */
-/* ---------- ปุ่มทั่วไป ---------- */
 .convert-button,
 .back-button,
 .popup-button,
@@ -68,7 +60,6 @@ h1 {
     transition: background-color 0.3s;
 }
 
-/* ---------- ปุ่มกลับ ---------- */
 .back-button { 
     display: block; 
     width: 90%; 
@@ -79,12 +70,8 @@ h1 {
     font-size: 16px; 
     border-radius: 50px;
 }
+.back-button:hover { background-color: darkorange; }
 
-.back-button:hover { 
-    background-color: darkorange; 
-}
-
-/* ---------- ปุ่มแปลง ---------- */
 .convert-button {
     background-color: #FF9800;
     padding: 12px 24px;
@@ -92,24 +79,11 @@ h1 {
     border-radius: 8px;
     margin-top: 10px;
 }
+.convert-button:hover { background-color: #F57C00; }
 
-.convert-button:hover {
-    background-color: #F57C00;
-}
-
-/* ---------- ปุ่ม Popup ---------- */
-.popup-button {
-    padding: 8px 15px;
-    background-color: #FF9800;
-}
-
-.popup-button:hover {
-    background-color: #F57C00;
-}
-
-.popup-button.active {
-    background-color: #4CAF50;
-}
+.popup-button { padding: 8px 15px; background-color: #FF9800; }
+.popup-button:hover { background-color: #F57C00; }
+.popup-button.active { background-color: #4CAF50; }
 
 .close-popup {
     padding: 8px 15px;
@@ -117,18 +91,25 @@ h1 {
     width: 100%;
     max-width: 200px;
 }
-
-.close-popup:hover {
-    background-color: #d32f2f;
-}
+.close-popup:hover { background-color: #d32f2f; }
 
 /* ========== FORM STYLES ========== */
-/* ---------- ฟอร์มหลัก ---------- */
+
+/* ปรับปรุง .form-container เดิม: ลบ Border ออกเพื่อให้เป็น Wrapper เปล่าๆ */
 .form-container {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 5px 0 5px;
+    max-width: 100%;
+}
+
+/* สร้าง Class ใหม่เพื่อเก็บสไตล์เดิม (กรอบส้ม) ไว้ใช้กับฟอร์มลาว */
+.lao-form-style {
     background-color: #f9f9f9;
     border-radius: 15px;
-    padding: 5px;
-    margin: 5px 0 5px;
+    padding: 10px;
     border: 1.5px solid orange;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -146,8 +127,8 @@ h1 {
     font-weight: bold;
 }
 
-input,
-select {
+/* Input Styles ทั่วไป */
+input, select {
     font-size: 16px;
     padding: 8px;
     margin: 5px 0;
@@ -163,7 +144,6 @@ select {
     margin-top: 15px;
 }
 
-/* ---------- กล่องกรอกตัวเลข ---------- */
 #numberInput {
     background-color: #e3f2fd;
     color: #1a237e;
@@ -176,17 +156,103 @@ select {
     width: 100%;
     max-width: none;
     box-sizing: border-box;
-    transition: background-color 0.3s, border-color 0.3s;
 }
 
-#numberInput:focus {
-    background-color: #bbdefb;
-    border-color: #3f51b5;
+/* ========== NEW THAI LOTTERY FORM STYLES (FULL WIDTH / COMPACT) ========== */
+/* ฟอร์มรัฐบาลไทยแบบใหม่ */
+.thai-lottery-form {
+    display: none; /* ควบคุมด้วย JS */
+    background-color: transparent;
+    margin: 10px 0;
+    padding: 0;
+    border: none; /* ลบเส้นขอบออกทั้งหมด */
+    box-shadow: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Grid System สำหรับฟอร์มไทย */
+.thai-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 คอลัมน์เท่ากัน */
+    gap: 10px; /* ระยะห่างระหว่างช่อง */
+    width: 100%;
+}
+
+.thai-grid-full {
+    grid-column: span 2; /* กินพื้นที่เต็ม 2 คอลัมน์ */
+}
+
+/* ปรับ Input ในฟอร์มไทยให้เต็มพื้นที่และสวยงาม */
+.thai-lottery-form input[type="text"],
+.thai-lottery-form input[type="date"],
+.thai-lottery-form select {
+    width: 100%;
+    max-width: 100%; /* ยกเลิกการจำกัดความกว้าง */
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 0;
+    text-align: center;
+}
+
+.thai-lottery-form input[type="text"]:focus {
+    border-color: #FF9800;
     outline: none;
+    background-color: #fff8e1;
+}
+
+.thai-lottery-form label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    text-align: left; /* จัดชิดซ้ายให้อ่านง่าย */
+    padding-left: 5px;
+    color: #555;
+}
+
+/* Wrapper สำหรับวันที่ */
+.thai-date-wrapper {
+    display: flex;
+    gap: 5px;
+}
+
+.thai-date-wrapper input {
+    flex: 1;
+}
+
+.thai-date-wrapper button {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0 15px;
+    font-size: 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ปุ่มแสดงผล */
+.thai-lottery-form .button-container button {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.thai-lottery-form .button-container button:hover {
+    background-color: #43A047;
 }
 
 /* ========== POPUP STYLES ========== */
-/* ---------- Popup Overlay ---------- */
 .popup-overlay {
     display: none;
     position: fixed;
@@ -241,7 +307,6 @@ select {
 }
 
 /* ========== RESULT DISPLAY STYLES ========== */
-/* ---------- Popup Header and Date ---------- */
 #popupDateDisplay {
     margin: 3px 0;
     color: blue;
@@ -263,7 +328,6 @@ select {
     background: linear-gradient(to bottom, #EE8D5C, #E800E8);
 }
 
-/* ---------- Result Header & Logo ---------- */
 .result-header { 
     display: flex; 
     align-items: center; 
@@ -271,10 +335,7 @@ select {
     margin-top: 10px;
 }
 
-.header-logo {
-    width: 40px;
-    height: auto;
-}
+.header-logo { width: 40px; height: auto; }
 
 .topic-box {
     display: inline-flex;
@@ -300,11 +361,8 @@ select {
     margin-bottom: 5px;
 }
 
-#thaiLotteryPopupOverlay .result-header {
-    margin-top: 10px;
-}
+#thaiLotteryPopupOverlay .result-header { margin-top: 10px; }
 
-/* ---------- Number Containers ---------- */
 .numbers-display {
     display: flex;
     justify-content: center;
@@ -322,7 +380,6 @@ select {
     min-width: 150px;
 }
 
-/* ---------- Prize Labels ---------- */
 .prize-label-blue, .prize-label-orange {
     display: inline-block;
     font-weight: bold;
@@ -346,7 +403,6 @@ select {
     border: 2px solid #C66900;
 }
 
-/* ---------- Ball Containers ---------- */
 .ball-group {
     display: inline-flex;
     justify-content: center;
@@ -357,9 +413,7 @@ select {
     vertical-align: middle;
 }
 
-.ball-group svg {
-    margin: 0 0.5px;
-}
+.ball-group svg { margin: 0 0.5px; }
 
 .circle-container, .square-container, .square-two-container { 
     position: relative;
@@ -374,28 +428,13 @@ select {
     white-space: nowrap;
 }
 
-.circle-container { 
-    min-width: 85px; 
-    border: 3px solid #FF00FF; 
-    border-radius: 2%; 
-}
-
-.square-container { 
-    min-width: 85px; 
-    border: 3px solid red; 
-}
-
-.square-two-container { 
-    min-width: 85px; 
-    border: 3px solid blue; 
-}
+.circle-container { min-width: 85px; border: 3px solid #FF00FF; border-radius: 2%; }
+.square-container { min-width: 85px; border: 3px solid red; }
+.square-two-container { min-width: 85px; border: 3px solid blue; }
 
 .circle-container svg,
 .square-container svg,
-.square-two-container svg {
-    flex-shrink: 0;
-    margin: 0 0.5px;
-}
+.square-two-container svg { flex-shrink: 0; margin: 0 0.5px; }
 
 .checkmark {
     position: absolute;
@@ -408,90 +447,7 @@ select {
     z-index: 1;
 }
 
-/* ========== THAI LOTTERY SPECIFIC STYLES ========== */
-/* ---------- ฟอร์มรัฐบาลไทย ---------- */
-.thai-lottery-form {
-    display: none;
-    background-color: lightyellow;
-    margin: 2px auto;
-    border-radius: 1px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid green;
-    padding: 5px;
-    line-height: 0.5;
-    max-width: 600px;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.thai-lottery-form .form-group {
-    margin-bottom: 10px;
-}
-
-.thai-lottery-form label {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-.thai-lottery-form input {
-    font-size: 18px;
-    padding: 5px;
-    margin: 2px 0;
-    border-radius: 4px;
-    width: 100%;
-    text-align: center;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.thai-lottery-form .input-pair {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    flex-wrap: nowrap;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.thai-lottery-form .date-input-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    flex-wrap: nowrap;
-}
-
-.thai-lottery-form .date-input-wrapper input[type="date"] {
-    flex: 1;
-    min-width: 0;
-}
-
-.thai-lottery-form .date-input-wrapper button {
-    flex-shrink: 0;
-    max-width: 120px;
-    width: auto;
-}
-
-.thai-lottery-form .button-container button {
-    font-size: 20px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    width: 100%;
-    max-width: 300px;
-    box-sizing: border-box;
-}
-
-/* ---------- Popup สำหรับรัฐบาลไทย ---------- */
+/* ========== THAI LOTTERY POPUP STYLES ========== */
 #thaiLotteryPopupOverlay {
     display: none;
     position: fixed;
@@ -521,10 +477,10 @@ select {
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 10px 5px; /*⬅️ ลด padding จาก 20px 10px */
+    padding: 10px 5px;
     border-radius: 50px;
-    margin-top: 5px; /* ⬅️ ลด margin */
-    margin-bottom: 5px; /* ⬅️ ลด margin */
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin: 0 2px;
     border-radius: 10px;
     border: 1.5px solid #4CAF50;
@@ -533,34 +489,31 @@ select {
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
 }
 
-#thaiLotteryPopupOverlay .topic-box {
-    padding: 1px 1px;
-    font-size: 18px;
-}
+#thaiLotteryPopupOverlay .topic-box { padding: 1px 1px; font-size: 18px; }
 
 #thaiLotteryPopupContent .draw-date {
     display: inline-block;
     color: #fff;
-    padding: 10px 15px; /*⬅️ ลด padding จาก 10px */
-    font-size: 14px; /* ⬅️ ลดขนาดฟอนต์เล็กน้อย */
+    padding: 10px 15px;
+    font-size: 14px;
     font-weight: bold;
     border: 2px solid #E65100;
     background: linear-gradient(to bottom, #FFB74D, #FB8C00);
     border-radius: 50px;
-    margin-top: 5px; /* ⬅️ ลด margin */
-    margin-bottom: 5px; /* ⬅️ ลด margin */
+    margin-top: 5px;
+    margin-bottom: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 #thaiLotteryPopupContent .prize-title {
     display: inline-block;
-    font-size: 20px; /*⬅️ ลดขนาดจาก 22px */
+    font-size: 20px;
     font-weight: bold;
     border: 2px solid #D32F2F;
     border-radius: 50px;
-    padding: 10px 15px; /* ⬅️ ลด padding จาก 10px 20px */
-    margin: 2px 0 4px; /* ⬅️ ลด margin จาก 4px 0 7px */
+    padding: 10px 15px;
+    margin: 2px 0 4px;
     background: linear-gradient(to bottom, #EF9A9A, #E53935);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
@@ -573,12 +526,11 @@ select {
     display: inline-block;
     font-weight: bold;
     margin: 0;
-    margin-bottom: 3px; /*⬅️ ลด margin */
-    padding: 10px 15px; /* ⬅️ ลด padding จาก 10px 15px */
+    margin-bottom: 3px;
+    padding: 10px 15px;
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6),
-                 1px 1px 1px rgba(255, 255, 255, 0.5);
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.6), 1px 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 #thaiLotteryPopupContent .prize-label-blue {
@@ -606,15 +558,13 @@ select {
     border-radius: 50px;
 }
 
-/* ========== NEW HORIZONTAL LAYOUT STYLES ========== */
-/* ---------- การจัดวางแนวนอนสำหรับเลขหน้า 3 ตัวและเลขท้าย 3 ตัว ---------- */
 #thaiLotteryPopupContent .horizontal-prize-groups {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2px; /* ลด gap จาก 10px */
-    margin-top: 8px; /* ลด margin */
+    gap: 2px;
+    margin-top: 8px;
     width: 100%;
 }
 
@@ -631,7 +581,7 @@ select {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 2px; /* ชิดกันมาก */
+    gap: 2px;
     flex-wrap: nowrap;
     width: 100%;
 }
@@ -655,100 +605,34 @@ select {
     gap: 0.5px 20px;
 }
 
-/* ปรับปรุงสำหรับหน้าจอขนาดเล็ก */
 @media (max-width: 480px) {
-    #thaiLotteryPopupContent .horizontal-numbers {
-        gap: 5px;
-    }
-    
-    #thaiLotteryPopupContent .three-digit-prize-group {
-        width: 100%;
-    }
+    #thaiLotteryPopupContent .horizontal-numbers { gap: 5px; }
+    #thaiLotteryPopupContent .three-digit-prize-group { width: 100%; }
 }
 
-/* ===== EFFECTS & SHADOWS ===== */
-/* การตั้งค่าสำหรับเอฟเฟกต์และเงาต่างๆ */
-.ball-shadow {
-    filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4));
-}
+.ball-shadow { filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4)); }
+.ball-text-shadow { filter: drop-shadow(-0.8px -0.8px 0.8px rgba(0,0,0,0.7)) drop-shadow(0.8px 0.8px 0.8px rgba(255,255,255,0.5)); }
 
-.ball-text-shadow {
-    filter: drop-shadow(-0.8px -0.8px 0.8px rgba(0,0,0,0.7)) 
-            drop-shadow(0.8px 0.8px 0.8px rgba(255,255,255,0.5));
-}
-
-/* ===== RESPONSIVE STYLES ===== */
-/* การตั้งค่าสำหรับการแสดงผลบนอุปกรณ์ต่างๆ */
-@media (max-width: 480px) {
-    #numberInput {
-        font-size: 18px;
-        padding: 8px;
-    }
-    
-    .thai-lottery-form .date-input-wrapper {
-        gap: 5px;
-    }
-
-    .thai-lottery-form .date-input-wrapper button {
-        max-width: 100px;
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-
-    .thai-lottery-form .date-input-wrapper input[type="date"] {
-        font-size: 14px;
-        padding: 6px;
-    }
-    
-    /* ปรับการจัดวางแนวนอนสำหรับหน้าจอเล็ก */
-    #thaiLotteryPopupContent .horizontal-prize-groups {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    #thaiLotteryPopupContent .three-digit-prize-group {
-        min-width: 100%;
-    }
-    
-    #thaiLotteryPopupContent .horizontal-numbers {
-        gap: 5px;
-    }
-}
-/* ===== FOOTER STYLES ===== */
-/* การตั้งค่าสำหรับส่วนท้ายของหน้า */
-footer {
-    text-align: center;
-    margin: 15px 0;
-    color: #666;
-    padding: 10px 0;
-}
 .popup-controls {
   display: flex;
-  justify-content: center; /* จัดกึ่งกลางแนวนอน */
-  align-items: center;     /* จัดกึ่งกลางแนวตั้ง (ถ้าจำเป็น) */
-  gap: 5px;               /* ระยะห่างระหว่างปุ่ม */
-  margin: 20px auto;       /* จัดให้อยู่ตรงกลางพร้อมระยะห่างด้านบน-ล่าง */
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 20px auto;
   text-align: center;
 }
-.popup-button,
-.close-popup {
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
-}
-/* เพิ่มสไตล์สำหรับเครื่องหมายขีดขั้นแนวตั้ง */
+
 .vertical-dash-separator {
     width: 5px;
     height: 38px;
     background: linear-gradient(to bottom, #FF69B4, #FF1493);
-    margin: 0 2px; /* ชิดกันมาก */
+    margin: 0 2px;
     border-radius: 1px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     position: relative;
     flex-shrink: 0;
 }
 
-/* เพิ่มเอฟเฟกต์เงาให้ขีดแนวตั้งดูมีมิติ */
 .vertical-dash-separator::before {
     content: '';
     position: absolute;
@@ -760,48 +644,39 @@ footer {
     border-radius: 1px;
 }
 
-/* สำหรับหน้าจอเล็ก */
 @media (max-width: 480px) {
-    #thaiLotteryPopupContent .horizontal-numbers {
-        gap: 1.5px;
-    }
-    
-    .vertical-dash-separator {
-        height: 32px;
-        margin: 0 4px;
-        width: 3px;
-    }
+    #thaiLotteryPopupContent .horizontal-numbers { gap: 1.5px; }
+    .vertical-dash-separator { height: 32px; margin: 0 4px; width: 3px; }
+    #thaiLotteryPopupContent .horizontal-prize-groups { gap: 3px; }
 }
-    
-    #thaiLotteryPopupContent .horizontal-prize-groups {
-        gap: 3px;
-    }
+
+/* เพิ่มสไตล์เพื่อให้ช่องเลือกชนิดผลรางวัลเข้ากัน */
+#topicSelect {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
-/* ===== FOOTER STYLES ===== */
-/* การตั้งค่าสำหรับส่วนท้ายของหน้า */
-footer {
-    text-align: center;
-    margin: 15px 0;
-    color: #666;
-    padding: 10px 0;
-}
+
 </style>
 </head>
 <body>
-    <!-- เราได้ลบ SVG Filter ออกและใช้ CSS filter แทน -->
-
     <h1>ผลรางวัลกลุ่มลาวและรัฐบาล</h1>
 
     <div class="form-container">
-        <div class="form-group">
-            <label for="topicSelect">1. เลือกชนิดผลรางวัล</label>
-            <select id="topicSelect">
-                <!-- Options will be populated by JavaScript -->
-            </select>
+        <!-- เพิ่ม div ครอบส่วนเลือกหัวข้อให้สวยงามเล็กน้อย -->
+        <div style="background-color: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1.5px solid orange;">
+            <div class="form-group">
+                <label for="topicSelect">1. เลือกชนิดผลรางวัล</label>
+                <select id="topicSelect">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
         </div>
 
-        <!-- ฟอร์มสำหรับหวยลาว (แสดงตามปกติ) -->
-        <div id="laoLotteryFormContent">
+        <!-- ฟอร์มสำหรับหวยลาว (ใส่ Class lao-form-style เพื่อให้มีกรอบส้มเหมือนเดิม) -->
+        <div id="laoLotteryFormContent" class="lao-form-style">
             <div class="form-group">
                 <label for="dateInput">2. เลือกวันที่</label>
                 <input type="date" id="dateInput">
@@ -815,14 +690,55 @@ footer {
             </div>
         </div>
 
-        <!-- ฟอร์มสำหรับรัฐบาลไทย (ซ่อนไว้ก่อน) -->
+        <!-- ฟอร์มสำหรับรัฐบาลไทย (ปรับปรุงใหม่: เต็มจอ Grid Layout ไร้กรอบ) -->
         <div id="thaiLotteryFormContent" class="thai-lottery-form">
-            <div class="form-group"><label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label><div class="date-input-wrapper"><input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" /><button type="button" id="calendarButton">📅</button></div><input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;"></div>
-            <div class="form-group"><label>เลขหน้า 3 ตัว</label><div class="input-pair"><input type="text" id="front-three-1" maxlength="3" placeholder="ชุดที่ 1"><input type="text" id="front-three-2" maxlength="3" placeholder="ชุดที่ 2"></div></div>
-            <div class="form-group"><label>เลขท้าย 3 ตัว</label><div class="input-pair"><input type="text" id="back-three-1" maxlength="3" placeholder="ชุดที่ 1"><input type="text" id="back-three-2" maxlength="3" placeholder="ชุดที่ 2"></div></div>
-            <div class="form-group"><label for="back-two">เลขท้าย 2 ตัว</label><input type="text" id="back-two" maxlength="2" placeholder="กรอกเลขท้าย 2 ตัว"></div>
-            <div class="form-group"><label for="first-prize">รางวัลที่ 1 (6 ตัว)</label><input type="text" id="first-prize" maxlength="6" placeholder="กรอกเลขรางวัลที่ 1"></div>
-            <div class="button-container"><button id="displayThaiResultsButton">แสดงผล</button></div>
+            <div class="thai-grid-container">
+                <!-- งวดวันที่ -->
+                <div class="thai-grid-full">
+                    <label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label>
+                    <div class="thai-date-wrapper">
+                        <input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" />
+                        <button type="button" id="calendarButton">📅</button>
+                    </div>
+                    <input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;">
+                </div>
+
+                <!-- รางวัลที่ 1 (แสดงเต็มความกว้าง) -->
+                <div class="thai-grid-full">
+                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+                    <input type="text" id="first-prize" maxlength="6" inputmode="numeric" pattern="\d*" placeholder="รางวัลที่ 1">
+                </div>
+
+                <!-- เลขหน้า 3 ตัว (คู่กัน) -->
+                <div>
+                    <label>เลขหน้า 3 ตัว (1)</label>
+                    <input type="text" id="front-three-1" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="หน้าชุด 1">
+                </div>
+                <div>
+                    <label>เลขหน้า 3 ตัว (2)</label>
+                    <input type="text" id="front-three-2" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="หน้าชุด 2">
+                </div>
+
+                <!-- เลขท้าย 3 ตัว (คู่กัน) -->
+                <div>
+                    <label>เลขท้าย 3 ตัว (1)</label>
+                    <input type="text" id="back-three-1" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="ท้ายชุด 1">
+                </div>
+                <div>
+                    <label>เลขท้าย 3 ตัว (2)</label>
+                    <input type="text" id="back-three-2" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="ท้ายชุด 2">
+                </div>
+
+                <!-- เลขท้าย 2 ตัว และ ปุ่มแสดงผล -->
+                <div class="thai-grid-full">
+                    <label for="back-two">เลขท้าย 2 ตัว</label>
+                    <input type="text" id="back-two" maxlength="2" inputmode="numeric" pattern="\d*" placeholder="2 ตัวล่าง">
+                </div>
+
+                <div class="thai-grid-full button-container">
+                    <button id="displayThaiResultsButton">แสดงผล</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -886,27 +802,25 @@ footer {
                     </div>
 
                     <div id="first-prize-display" class="number-group" style="margin-top: 5px;"></div>
-                <!-- แก้ไขส่วนนี้ให้แสดงเลขหน้า 3 ตัวและเลขท้าย 3 ตัวในแนวนอนแบบใหม่ -->
-<div class="result-section horizontal-prize-groups">
-    <div class="three-digit-prize-group">
-        <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
-        <div class="horizontal-numbers">
-            <div id="display-front-three-1" class="number-group"></div>
-            <!-- เพิ่มเครื่องหมายขีดขั้นแนวตั้งสีชมพู -->
-            <div class="vertical-dash-separator"></div>
-            <div id="display-front-three-2" class="number-group"></div>
-        </div>
-    </div>
-    <div class="three-digit-prize-group">
-        <p class="prize-label-green">เลขท้าย 3 ตัว</p>
-        <div class="horizontal-numbers">
-            <div id="display-back-three-1" class="number-group"></div>
-            <!-- เพิ่มเครื่องหมายขีดขั้นแนวตั้งสีชมพู -->
-            <div class="vertical-dash-separator"></div>
-            <div id="display-back-three-2" class="number-group"></div>
-        </div>
-    </div>
-</div>
+                    
+                    <div class="result-section horizontal-prize-groups">
+                        <div class="three-digit-prize-group">
+                            <p class="prize-label-blue">เลขหน้า 3 ตัว</p>
+                            <div class="horizontal-numbers">
+                                <div id="display-front-three-1" class="number-group"></div>
+                                <div class="vertical-dash-separator"></div>
+                                <div id="display-front-three-2" class="number-group"></div>
+                            </div>
+                        </div>
+                        <div class="three-digit-prize-group">
+                            <p class="prize-label-green">เลขท้าย 3 ตัว</p>
+                            <div class="horizontal-numbers">
+                                <div id="display-back-three-1" class="number-group"></div>
+                                <div class="vertical-dash-separator"></div>
+                                <div id="display-back-three-2" class="number-group"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="result-section prize-group-vertical"><div id="display-back-two" class="number-group"></div><p class="prize-label-orange">เลขท้าย 2 ตัว</p></div>
                 </div>
             </div>
@@ -936,11 +850,10 @@ const lotteryTypes = {
     'laosamakkeevip': { name: 'ลาวสามัคคี VIP', time: '21.30 น', digits: 5, type: 'samakkhee' },
     'laostar-2200': { name: 'ลาวสตาร์ VIP', time: '22.00 น', digits: 5, type: 'star' },
     'laostar-2330': { name: 'ลาวกาชาด', time: '23.30 น', digits: 5, type: 'star' },
-    'thai-government': { name: 'รัฐบาลไทย', type: 'thai' } // เพิ่มตัวเลือกสำหรับรัฐบาลไทย
+    'thai-government': { name: 'รัฐบาลไทย', type: 'thai' }
 };
 
 // --- Core Functions ---
-// Function to create a single ping-pong ball (Lao lottery style)
 function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
     const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
     const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
@@ -970,24 +883,17 @@ function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
 
     const svgContent = `
         <defs>
-            <!-- Gradient พื้นผิวบอล -->
             <radialGradient id="${gradientId}" cx="35%" cy="35%" r="70%">
                 <stop offset="0%" stop-color="${highlightColor}" />
                 <stop offset="50%" stop-color="${midColor}" />
                 <stop offset="100%" stop-color="${shadowColor}" />
             </radialGradient>
-            
-            <!-- Gradient สำหรับ highlight เงาสะท้อน -->
             <radialGradient id="${highlightId}" cx="30%" cy="30%" r="30%">
                 <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
                 <stop offset="100%" stop-color="white" stop-opacity="0"/>
             </radialGradient>
         </defs>
-
-        <!-- ตัวลูกปิงปอง -->
         <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradientId})" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
-
-        <!-- เงาสะท้อน -->
         <circle cx="${cx - r * 0.3}" cy="${cy - r * 0.3}" r="${r * 0.35}" fill="url(#${highlightId})"/>
     `;
 
@@ -1013,8 +919,6 @@ function setDefaultDate() {
         const localDate = new Date(new Date().getTime() + (7 * 60 * 60 * 1000));
         dateInput.value = localDate.toISOString().split('T')[0];
     }
-
-    // ตั้งค่าวันที่เริ่มต้นสำหรับฟอร์มรัฐบาลไทยด้วย
     const thaiDrawDateInput = document.getElementById('draw-date');
     if (thaiDrawDateInput) {
         const today = new Date();
@@ -1028,11 +932,9 @@ function getThaiDate(date = new Date()) {
     return `วัน${days[date.getDay()]}ที่ ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} พ.ศ. ${date.getFullYear() + 543}`;
 }
 
-// Popup functions for Lao Lottery
+// Popup functions
 function showPopup() { document.getElementById("popupOverlay").style.display = "flex"; }
 function closePopup() { document.getElementById("popupOverlay").style.display = "none"; }
-
-// Popup functions for Thai Government Lottery
 function showThaiPopup() { document.getElementById("thaiLotteryPopupOverlay").style.display = "flex"; }
 function closeThaiPopup() { document.getElementById("thaiLotteryPopupOverlay").style.display = "none"; }
 
@@ -1040,9 +942,7 @@ function updateFormVisibility(selectedType) {
     const laoFormContent = document.getElementById('laoLotteryFormContent');
     const thaiFormContent = document.getElementById('thaiLotteryFormContent');
     const numberInput = document.getElementById("numberInput");
-    const dateInput = document.getElementById("dateInput");
-    const convertButton = document.getElementById("convertButton");
-
+    
     if (selectedType === 'thai-government') {
         laoFormContent.style.display = 'none';
         thaiFormContent.style.display = 'block';
@@ -1053,7 +953,7 @@ function updateFormVisibility(selectedType) {
         if (config) {
             numberInput.maxLength = config.digits;
             numberInput.placeholder = `กรุณากรอกตัวเลข ${config.digits} หลัก`;
-            numberInput.value = ""; // Clear previous input
+            numberInput.value = "";
         } else {
              numberInput.maxLength = "";
              numberInput.placeholder = "กรุณาเลือกชนิดผลรางวัลก่อน";
@@ -1064,9 +964,7 @@ function updateFormVisibility(selectedType) {
 
 function populateTopicSelect() {
     const select = document.getElementById("topicSelect");
-    select.innerHTML = ''; // Clear existing options
-
-    // Sort keys by time for Lao lotteries, then add Thai Government at the end
+    select.innerHTML = ''; 
     const laoKeys = Object.keys(lotteryTypes).filter(key => lotteryTypes[key].type !== 'thai');
     const sortedLaoKeys = laoKeys.sort((a, b) => {
         const timeA = lotteryTypes[a].time.replace('.', '');
@@ -1081,14 +979,13 @@ function populateTopicSelect() {
         select.appendChild(option);
     });
 
-    // Add Thai Government Lottery as the last option
     const thaiOption = document.createElement('option');
     thaiOption.value = 'thai-government';
     thaiOption.textContent = 'ผลฉลากกินแบ่งรัฐบาล';
     select.appendChild(thaiOption);
 }
 
-// --- Lao Lottery Logic (mostly unchanged) ---
+// --- Lao Lottery Logic ---
 function convertNumber() {
     const selectedKey = document.getElementById("topicSelect").value;
     const config = lotteryTypes[selectedKey];
@@ -1102,7 +999,7 @@ function convertNumber() {
     const date = document.getElementById("dateInput").value ? new Date(document.getElementById("dateInput").value) : new Date();
     
     const popupNameDisplay = document.getElementById("popupNameDisplay");
-    popupNameDisplay.className = 'topic-box'; // Set the class
+    popupNameDisplay.className = 'topic-box';
     popupNameDisplay.innerHTML = `
         <img src="logo.png" alt="Logo" class="header-logo">
         <span>ผล${config.name}</span>
@@ -1110,7 +1007,7 @@ function convertNumber() {
     `;
 
     const popupTimeDisplay = document.getElementById("popupTimeDisplay");
-    popupTimeDisplay.className = 'topic-time'; // Set the class
+    popupTimeDisplay.className = 'topic-time';
     popupTimeDisplay.textContent = `เวลา ${config.time}`;
 
     document.getElementById("popupDateDisplay").textContent = getThaiDate(date);
@@ -1118,17 +1015,16 @@ function convertNumber() {
 
     let twoDigits, threeDigits;
     
-    // Slicing logic based on lottery type
     switch (config.type) {
-        case 'pattana': // 6 digits
+        case 'pattana':
             threeDigits = num.slice(3);
             twoDigits = num.slice(2, 4);
             break;
-        case 'samakkhee': // 5 digits
+        case 'samakkhee':
             threeDigits = num.slice(2);
             twoDigits = num.slice(1, 3);
             break;
-        case 'star': // 5 digits
+        case 'star':
         default:
             threeDigits = num.slice(2);
             twoDigits = num.slice(0, 2);
@@ -1139,19 +1035,17 @@ function convertNumber() {
     document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
     document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
 
-    // Reset toggle buttons
     ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active"));
     
     showPopup();
     setupSaveLaoImageButton();
 }
 
-// --- Popup Button Functions for Lao Lottery ---
+// --- Popup Button Functions ---
 function getNumbersForToggle() {
     const selectedKey = document.getElementById("topicSelect").value;
     const config = lotteryTypes[selectedKey];
     const num = document.getElementById('numberInput').value;
-
     let twoDigits, threeDigits, threeDigits_first, threeDigits_lastTwo;
 
     switch (config.type) {
@@ -1171,7 +1065,6 @@ function getNumbersForToggle() {
     }
     threeDigits_first = threeDigits[0];
     threeDigits_lastTwo = threeDigits.slice(1);
-    
     return { twoDigits, threeDigits, threeDigits_first, threeDigits_lastTwo };
 }
 
@@ -1179,14 +1072,8 @@ function toggleCirclePopup() {
     const display = document.getElementById("popupTwoDigitsDisplay");
     const button = document.getElementById("popupCircleButton");
     const { twoDigits } = getNumbersForToggle();
-    
     if (button.classList.toggle("active")) {
-        display.innerHTML = `
-            <div class="circle-container">
-                ${createPingPongNumbers(twoDigits, 'orange', 40, 22)}
-                <div class="checkmark">✓</div>
-            </div>
-        `;
+        display.innerHTML = `<div class="circle-container">${createPingPongNumbers(twoDigits, 'orange', 40, 22)}<div class="checkmark">✓</div></div>`;
     } else {
         display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
     }
@@ -1196,14 +1083,8 @@ function toggleSquarePopup() {
     const display = document.getElementById("popupThreeDigitsDisplay");
     const button = document.getElementById("popupSquareButton");
     const { threeDigits } = getNumbersForToggle();
-
     if (button.classList.toggle("active")) {
-        display.innerHTML = `
-            <div class="square-container">
-                ${createPingPongNumbers(threeDigits, 'blue', 40, 22)}
-                <div class="checkmark">✓</div>
-            </div>
-        `;
+        display.innerHTML = `<div class="square-container">${createPingPongNumbers(threeDigits, 'blue', 40, 22)}<div class="checkmark">✓</div></div>`;
     } else {
         display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
     }
@@ -1213,15 +1094,8 @@ function toggleSquareTopPopup() {
     const display = document.getElementById("popupThreeDigitsDisplay");
     const button = document.getElementById("popupCircleTopButton");
     const { threeDigits, threeDigits_first, threeDigits_lastTwo } = getNumbersForToggle();
-
     if (button.classList.toggle("active")) {
-        display.innerHTML = `
-            ${createPingPongBall(threeDigits_first, 'blue', 40, 22)}
-            <div class="square-two-container">
-                ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 40, 22)}
-                <div class="checkmark">✓</div>
-            </div>
-        `;
+        display.innerHTML = `${createPingPongBall(threeDigits_first, 'blue', 40, 22)}<div class="square-two-container">${createPingPongNumbers(threeDigits_lastTwo, 'blue', 40, 22)}<div class="checkmark">✓</div></div>`;
     } else {
         display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
     }
@@ -1229,17 +1103,14 @@ function toggleSquareTopPopup() {
 
 function setupSaveLaoImageButton() {
     const saveBtn = document.getElementById("saveLaoAsImageButton");
-    // Remove previous event listener to prevent multiple binds
     const newSaveBtn = saveBtn.cloneNode(true);
     saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
     newSaveBtn.addEventListener("click", function() {
         const captureElement = document.querySelector("#popupOverlay .popup-content");
         const controlsElement = captureElement.querySelector('.popup-buttons-container');
-
         if (controlsElement) controlsElement.style.display = 'none';
 
-        // ใช้ timeout เพื่อให้แน่ใจว่า DOM อัพเดทก่อนการจับภาพ
         setTimeout(() => {
             html2canvas(captureElement, {
                 useCORS: true,
@@ -1247,23 +1118,19 @@ function setupSaveLaoImageButton() {
                 backgroundColor: '#fffde7',
                 allowTaint: true,
                 onclone: function(clonedDoc) {
-                    // ตรวจสอบให้แน่ใจว่าเอฟเฟกต์เงายังคงแสดงใน cloned document
                     const balls = clonedDoc.querySelectorAll('.ball-shadow, .ball-text-shadow');
-                    balls.forEach(ball => {
-                        ball.style.filter = getComputedStyle(ball).filter;
-                    });
+                    balls.forEach(ball => { ball.style.filter = getComputedStyle(ball).filter; });
                 }
             }).then(canvas => {
                 const link = document.createElement('a');
                 const num = document.getElementById("numberInput").value || "result";
                 const selectedKey = document.getElementById("topicSelect").value;
                 const topicName = lotteryTypes[selectedKey].name.replace(/\s+/g, '');
-                
                 link.download = `Result-${topicName}-${num}-${Date.now()}.png`;
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             }).catch(err => {
-                console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
+                console.error("Error:", err);
                 alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
             }).finally(() => {
                 if (controlsElement) controlsElement.style.display = 'flex';
@@ -1272,7 +1139,7 @@ function setupSaveLaoImageButton() {
     });
 }
 
-// --- Thai Government Lottery Logic (from 08.html, adapted) ---
+// --- Thai Government Lottery Logic ---
 function formatThaiDate(dateString) {
     const parts = dateString.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
     if (!parts) return `งวดวันที่ ${dateString}`;
@@ -1311,16 +1178,10 @@ function displayThaiResults() {
     
     document.getElementById("display-draw-date").innerText = formatThaiDate(rawDate);
     displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 40, 22);
-    
-    // แสดงเลขหน้า 3 ตัว (ลำดับแรกและตามด้วยตัวเลข 2 ชุดในแถวเดียวกัน)
     displayNumberGroup("display-front-three-1", document.getElementById("front-three-1").value, "thai-blue", 40, 22);
     displayNumberGroup("display-front-three-2", document.getElementById("front-three-2").value, "thai-blue", 40, 22);
-    
-    // แสดงเลขท้าย 3 ตัว (ลำดับแรกและตามด้วยตัวเลข 2 ชุดในแถวเดียวกัน)
     displayNumberGroup("display-back-three-1", document.getElementById("back-three-1").value, "thai-green", 40, 22);
     displayNumberGroup("display-back-three-2", document.getElementById("back-three-2").value, "thai-green", 40, 22);
-    
-    // แสดงเลขท้าย 2 ตัว
     displayNumberGroup("display-back-two", document.getElementById("back-two").value, "thai-orange", 40, 22);
     
     showThaiPopup();
@@ -1329,19 +1190,17 @@ function displayThaiResults() {
 
 function setupSaveThaiImageButton() {
     const saveBtn = document.getElementById("saveThaiAsImageButton");
-    // Remove previous event listener to prevent multiple binds
     const newSaveBtn = saveBtn.cloneNode(true);
     saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
     newSaveBtn.addEventListener("click", function() {
-        const captureElement = document.querySelector("#thaiLotteryPopupContent"); // Capture the specific popup content
+        const captureElement = document.querySelector("#thaiLotteryPopupContent");
         const controlsElement = captureElement.querySelector('.popup-controls');
         const dateText = document.getElementById("display-draw-date").innerText.replace(/[^a-zA-Z0-9-]/g, '_');
         const firstPrize = document.getElementById("first-prize").value || "XXXXXX";
 
-        if (controlsElement) { controlsElement.style.display = 'none'; } // Hide controls for screenshot
+        if (controlsElement) { controlsElement.style.display = 'none'; }
 
-        // ใช้ timeout เพื่อให้แน่ใจว่า DOM อัพเดทก่อนการจับภาพ
         setTimeout(() => {
             html2canvas(captureElement, {
                 useCORS: true,
@@ -1351,15 +1210,9 @@ function setupSaveThaiImageButton() {
                 allowTaint: true,
                 onclone: (clonedDoc) => {
                     const clonedElement = clonedDoc.querySelector("#thaiLotteryPopupContent");
-                    if (clonedElement) {
-                        clonedElement.style.boxShadow = 'none'; // Remove shadow from popup for cleaner screenshot
-                    }
-                    
-                    // ตรวจสอบให้แน่ใจว่าเอฟเฟกต์เงายังคงแสดงใน cloned document
+                    if (clonedElement) clonedElement.style.boxShadow = 'none';
                     const balls = clonedDoc.querySelectorAll('.ball-shadow, .ball-text-shadow');
-                    balls.forEach(ball => {
-                        ball.style.filter = getComputedStyle(ball).filter;
-                    });
+                    balls.forEach(ball => { ball.style.filter = getComputedStyle(ball).filter; });
                 }
             }).then(canvas => {
                 const link = document.createElement('a');
@@ -1367,71 +1220,58 @@ function setupSaveThaiImageButton() {
                 link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
             }).catch(err => {
-                console.error("เกิดข้อผิดพลาดในการสร้างรูปภาพ:", err);
+                console.error("Error:", err);
                 alert("ขออภัย, ไม่สามารถบันทึกเป็นรูปภาพได้");
             }).finally(() => {
-                if (controlsElement) { controlsElement.style.display = 'flex'; } // Show controls again
+                if (controlsElement) { controlsElement.style.display = 'flex'; }
             });
         }, 100);
     });
 }
 
+// --- Event Listeners ---
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener("DOMContentLoaded", () => {
+    populateTopicSelect();
+    setDefaultDate();
+    updateFormVisibility(document.getElementById("topicSelect").value);
+    
+    document.getElementById("topicSelect").addEventListener("change", (event) => {
+        updateFormVisibility(event.target.value);
+    });
 
+    document.getElementById("convertButton").addEventListener("click", convertNumber);
+    document.getElementById("displayThaiResultsButton").addEventListener("click", displayThaiResults);
 
-        // --- Event Listeners ---
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener("DOMContentLoaded", () => {
-            populateTopicSelect();
-            setDefaultDate();
-            updateFormVisibility(document.getElementById("topicSelect").value); // Set initial form visibility
-            
-            document.getElementById("topicSelect").addEventListener("change", (event) => {
-                updateFormVisibility(event.target.value);
-            });
+    const thaiCalendarButton = document.getElementById('calendarButton');
+    const thaiHiddenDateInput = document.getElementById('hiddenDateInput');
+    const thaiDrawDateInput = document.getElementById('draw-date');
 
-            // Event listener for Lao lottery's convert button
-            document.getElementById("convertButton").addEventListener("click", convertNumber);
-
-            // Event listener for Thai lottery's display button
-            document.getElementById("displayThaiResultsButton").addEventListener("click", displayThaiResults);
-
-            // Calendar button for Thai Lottery date input
-            const thaiCalendarButton = document.getElementById('calendarButton');
-            const thaiHiddenDateInput = document.getElementById('hiddenDateInput');
-            const thaiDrawDateInput = document.getElementById('draw-date');
-
-            if (thaiCalendarButton && thaiHiddenDateInput && thaiDrawDateInput) {
-                thaiCalendarButton.addEventListener('click', () => {
-                    try {
-                        thaiHiddenDateInput.showPicker();
-                    } catch (error) {
-                        thaiHiddenDateInput.click();
-                    }
-                });
-
-thaiHiddenDateInput.addEventListener('change', (e) => {
-    const selectedDate = e.target.value;
-    if (selectedDate) {
-        const parts = selectedDate.split('-');
-        // แปลงจาก YYYY-MM-DD (ค.ศ.) เป็น DD/MM/YYYY (พ.ศ.)
-        thaiDrawDateInput.value = `${parts[2]}/${parts[1]}/${parseInt(parts[0], 10) + 543}`;
-    } else {
-        // เมื่อผู้ใช้ล้างค่า ให้ตั้งเป็นวันปัจจุบัน
-        const today = new Date();
-        thaiDrawDateInput.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear() + 543}`;
-    }
-                });
-            }
+    if (thaiCalendarButton && thaiHiddenDateInput && thaiDrawDateInput) {
+        thaiCalendarButton.addEventListener('click', () => {
+            try { thaiHiddenDateInput.showPicker(); } catch (error) { thaiHiddenDateInput.click(); }
         });
 
-        // --- PWA Service Worker Registration ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw-all-lao.js')
-                    .then(reg => console.log('Service Worker for All Lao registered.', reg))
-                    .catch(err => console.error('Service Worker registration failed:', err));
-            });
-        }
+        thaiHiddenDateInput.addEventListener('change', (e) => {
+            const selectedDate = e.target.value;
+            if (selectedDate) {
+                const parts = selectedDate.split('-');
+                thaiDrawDateInput.value = `${parts[2]}/${parts[1]}/${parseInt(parts[0], 10) + 543}`;
+            } else {
+                const today = new Date();
+                thaiDrawDateInput.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear() + 543}`;
+            }
+        });
+    }
+});
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw-all-lao.js')
+            .then(reg => console.log('Service Worker registered.', reg))
+            .catch(err => console.error('Service Worker registration failed:', err));
+    });
+}
     </script>
 </body>
 </html>
