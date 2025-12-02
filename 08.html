@@ -268,102 +268,109 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 
-/* --- สไตล์สำหรับผลรัฐบาลไทย (แบบเต็มจอและกะทัดรัด) --- */
+/* ========== NEW THAI LOTTERY FORM STYLES (FULL WIDTH / COMPACT) ========== */
+/* ฟอร์มรัฐบาลไทยแบบใหม่ */
 .thai-lottery-form {
-    display: none;
-    background-color: transparent; /* ไม่มีพื้นหลัง */
-    margin: 5px auto;
-    border-radius: 0;
-    box-shadow: none; /* ไม่มีเงา */
-    border: none; /* ไม่มีกรอบ */
+    display: none; /* ควบคุมด้วย JS */
+    background-color: transparent;
+    margin: 10px 0;
     padding: 0;
+    border: none; /* ลบเส้นขอบออกทั้งหมด */
+    box-shadow: none;
     width: 100%;
-    max-width: 100%; /* เต็มจอ */
     box-sizing: border-box;
 }
 
-/* Grid Layout สำหรับไทย */
+/* Grid System สำหรับฟอร์มไทย */
 .thai-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 คอลัมน์เท่ากัน */
-    gap: 10px;
+    gap: 10px; /* ระยะห่างระหว่างช่อง */
     width: 100%;
-    padding: 0 5px;
-    box-sizing: border-box;
 }
 
-/* รายการที่กินพื้นที่เต็มบรรทัด */
-.full-width {
-    grid-column: 1 / -1;
+.thai-grid-full {
+    grid-column: span 2; /* กินพื้นที่เต็ม 2 คอลัมน์ */
+}
+
+/* ปรับ Input ในฟอร์มไทยให้เต็มพื้นที่และสวยงาม */
+.thai-lottery-form input[type="text"],
+.thai-lottery-form input[type="date"],
+.thai-lottery-form select {
+    width: 100%;
+    max-width: 100%; /* ยกเลิกการจำกัดความกว้าง */
+    box-sizing: border-box;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 0;
+    text-align: center;
+}
+
+.thai-lottery-form input[type="text"]:focus {
+    border-color: #FF9800;
+    outline: none;
+    background-color: #fff8e1;
 }
 
 .thai-lottery-form label {
-    display: block;
-    font-size: 15px; /* ลดขนาด font label เล็กน้อย */
+    font-size: 14px;
+    margin-bottom: 4px;
+    text-align: left; /* จัดชิดซ้ายให้อ่านง่าย */
+    padding-left: 5px;
     color: #555;
-    margin-bottom: 2px;
-    text-align: left;
-    font-weight: bold;
 }
 
-.thai-lottery-form input {
-    font-size: 18px;
-    padding: 10px;
-    margin: 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 100%; /* เต็มความกว้างของ Grid Cell */
-    text-align: center;
-    max-width: 100%; /* ปลดล็อก max-width เดิม */
-    box-sizing: border-box;
-    background-color: white;
-}
-.thai-lottery-form input:focus {
-    border-color: #4CAF50;
-    outline: none;
-    background-color: #f0fff0;
-}
-
-/* ปรับแต่งส่วนวันที่ */
-.thai-lottery-form .date-input-wrapper {
+/* Wrapper สำหรับวันที่ */
+.thai-date-wrapper {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     gap: 5px;
-    width: 100%;
 }
-.thai-lottery-form .date-input-wrapper input {
-    text-align: left;
-    padding-left: 15px;
+
+.thai-date-wrapper input {
+    flex: 1;
 }
-.thai-lottery-form .date-input-wrapper button {
+
+.thai-date-wrapper button {
     flex-shrink: 0;
-    width: 45px;
-    height: 44px; /* ให้สูงเท่า input */
-    border-radius: 8px;
+    width: auto;
+    padding: 0 15px;
+    font-size: 20px;
     background-color: #eee;
     border: 1px solid #ccc;
-    font-size: 20px;
+    border-radius: 8px;
     cursor: pointer;
 }
 
-/* ปุ่มแสดงผลแบบเต็มจอ */
+/* จัดให้ปุ่มอยู่กึ่งกลางของหน้า */
+.thai-lottery-form .button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    grid-column: span 2; /* [แก้ไข] เพิ่มเพื่อให้ Container ขยายเต็ม 2 คอลัมน์ ทำให้จัดกึ่งกลางได้จริง */
+}
+
+/* ปุ่มแสดงผล */
 .thai-lottery-form .button-container button {
-    font-size: 20px;
+    width: 100%;
+    max-width: 320px; /* ปรับให้ปุ่มไม่กว้างเกินไปบนคอม */
     padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #28a745; /* สีเขียว */
+    font-size: 18px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    width: 100%;
-    max-width: 100%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    cursor: pointer;
     margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .thai-lottery-form .button-container button:hover {
-    background-color: #218838;
+    background-color: #43A047;
 }
+
 
 #popupOverlay .result-header {
     margin-top: 5px;
@@ -529,7 +536,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 #thaiLotteryPopupContent .prize-divider {
     font-size: 40px; 
     font-weight: bold; 
-    color: #FF1493;  
+    color: #FF1493; 
     margin: 0 5px;
     padding: 0;
     line-height: 1; /* ปรับ line-height ให้ชิดขึ้น */
@@ -621,48 +628,48 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
             </div>
         </div>
 
+        <!-- ฟอร์มสำหรับรัฐบาลไทย (ปรับปรุงใหม่: เต็มจอ Grid Layout ไร้กรอบ) -->
         <div id="thaiLotteryFormContent" class="thai-lottery-form">
             <div class="thai-grid-container">
-                <!-- แถว 1: วันที่ (เต็ม) -->
-                <div class="full-width">
+                <!-- งวดวันที่ -->
+                <div class="thai-grid-full">
                     <label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label>
-                    <div class="date-input-wrapper">
+                    <div class="thai-date-wrapper">
                         <input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" />
                         <button type="button" id="calendarButton">📅</button>
                     </div>
                     <input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;">
                 </div>
 
-                <!-- แถว 2: รางวัลที่ 1 และ เลขท้าย 2 ตัว (อยู่คู่กัน) -->
+                <!-- รางวัลที่ 1 (แสดงเต็มความกว้าง) -->
+                <!-- เลขหน้า 3 ตัว (คู่กัน) -->
                 <div>
-                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
-                    <input type="text" id="first-prize" maxlength="6" placeholder="รางวัลที่ 1" inputmode="numeric">
+                    <label>เลขหน้า 3 ตัว (1)</label>
+                    <input type="text" id="front-three-1" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="หน้าชุด 1">
                 </div>
                 <div>
+                    <label>เลขหน้า 3 ตัว (2)</label>
+                    <input type="text" id="front-three-2" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="หน้าชุด 2">
+                </div>
+
+                <!-- เลขท้าย 3 ตัว (คู่กัน) -->
+                <div>
+                    <label>เลขท้าย 3 ตัว (1)</label>
+                    <input type="text" id="back-three-1" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="ท้ายชุด 1">
+                </div>
+                <div>
+                    <label>เลขท้าย 3 ตัว (2)</label>
+                    <input type="text" id="back-three-2" maxlength="3" inputmode="numeric" pattern="\d*" placeholder="ท้ายชุด 2">
+                </div>
+
+                <!-- เลขท้าย 2 ตัว และ ปุ่มแสดงผล -->
+                <div class="thai-grid-full">
                     <label for="back-two">เลขท้าย 2 ตัว</label>
-                    <input type="text" id="back-two" maxlength="2" placeholder="2 ตัวล่าง" inputmode="numeric">
+                    <input type="text" id="back-two" maxlength="2" inputmode="numeric" pattern="\d*" placeholder="2 ตัวล่าง">
                 </div>
-
-                <!-- แถว 3: เลขหน้า 3 ตัว (คู่กัน) -->
-                <div class="full-width" style="margin-top: 5px;">
-                    <label>เลขหน้า 3 ตัว (2 ชุด)</label>
-                </div>
-                <div>
-                    <input type="text" id="front-three-1" maxlength="3" placeholder="ชุดที่ 1" inputmode="numeric">
-                </div>
-                <div>
-                    <input type="text" id="front-three-2" maxlength="3" placeholder="ชุดที่ 2" inputmode="numeric">
-                </div>
-
-                <!-- แถว 4: เลขท้าย 3 ตัว (คู่กัน) -->
-                <div class="full-width" style="margin-top: 5px;">
-                    <label>เลขท้าย 3 ตัว (2 ชุด)</label>
-                </div>
-                <div>
-                    <input type="text" id="back-three-1" maxlength="3" placeholder="ชุดที่ 1" inputmode="numeric">
-                </div>
-                <div>
-                    <input type="text" id="back-three-2" maxlength="3" placeholder="ชุดที่ 2" inputmode="numeric">
+                <div class="thai-grid-full">
+                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+                    <input type="text" id="first-prize" maxlength="6" inputmode="numeric" pattern="\d*" placeholder="รางวัลที่ 1">
                 </div>
 
                 <!-- ปุ่มแสดงผล -->
@@ -1142,9 +1149,9 @@ function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) 
             
             if (frontThreeGroupDisplay) {
                 frontThreeGroupDisplay.innerHTML = `
-                    ${createPingPongNumbers(frontThree1, "thai-blue", 40, 20)}
+                    ${createPingPongNumbers(frontThree1, "thai-blue", 42, 22)}
                     <span class="prize-divider">|</span>
-                    ${createPingPongNumbers(frontThree2, "thai-blue", 40, 20)}
+                    ${createPingPongNumbers(frontThree2, "thai-blue", 42, 22)}
                 `;
             }
 
@@ -1155,9 +1162,9 @@ function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) 
             
             if (backThreeGroupDisplay) {
                 backThreeGroupDisplay.innerHTML = `
-                    ${createPingPongNumbers(backThree1, "thai-green", 40, 20)}
+                    ${createPingPongNumbers(backThree1, "thai-green", 42, 22)}
                     <span class="prize-divider">|</span>
-                    ${createPingPongNumbers(backThree2, "thai-green", 40, 20)}
+                    ${createPingPongNumbers(backThree2, "thai-green", 42, 22)}
                 `;
             }
             
@@ -1266,5 +1273,6 @@ function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) 
     </script>
 </body>
 </html>
+
 
 
