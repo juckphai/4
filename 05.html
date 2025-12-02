@@ -234,10 +234,17 @@ input, select {
     cursor: pointer;
 }
 
+/* จัดให้ปุ่มอยู่กึ่งกลางของหน้า */
+.thai-lottery-form .button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 /* ปุ่มแสดงผล */
 .thai-lottery-form .button-container button {
     width: 100%;
-    max-width: 100%;
+    max-width: 320px; /* ปรับให้ปุ่มไม่กว้างเกินไปบนคอม */
     padding: 12px;
     font-size: 18px;
     background-color: #4CAF50;
@@ -248,9 +255,11 @@ input, select {
     margin-top: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .thai-lottery-form .button-container button:hover {
     background-color: #43A047;
 }
+
 
 /* ========== POPUP STYLES ========== */
 .popup-overlay {
@@ -704,11 +713,6 @@ input, select {
                 </div>
 
                 <!-- รางวัลที่ 1 (แสดงเต็มความกว้าง) -->
-                <div class="thai-grid-full">
-                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
-                    <input type="text" id="first-prize" maxlength="6" inputmode="numeric" pattern="\d*" placeholder="รางวัลที่ 1">
-                </div>
-
                 <!-- เลขหน้า 3 ตัว (คู่กัน) -->
                 <div>
                     <label>เลขหน้า 3 ตัว (1)</label>
@@ -733,6 +737,10 @@ input, select {
                 <div class="thai-grid-full">
                     <label for="back-two">เลขท้าย 2 ตัว</label>
                     <input type="text" id="back-two" maxlength="2" inputmode="numeric" pattern="\d*" placeholder="2 ตัวล่าง">
+                </div>
+                <div class="thai-grid-full">
+                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+                    <input type="text" id="first-prize" maxlength="6" inputmode="numeric" pattern="\d*" placeholder="รางวัลที่ 1">
                 </div>
 
                 <div class="thai-grid-full button-container">
