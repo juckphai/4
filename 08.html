@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -38,15 +39,34 @@ h1 { text-align: center; color: #e65100; margin: 10px 0 15px; font-size: 24px; }
   background-color: darkorange; 
 }
 
-/* ปุ่มแปลง */
+/* ปุ่มแปลง (สำหรับลาว) */
 .convert-button { background-color: #FF9800; padding: 12px 24px; font-size: 18px; border-radius: 8px; margin-top: 10px; }
 .convert-button:hover { background-color: #F57C00; }
-/* --------- ฟอร์มหลัก ---------- */
-.form-container { background-color: #f9f9f9; border-radius: 15px; padding: 5px; margin: 2px 0 5px; border: 1.5px solid orange; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+
+/* --------- ฟอร์มหลัก (แก้ไข: เอากรอบส้มออกจาก Container หลัก) ---------- */
+.form-container { 
+    /* ลบ border, padding, background เดิมออก เพื่อให้ส่วนไทยขยายเต็ม */
+    background-color: transparent; 
+    border: none; 
+    box-shadow: none; 
+    padding: 0;
+    margin: 2px 0 5px; 
+}
+
 .form-group { margin-bottom: 12px; text-align: center; }
 .form-group label { display: block; margin-bottom: 6px; font-size: 18px; color: #333; font-weight: bold; }
 input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px solid #ddd; border-radius: 5px; width: 100%; max-width: 250px; }
-/* กล่องกรอกตัวเลข */
+
+/* ---------- ส่วนเฉพาะของลาว (ใส่กรอบส้มที่นี่แทน) ---------- */
+#laoLotteryFormContent {
+    background-color: #f9f9f9; 
+    border-radius: 15px; 
+    padding: 15px; 
+    border: 1.5px solid orange; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* กล่องกรอกตัวเลขลาว */
 #numberInput { background-color: #e3f2fd; color: #1a237e; font-weight: bold; font-size: 20px; padding: 10px; border: 1.5px solid #1a237e; border-radius: 10px; text-align: center; width: 100%; max-width: none; box-sizing: border-box; transition: background-color 0.3s, border-color 0.3s; }
 #numberInput:focus { background-color: #bbdefb; border-color: #3f51b5; outline: none; }
 .form-footer { display: flex; justify-content: center; margin-top: 15px; }
@@ -248,53 +268,103 @@ input, select { font-size: 16px; padding: 8px; margin: 5px 0; border: 1.5px soli
 footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 
-/* --- สไตล์สำหรับผลรัฐบาลไทย (จาก 08.html) --- */
+/* --- สไตล์สำหรับผลรัฐบาลไทย (แบบเต็มจอและกะทัดรัด) --- */
 .thai-lottery-form {
-    display: none; /* ซ่อนไว้ก่อน */
-    background-color: lightyellow;
-    margin: 2px auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid green;
-    padding: 5px;
-    line-height: 0.5;
-    max-width: 600px;
-    text-align: center;
+    display: none;
+    background-color: transparent; /* ไม่มีพื้นหลัง */
+    margin: 5px auto;
+    border-radius: 0;
+    box-shadow: none; /* ไม่มีเงา */
+    border: none; /* ไม่มีกรอบ */
+    padding: 0;
+    width: 100%;
+    max-width: 100%; /* เต็มจอ */
     box-sizing: border-box;
 }
 
-.thai-lottery-form .form-group {
-    margin-bottom: 10px;
+/* Grid Layout สำหรับไทย */
+.thai-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 คอลัมน์เท่ากัน */
+    gap: 10px;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+/* รายการที่กินพื้นที่เต็มบรรทัด */
+.full-width {
+    grid-column: 1 / -1;
 }
 
 .thai-lottery-form label {
     display: block;
-    font-size: 18px;
-    margin-bottom: 5px;
+    font-size: 15px; /* ลดขนาด font label เล็กน้อย */
+    color: #555;
+    margin-bottom: 2px;
+    text-align: left;
+    font-weight: bold;
 }
 
 .thai-lottery-form input {
     font-size: 18px;
-    padding: 8px;
-    margin: 5px 0;
-    border: 2px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%; /* เต็มความกว้างของ Grid Cell */
     text-align: center;
-    max-width: 100%;
+    max-width: 100%; /* ปลดล็อก max-width เดิม */
     box-sizing: border-box;
+    background-color: white;
+}
+.thai-lottery-form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    background-color: #f0fff0;
 }
 
-.thai-lottery-form .input-pair {
+/* ปรับแต่งส่วนวันที่ */
+.thai-lottery-form .date-input-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    gap: 10px;
-    text-align: center;
-    flex-wrap: nowrap; /* ✅ บังคับให้อยู่ในบรรทัดเดียว */
+    gap: 5px;
     width: 100%;
-    box-sizing: border-box;
 }
+.thai-lottery-form .date-input-wrapper input {
+    text-align: left;
+    padding-left: 15px;
+}
+.thai-lottery-form .date-input-wrapper button {
+    flex-shrink: 0;
+    width: 45px;
+    height: 44px; /* ให้สูงเท่า input */
+    border-radius: 8px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* ปุ่มแสดงผลแบบเต็มจอ */
+.thai-lottery-form .button-container button {
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #28a745; /* สีเขียว */
+    color: white;
+    border: none;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+.thai-lottery-form .button-container button:hover {
+    background-color: #218838;
+}
+
 #popupOverlay .result-header {
     margin-top: 5px;
 }
@@ -304,60 +374,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 #thaiLotteryPopupOverlay .draw-date {
     margin-top: 2px;
-}
-
-/* --- เริ่มการแก้ไขสำหรับ input date ของรัฐบาลไทย --- */
-.thai-lottery-form .date-input-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    width: 100%; /* ✅ เต็มกรอบสีเขียว */
-    box-sizing: border-box;
-    flex-wrap: nowrap; 
-}
-
-.thai-lottery-form .date-input-wrapper input[type="date"] {
-    flex: 1; /* ✅ ให้ input ยืดเต็มที่ */
-    min-width: 0; /* ป้องกันไม่ให้ล้น */
-}
-
-.thai-lottery-form .date-input-wrapper button {
-    flex-shrink: 0; /* ✅ ปุ่มไม่ถูกบีบ */
-    max-width: 120px; /* จำกัดความกว้างปุ่ม */
-    width: auto;
-}
-
-.thai-lottery-form .button-container button {
-    font-size: 20px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    width: 100%;
-    max-width: 300px;
-    box-sizing: border-box;
-}
-
-/* ✅ Responsive ปรับสำหรับจอเล็ก */
-@media (max-width: 480px) {
-    .thai-lottery-form .date-input-wrapper {
-        gap: 6px;
-    }
-
-    .thai-lottery-form .date-input-wrapper button {
-        max-width: 100px;
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-
-    .thai-lottery-form .date-input-wrapper input[type="date"] {
-        font-size: 14px;
-        padding: 6px;
-    }
 }
 
 /* Popup สำหรับรัฐบาลไทย */
@@ -390,10 +406,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 20px 10px; /*⬅️ ลด padding จาก 20px 10px */
+    padding: 20px 10px; 
     border-radius: 50px;
-    margin-top: 3px; /* ⬅️ ลด margin */
-    margin-bottom: 3px; /* ⬅️ ลด margin */
+    margin-top: 3px;
+    margin-bottom: 3px;
     margin: 0 2px;
     border-radius: 10px;
     border: 1.5px solid #4CAF50;
@@ -421,25 +437,24 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 /* ปรับลดพื้นที่ว่างด้านบนสุด */
 #thaiLotteryPopupOverlay .topic-box {
-    padding: 8px 25px; /* ลด padding-top/bottom */
+    padding: 8px 25px; 
     font-size: 22px; 
-    margin-top: 3px; /* ลด margin-top */
-    margin-bottom: 3px; /* ลด margin-bottom */
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 /* ปรับลดพื้นที่ว่างรอบวันที่ */
 #thaiLotteryPopupContent .draw-date {
     display: inline-block;
     color: #fff;
-    /* ลด padding-top/bottom */
     padding: 8px 15px; 
     font-size: 15px;
     font-weight: bold;
     border: 2px solid #E65100;
     background: linear-gradient(to bottom, #FFB74D, #FB8C00);
     border-radius: 50px;
-    margin-top: 3px; /* ลด margin-top */
-    margin-bottom: 3px; /* ลด margin-bottom */
+    margin-top: 3px;
+    margin-bottom: 3px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
@@ -451,9 +466,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-weight: bold;
     border: 2px solid #D32F2F;
     border-radius: 50px;
-    /* ลด padding-top/bottom */
     padding: 8px 25px; 
-    margin: 4px 0 4px; /* ลด margin-top/bottom */
+    margin: 4px 0 4px;
     background: linear-gradient(to bottom, #EF9A9A, #E53935);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
@@ -466,9 +480,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     display: inline-block;
     font-weight: bold;
     margin: 0;
-    /* ลด margin-bottom */
     margin-bottom: 3px; 
-    /* ลด padding-top/bottom */
     padding: 5px 15px; 
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -496,7 +508,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     font-size: 22px;
     background: linear-gradient(to bottom, #FFE3A0, #FF8C00);
     border: 2px solid #D97200;
-    /* ลด margin-top */
     margin-top: 5px; 
     padding: 10px 15px;
     border-radius: 50px;
@@ -508,7 +519,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: column; 
     align-items: center;
     gap: 0.5px;
-    /* ลด margin-top */
     margin-top: 5px; 
 }
 
@@ -527,8 +537,8 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 3px; /* ลด margin-top */
-    margin-bottom: 5px; /* ลด margin-bottom */
+    margin-top: 3px; 
+    margin-bottom: 5px; 
 }
 
 /* ลูกบอลใน popup ไทย */
@@ -537,7 +547,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: row; 
     justify-content: center; 
     align-items: center;
-    margin-top: 3px; /* ลด margin-top */
+    margin-top: 3px; 
     gap: 0.5px; 
     margin: 0;
     min-height: 42px;
@@ -549,7 +559,6 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     flex-direction: column-reverse; /* สลับให้ป้ายอยู่ด้านล่าง */
     align-items: center;
     gap: 0.5px;
-    /* ลด margin-top/bottom */
     margin-top: 5px; 
     margin-bottom: 0px;
 }
@@ -578,10 +587,12 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     <h1>ผลรางวัลกลุ่มลาวและรัฐบาล</h1>
 
     <div class="form-container">
-        <div class="form-group">
+        <!-- ย้าย style="border:1.5px solid orange;" มาใส่ที่ตัว Lao Form Content แทน -->
+        <!-- ส่วนเลือก Topic ใช้ร่วมกัน -->
+        <div class="form-group" style="margin-bottom: 5px; padding: 0 10px;">
             <label for="topicSelect">1. เลือกชนิดผลรางวัล</label>
-            <select id="topicSelect">
-                </select>
+            <select id="topicSelect" style="max-width: 100%;">
+            </select>
         </div>
 
         <div id="laoLotteryFormContent">
@@ -599,12 +610,54 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
         </div>
 
         <div id="thaiLotteryFormContent" class="thai-lottery-form">
-            <div class="form-group"><label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label><div class="date-input-wrapper"><input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" /><button type="button" id="calendarButton">📅</button></div><input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;"></div>
-            <div class="form-group"><label>เลขหน้า 3 ตัว</label><div class="input-pair"><input type="text" id="front-three-1" maxlength="3" placeholder="ชุดที่ 1"><input type="text" id="front-three-2" maxlength="3" placeholder="ชุดที่ 2"></div></div>
-            <div class="form-group"><label>เลขท้าย 3 ตัว</label><div class="input-pair"><input type="text" id="back-three-1" maxlength="3" placeholder="ชุดที่ 1"><input type="text" id="back-three-2" maxlength="3" placeholder="ชุดที่ 2"></div></div>
-            <div class="form-group"><label for="back-two">เลขท้าย 2 ตัว</label><input type="text" id="back-two" maxlength="2" placeholder="กรอกเลขท้าย 2 ตัว"></div>
-            <div class="form-group"><label for="first-prize">รางวัลที่ 1 (6 ตัว)</label><input type="text" id="first-prize" maxlength="6" placeholder="กรอกเลขรางวัลที่ 1"></div>
-            <div class="button-container"><button id="displayThaiResultsButton">แสดงผล</button></div>
+            <div class="thai-grid-container">
+                <!-- แถว 1: วันที่ (เต็ม) -->
+                <div class="full-width">
+                    <label for="draw-date">งวดวันที่ (วว/ดด/ปปปป)</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="draw-date" placeholder="วว/ดด/ปปปป (พ.ศ.)" />
+                        <button type="button" id="calendarButton">📅</button>
+                    </div>
+                    <input type="date" id="hiddenDateInput" style="display: none; visibility: hidden;">
+                </div>
+
+                <!-- แถว 2: รางวัลที่ 1 และ เลขท้าย 2 ตัว (อยู่คู่กัน) -->
+                <div>
+                    <label for="first-prize">รางวัลที่ 1 (6 ตัว)</label>
+                    <input type="text" id="first-prize" maxlength="6" placeholder="รางวัลที่ 1" inputmode="numeric">
+                </div>
+                <div>
+                    <label for="back-two">เลขท้าย 2 ตัว</label>
+                    <input type="text" id="back-two" maxlength="2" placeholder="2 ตัวล่าง" inputmode="numeric">
+                </div>
+
+                <!-- แถว 3: เลขหน้า 3 ตัว (คู่กัน) -->
+                <div class="full-width" style="margin-top: 5px;">
+                    <label>เลขหน้า 3 ตัว (2 ชุด)</label>
+                </div>
+                <div>
+                    <input type="text" id="front-three-1" maxlength="3" placeholder="ชุดที่ 1" inputmode="numeric">
+                </div>
+                <div>
+                    <input type="text" id="front-three-2" maxlength="3" placeholder="ชุดที่ 2" inputmode="numeric">
+                </div>
+
+                <!-- แถว 4: เลขท้าย 3 ตัว (คู่กัน) -->
+                <div class="full-width" style="margin-top: 5px;">
+                    <label>เลขท้าย 3 ตัว (2 ชุด)</label>
+                </div>
+                <div>
+                    <input type="text" id="back-three-1" maxlength="3" placeholder="ชุดที่ 1" inputmode="numeric">
+                </div>
+                <div>
+                    <input type="text" id="back-three-2" maxlength="3" placeholder="ชุดที่ 2" inputmode="numeric">
+                </div>
+
+                <!-- ปุ่มแสดงผล -->
+                <div class="button-container full-width">
+                    <button id="displayThaiResultsButton">แสดงผล</button>
+                </div>
+            </div>
         </div>
     </div>
 
