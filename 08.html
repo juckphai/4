@@ -368,8 +368,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 #popupOverlay .result-header {
     margin-top: 5px;
 }
+
+/* --- [แก้ไข] ปรับลดระยะห่าง header รัฐบาล --- */
 #thaiLotteryPopupOverlay .result-header {
-    margin-top: 10px;
+    margin-top: 0px; /* แก้ไขจาก 10px เป็น 0px */
 }
 
 #thaiLotteryPopupOverlay .draw-date {
@@ -404,9 +406,10 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
     box-sizing: border-box;
 }
 
+/* --- [แก้ไข] ปรับลด Padding ในกล่องแสดงผล --- */
 #thaiLotteryPopupContent .result-display {
     background-color: #FFFFD1;
-    padding: 20px 10px; 
+    padding: 5px 10px; /* แก้ไขจาก 20px 10px เป็น 5px 10px */
     border-radius: 50px;
     margin-top: 3px;
     margin-bottom: 3px;
@@ -565,7 +568,16 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 
 #thaiLotteryPopupContent .flex-row { display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: 0.5px 20px; }
-#thaiLotteryPopupContent .popup-controls { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 15px; }
+
+/* --- [แก้ไข] ปรับลดระยะห่างของปุ่มควบคุมด้านล่าง --- */
+#thaiLotteryPopupContent .popup-controls { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px; 
+    margin-top: 5px; /* แก้ไขจาก 15px เป็น 5px */
+}
+
 #thaiLotteryPopupContent .popup-button { border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #007bff; width: 90%; max-width: 200px; font-size: 16px; }
 #thaiLotteryPopupContent .popup-button:hover { background-color: #0056b3; }
 #thaiLotteryPopupContent .close-popup { display: block; margin: 0 auto; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; transition: background-color: 0.3s; padding: 10px 20px; background-color: #f44336; width: 90%; max-width: 200px; font-size: 16px; }
@@ -768,7 +780,7 @@ footer { text-align: center; margin: 15px 0; color: #666; padding: 10px 0; }
 
 // --- Core Functions ---
 // Function to create a single ping-pong ball (Lao lottery style)
-function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
+function createPingPongBall(number, type = 'red', size = 42, fontSize = 22) {
     const gradientId = `grad-${type}-${Math.random().toString(36).substring(2, 9)}`;
     const highlightId = `highlight-${type}-${Math.random().toString(36).substring(2, 9)}`;
     let highlightColor, midColor, shadowColor;
@@ -826,7 +838,7 @@ function createPingPongBall(number, type = 'red', size = 40, fontSize = 22) {
     `;
 }
 
-function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) {
+function createPingPongNumbers(numbers, type = 'red', size = 42, fontSize = 22) {
     return numbers.split('').map(digit => createPingPongBall(digit, type, size, fontSize)).join('');
 }
 
@@ -948,9 +960,9 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
                     break;
             }
 
-            document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red', 40, 22);
-            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
-            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
+            document.getElementById("popupMainDigitsDisplay").innerHTML = createPingPongNumbers(num, 'red', 42, 22);
+            document.getElementById("popupThreeDigitsDisplay").innerHTML = createPingPongNumbers(threeDigits, 'blue', 42, 22);
+            document.getElementById("popupTwoDigitsDisplay").innerHTML = createPingPongNumbers(twoDigits, 'orange', 42, 22);
 
             ["popupCircleButton", "popupSquareButton", "popupCircleTopButton"].forEach(id => document.getElementById(id).classList.remove("active"));
             
@@ -994,12 +1006,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
                     <div class="circle-container">
-                        ${createPingPongNumbers(twoDigits, 'orange', 40, 22)}
+                        ${createPingPongNumbers(twoDigits, 'orange', 42, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 40, 22);
+                display.innerHTML = createPingPongNumbers(twoDigits, 'orange', 42, 22);
             }
         }
 
@@ -1011,12 +1023,12 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
                     <div class="square-container">
-                        ${createPingPongNumbers(threeDigits, 'blue', 40, 22)}
+                        ${createPingPongNumbers(threeDigits, 'blue', 42, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 42, 22);
             }
         }
 
@@ -1027,14 +1039,14 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
 
             if (button.classList.toggle("active")) {
                 display.innerHTML = `
-                    ${createPingPongBall(threeDigits_first, 'blue', 40, 22)}
+                    ${createPingPongBall(threeDigits_first, 'blue', 42, 22)}
                     <div class="square-two-container">
-                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 40, 22)}
+                        ${createPingPongNumbers(threeDigits_lastTwo, 'blue', 42, 22)}
                         <div class="checkmark">✓</div>
                     </div>
                 `;
             } else {
-                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 40, 22);
+                display.innerHTML = createPingPongNumbers(threeDigits, 'blue', 42, 22);
             }
         }
 
@@ -1121,7 +1133,7 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
             document.getElementById("display-draw-date").innerText = formatThaiDate(rawDate);
             
             // รางวัลที่ 1
-            displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 40, 22);
+            displayNumberGroup("first-prize-display", document.getElementById("first-prize").value, "thai-red", 42, 22);
 
             // --- แก้ไขส่วนแสดงผลเลขหน้า 3 ตัว ---
             const frontThree1 = document.getElementById("front-three-1").value;
@@ -1254,3 +1266,5 @@ function createPingPongNumbers(numbers, type = 'red', size = 40, fontSize = 22) 
     </script>
 </body>
 </html>
+
+
