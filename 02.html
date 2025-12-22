@@ -97,10 +97,10 @@ box-sizing: border-box;
 .result-container-popup {
     box-sizing: border-box;
     min-height: 300px;
-    max-width: calc(100% - 2px);   /* ตรงกับด้านบน */
-    margin: 5px auto;              /* กึ่งกลาง พร้อมค่าบน-ล่าง 5px */
-    padding: 10px 2px;             /* ตรงกับด้านบน */
-     border: 1.5px solid #FF33CC;    /* ตรงกับด้านบน */
+    max-width: calc(100% - 4px);
+    margin: 2px auto;
+    padding: 2px;                  /* เท่ากันทุกด้าน */
+    border: 1.5px solid #FF33CC;
     border-radius: 10px;
     position: relative;
     text-align: center;
@@ -2605,7 +2605,7 @@ document.getElementById("saveResultAsImageBtn").addEventListener("click", functi
 
   controlsElement.style.display = 'none';
   const originalPadding = captureElement.style.padding;
-  captureElement.style.padding = '4px 4px 4px 4px';
+  captureElement.style.padding = '2px 2px 2px 2px';
 
   html2canvas(captureElement, {
     useCORS: true,
